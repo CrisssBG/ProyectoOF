@@ -1,0 +1,32 @@
+<!--edit_contact.html-->
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<form action="/update/{{contact.0}}" method="POST">
+    <input type="text" name="nombre" placeholder="Nombre" value="{{ contact.1 }}">
+    <input type="text" name="experiencia" placeholder="Experiencia" value="{{ contact.2 }}">
+    <input type="text" name="universidades" placeholder="Universidades" value="{{ contact.3 }}">
+    <input type="text" name="nivel_academico" placeholder="Nivel academico" value="{{ contact.4 }}">
+
+    <label>Habilidades:</label>
+    <ul>
+        <li>
+            <input type="checkbox" id="arte" name="habilidades[]" value="1">
+            <label for="arte">Arte</label>
+        </li>
+        <li>
+            <input type="checkbox" id="musica" name="habilidades[]" value="2">
+            <label for="musica">Música</label>
+        </li>
+        <li>
+            <input type="checkbox" id="programacion" name="habilidades[]" value="3">
+            <label for="programacion">Programación</label>
+        </li>
+        <!-- Agregar más habilidades según sea necesario -->
+    </ul>
+    <button type="submit">
+        Save
+    </button>
+</form>
+{% endblock %}

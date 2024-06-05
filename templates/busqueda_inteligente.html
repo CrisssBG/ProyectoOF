@@ -1,0 +1,29 @@
+<!--busqueda_inteligente.html-->
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<form id="form-busqueda" method="POST">
+    <label for="habilidad">Habilidad:</label>
+    <select id="habilidad" name="habilidad">
+      <option value="">Seleccione una habilidad</option>
+      <option value="arte">Arte</option>
+      <option value="musica">Música</option>
+      <option value="programacion">Programación</option>
+      <!-- Agrega más habilidades según sea necesario -->
+    </select><br><br>
+    <label for="experiencia">Año de experiencia:</label>
+    <input type="number" id="experiencia" name="experiencia"><br><br>
+    <button type="submit">Buscar</button>
+    <!--button type="button" onclick="buscarDocentes()">Buscar</button-->
+  </form>
+  
+  <ul id="resultado-busqueda">
+    <!-- Lista de docentes que coinciden con la búsqueda -->
+  </ul>
+  
+  <!--script src="/static/busqueda_inteligente.js"></script-->
+  <script src="{{ url_for('static', filename='js/busqueda_inteligente.js') }}"></script>
+
+
+  {% endblock %}
