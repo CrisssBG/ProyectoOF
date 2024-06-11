@@ -2,7 +2,7 @@
 from app import app
 from db import init_connection  # Importa la función para inicializar la conexión a MySQL
 from docentes import docentes_bp  # Importa el Blueprint de docentes
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from ontologia_fuzzy import OntologiaFuzzy
 
 # Inicializa la configuración de MySQL
@@ -25,6 +25,28 @@ def buscar_docentes_similares():
     experiencia = data.get('experiencia')
     docentes_similares = ontologia_fuzzy.obtener_docentes_similares(habilidad, experiencia)
     return jsonify(docentes_similares)
+
+@app.route('/')
+def home():
+    #return render_template('index.html')
+    return render_template('index.php')
+
+@app.route('/perfil')
+def perfil():
+    # Tu lógica para la vista 'register' aquí
+    return render_template('perfil.html')
+
+@app.route('/register')
+def register():
+    # Tu lógica para la vista 'register' aquí
+    return render_template('register.html')
+
+@app.route('/busqueda_inteligente', methods=['GET', 'POST'])
+def busqueda_inteligente():
+    if request.method == 'POST':
+        # Maneja la lógica de la búsqueda aquí
+        pass
+    return render_template('busqueda_inteligente.html')
 
 # Ejecuta la aplicación
 if __name__ == "__main__":

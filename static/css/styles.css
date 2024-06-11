@@ -1,0 +1,491 @@
+/* static/css/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /*background-color: #111;*
+    background-color: #004484;
+    padding-top: 50px;
+    text-align: left;
+}
+*/
+
+
+
+.sidenav a.active {
+    /*background-color: #4CAF50; /* Color de fondo para la sección activa */
+    background-color: #16b8dd; /* Color de fondo para la sección activa */
+    color: white;             /* Color del texto para la sección activa */
+    border-radius: 25px;
+}
+
+
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #004484;
+    /*overflow-x: hidden;*/
+    overflow: hidden;
+    padding-top: 10px;
+    transition: 0.5s;
+}
+
+.sidenav a {
+    padding: 12px 12px 10px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.sidenav a:hover {
+    /*color: #16b8dd;*/
+    background-color: #16b8dd; /* Color de fondo para la sección activa */
+    border-radius: 25px;
+}
+
+.sidenav a i {
+    margin-right: 10px; /* Agrega padding a los elementos <i> */
+    margin-left: -15px;
+    font-size: 17px;
+    min-width: 35px;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 4%;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+
+
+/*
+.mini-sidenav{
+    width: 80px;
+}
+*/
+.hide-text {
+    /*display: none;*/
+    font-size: 0;
+}
+
+#main {
+    transition: margin-left .5s;
+    margin-left: 200px;  /* Ajuste necesario para que el contenido no sea cubierto por la barra lateral */
+    padding: 20px;
+}
+
+.banner {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+}
+
+.banner img {
+    width: 60%;
+    height: auto;
+    display: inline-block;
+}
+/*
+footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 2px;
+    text-align: center;
+    z-index: 1000; /* Un valor menor que el z-index de la barra lateral *
+}*/
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 5px;
+    width: 100%;
+    color: #fff;
+}
+
+h1 {
+    /*background-color: #f4f4f4; /* Fondo gris claro */
+    background-color: #007bff; /* Fondo gris claro */
+    /*color: #f4f4f4; /* Color del texto */
+    color: #fff; /* Color del texto */
+    padding: 12px; /* Espaciado interno para que el texto no esté pegado al borde */
+    text-align: center;
+    border-radius: 10px;
+    font-size: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    margin: 0 auto; /* Centrar horizontalmente */
+    margin-bottom: 22px;
+    margin-top: 0px;
+    border-top: 5px solid #004484; /* Establece el color del borde superior */
+}
+
+h2 {
+    text-align: center; /* Centra el texto horizontalmente */
+}
+
+p {
+    text-align: justify;
+    font-family: Arial ;
+    font-size: 14px;
+}
+
+span{
+    text-align: justify;
+    font-family: Arial ;
+    font-size: 9px;
+}
+
+label {
+    /*font-weight: bold;*/
+}
+
+input {
+    border-radius: 10px; /* Redondear esquinas de los inputs */
+    padding: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el ancho total */
+}
+
+.line {
+    border: none;
+    border-top: 5px solid #004484; /* Establece el color y grosor de la línea */
+    width: 100%; /* Opcional: ajusta el ancho de la línea */
+    border-radius: 10px;
+}
+
+/*
+.container{
+    padding: 22px;
+}*/
+
+.personal-info-container {
+    border: 2px solid #ccc; /* Borde sólido de 2 píxeles de ancho y color gris */
+    padding: 20px; /* Espacio interno de 20 píxeles alrededor del contenido */
+    margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.busqueda-container {
+    border: 2px solid #ccc; /* Borde sólido de 2 píxeles de ancho y color gris */
+    padding: 20px; /* Espacio interno de 20 píxeles alrededor del contenido */
+    margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.personal-info-box {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+.personal-info-box form {
+    margin-bottom: 20px; /* Espacio entre el formulario y el botón */
+}
+
+.form-group {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px; /* Inputs más redondeados */
+    box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el ancho total */
+}
+
+button[type="submit"] {
+    display: block;
+    width: 50%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px; /* Botón más redondeado */
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.info-container {
+    border: 2px solid #ccc; /* Borde sólido de 2 píxeles de ancho y color gris */
+    padding: 20px; /* Espacio interno de 20 píxeles alrededor del contenido */
+    margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.personal-info-box button {
+    position: absolute;
+    bottom: 10px; /* Distancia desde la parte inferior del cuadro */
+    right: 10px; /* Distancia desde el borde derecho del cuadro */
+}
+
+.left-column {
+    flex: 1;
+    margin-right: 20px; /* Espacio entre las columnas */
+}
+
+.right-column {
+    flex: 1;
+}
+
+.personal-habilidades-container {
+    border: 2px solid #ccc; /* Borde sólido de 2 píxeles de ancho y color gris */
+    padding: 20px; /* Espacio interno de 20 píxeles alrededor del contenido */
+    margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.table-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.table {
+    border: 1px solid #e3e4e5; /* Borde gris para la tabla */
+    /*border: 3px solid #004484; /* Borde gris para la tabla */
+    border-radius: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.table thead {
+    background-color: #f0f0f0; /* Fondo claro para el encabezado */
+}
+
+.table-bordered td, .table-bordered th {
+    padding-left: 15px; /* Espaciado a la izquierda de las celdas */
+    padding-right: 15px; /* Espaciado a la derecha de las celdas */
+}
+
+footer small {
+    display: block;
+    text-align: center;
+    color: #666;
+    font-size: 12px;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.range-container {
+    display: flex; /* Usa flexbox para alinear los elementos horizontalmente */
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+}
+
+.icon-container {
+    /*text-align: center;*/
+    font-size: 28px; /* Tamaño más grande para los iconos /
+    margin-top: -55px;
+    margin-left: -125px;*/
+    /*display: inline-block; /* Para que el contenedor se ajuste al tamaño del icono */
+    /*vertical-align: middle; /* Para alinear verticalmente el contenedor */
+    margin-left: 10px; /* Ajuste el margen izquierdo según sea necesario */
+}
+/*
+.icon-container i {
+    color: #004484;
+}
+*/
+.icon-sad {
+    color: #ff0000; /* Rojo para triste */
+}
+
+.icon-neutral {
+    color: #ffd700; /* Amarillo para normal */
+}
+
+.icon-happy {
+    color: #0030cc; /* Verde para feliz */
+}
+
+.icon-very-happy {
+    color: #00cc00; /* Verde para feliz */
+}
+/*
+.text-sad {
+    color: #ff0000; 
+}
+
+.text-neutral {
+    color: #ffd700;
+}
+
+.text-happy {
+    color: #0030cc; 
+}
+
+.text-very-happy {
+    color: #00cc00; 
+}
+*/
+.custom-file-input {
+    cursor: pointer;
+}
+
+.custom-file-label::after {
+    content: 'Seleccionar';
+}
+
+#imagen_perfil_preview_container {
+    margin-top: 10px;
+}
+
+#imagen_perfil_preview {
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: block;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover; /* Ajusta la imagen para que se ajuste al círculo */
+}
+
+.modify-profile-icon {
+    position: absolute; /* Establece la posición absoluta para el icono */
+    top: 15px; /* Ajusta la distancia desde la parte superior */
+    right: 20px; /* Ajusta la distancia desde el borde derecho */
+    font-size: 28px; /* Tamaño del icono */
+    color: #0056b3;
+}
+/*
+.personalP-habilidades-container {
+    margin: 20px;
+}
+    */
+/*
+.lineP {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+*//*
+.personalP-info-box {
+    display: flex;
+    justify-content: space-between;
+}
+*//*
+.personal-info-columnP {
+    width: 48%;
+}
+*/
+.form-groupP {
+    margin-bottom: 15px;
+}
+
+progress {
+    width: 100%;
+    height: 20px;
+}
+
+.edit-message {
+    /*position: fixed;*/
+    position: absolute;
+    font-size: 14px;
+    display: none;
+    background-color: green;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    text-align: left;
+    box-shadow: 0 4px 40px rgba(0, 128, 0, 0.5);
+    z-index: 1000;
+}
+
+.edit-messageH {
+    /*position: fixed;*/
+    position: absolute;
+    font-size: 14px;
+    display: none;
+    background-color: green;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    text-align: left;
+    box-shadow: 0 4px 40px rgba(0, 128, 0, 0.5);
+    z-index: 1000;
+}
+
+.personal-info-container.green-border {
+    border: 2px solid green;
+    border-radius: 25px;
+    padding: 20px;
+    margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
+    box-shadow: 0 4px 40px rgba(0, 128, 0, 0.8);
+    background-color: #fff; /* Fondo gris claro */
+}
+
+.personal-habilidades-container.green-border {
+    border: 2px solid green;
+    border-radius: 25px;
+    padding: 20px;
+    margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
+    box-shadow: 0 4px 40px rgba(0, 128, 0, 0.8);
+    background-color: #fff; /* Fondo gris claro */
+}
+
+.scroll-to-bottom {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    /*background-color: rgba(0, 0, 0, 0.7);*/
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    /*z-index: 9999; /* Asegura que esté por encima de todo */
+    transition: opacity 0.8s;   
+}
+
+.scroll-to-bottom i {
+    margin-left: 5px;
+}
+
+.scroll-to-bottom:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}

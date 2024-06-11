@@ -4,26 +4,249 @@
 {% block body %}
 
 <form id="form-busqueda" method="POST">
-    <label for="habilidad">Habilidad:</label>
-    <select id="habilidad" name="habilidad">
-      <option value="">Seleccione una habilidad</option>
-      <option value="arte">Arte</option>
-      <option value="musica">Música</option>
-      <option value="programacion">Programación</option>
-      <!-- Agrega más habilidades según sea necesario -->
-    </select><br><br>
-    <label for="experiencia">Año de experiencia:</label>
-    <input type="number" id="experiencia" name="experiencia"><br><br>
-    <button type="submit">Buscar</button>
+    <h1>Busqueda Inteligente</h1>
+    <div class="info-container">
+        <h2>Parámetros<hr class="line"></h2>
+
+        <label for="experiencia"><strong>Años de experiencia:</strong></label>
+        <input type="number" id="experiencia" name="experiencia"><br><br>
+
+        <!--label for="habilidad">Habilidad:</label>
+        <select id="habilidad" name="habilidad">
+            <option value="">Seleccione una habilidad</option>
+            <option value="arte">Arte</option>
+            <option value="musica">Música</option>
+            <option value="programacion">Programación</option>
+            <-- Agrega más habilidades según sea necesario -->
+        <div class="form-group">
+            <label for="intereses"> <strong>Intereses:</strong></label><br>
+            <input type="checkbox" id="musica" name="carrera" value="Musica">
+            <label for="musica">Música</label><br>
+            <input type="checkbox" id="deporte" name="carrera" value="Deporte">
+            <label for="deporte">Deportes</label><br>
+            <input type="checkbox" id="cine" name="carrera" value="Tecnología de Información">
+            <label for="cine">Cine</label><br>
+            <input type="checkbox" id="libros" name="carrera" value="Libros">
+            <label for="libros">Libros</label><br>
+            <input type="checkbox" id="baile" name="carrera" value="Baile">
+            <label for="baile">Baile</label><br>
+            <input type="checkbox" id="ciencia" name="carrera" value="Ciencia">
+            <label for="ciencia">Ciencia</label><br>
+            <input type="checkbox" id="otros" name="carrera" value="Otros">
+            <label for="otros">Otros</label><br><br>
+            <!--input type="text" id="otros" name="otros"-->
+        </div>
+        </select><br>
+        
+        <label for="nivel_estudio"><strong>Nivel de estudio:</strong></label>
+        <select id="nivel_estudio" name="nivel_estudio">
+            <option value="">Seleccionar</option>
+            <option value="Tecnologo">Tecnólogo</option>
+            <option value="Licenciatura">Licenciatura</option>
+            <option value="Especialización">Especialización</option>
+            <option value="Maestria">Maestría</option>
+            <option value="Doctorado">Doctorado</option>
+            <option value="Posdoctorado">Posdoctorado</option>
+            <!-- Agrega más habilidades según sea necesario -->
+        </select><br><br><br><br><br>
+        <hr>
+        <h2>Habilidades e Intereses</h2>
+        <div class="personal-info-box">
+          <div class="personal-info-column left-column">
+              <form action="/add_contact" method="POST">
+                  <div class="form-group">
+                      <label for="programacion"><strong>Programación:</strong></label><br>
+                      <input type="range" id="programacion" name="programacion" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="desarrollo_software"><strong>Desarrollo de Software:</strong></label><br>
+                      <input type="range" id="desarrollo_software" name="desarrollo_software" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="analisis_datos"><strong>Análisis de Datos:</strong></label><br>
+                      <input type="range" id="analisis_datos" name="analisis_datos" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="base_datos"><strong>Gestión en Base de Datos:</strong></label><br>
+                      <input type="range" id="base_datos" name="base_datos" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="diseño_grafico"><strong>Diseño de Interfaz:</strong></label><br>
+                      <input type="range" id="diseño_grafico" name="diseño_grafico" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="redes"><strong>Redes:</strong></label><br>
+                      <input type="range" id="redes" name="redes" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="sistemas_operativos"><strong>Sistemas Operativos:</strong></label><br>
+                      <input type="range" id="sistemas_operativos" name="sistemas_operativos" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="front_end"><strong>Desarrollo Front-end:</strong></label><br>
+                      <input type="range" id="front_end" name="front_end" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="back_end"><strong>Desarrollo Back-end:</strong></label><br>
+                      <input type="range" id="back_end" name="back_end" min="0" max="100" value="50"><br>
+                  </div>
+              </form>
+          </div>
+
+          <div class="personal-info-column right-column">
+              <form action="/add_contact" method="POST">
+                  <div class="form-group">
+                      <label for="seguridad_informatica"><strong>Seguridad Informática:</strong></label><br>
+                      <input type="range" id="seguridad_informatica" name="seguridad_informatica" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="servidores_nube"><strong>Gestión de Servidores en la Nube:</strong></label><br>
+                      <input type="range" id="servidores_nube" name="servidores_nube" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="resolucion_problemas"><strong>Resolución de Problemas:</strong></label><br>
+                      <input type="range" id="resolucion_problemas" name="resolucion_problemas" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="trabajo_equipo"><strong>Trabajo en equipo:</strong></label><br>
+                      <input type="range" id="trabajo_equipo" name="trabajo_equipo" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="desarrollo_web"><strong>Desarrollo Web:</strong></label><br>
+                      <input type="range" id="desarrollo_web" name="desarrollo_web" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="diseño_grafico"><strong>Diseño Gráfico:</strong></label><br>
+                      <input type="range" id="diseño_grafico" name="diseño_grafico" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="diseno_3d"><strong>Diseño 3D:</strong></label><br>
+                      <input type="range" id="diseno_3d" name="diseno_3d" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="diseno_branding"><strong>Diseño Branding:</strong></label><br>
+                      <input type="range" id="diseno_branding" name="diseno_branding" min="0" max="100" value="50"><br>
+                  </div>
+                  <div class="form-group">
+                      <label for="animacion_grafica"><strong>Animación Gráfica:</strong></label><br>
+                      <input type="range" id="animacion_grafica" name="animacion_grafica" min="0" max="100" value="50"><br>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+        <button type="submit">Buscar</button>
+    </div>
     <!--button type="button" onclick="buscarDocentes()">Buscar</button-->
-  </form>
+</form>
   
-  <ul id="resultado-busqueda">
-    <!-- Lista de docentes que coinciden con la búsqueda -->
-  </ul>
+  <div class="info-container">
+    <ul id="resultado-busqueda">
+      <!-- Lista de docentes que coinciden con la búsqueda -->
+       <h2>Resultado de la Busqueda<hr class="line"></h2>
+       <table class="table table-striped table-hover table-bordered table-sm bg-white">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Experiencia</th>
+                <th>Carrera</th>
+                <th>Nivel academico</th>
+                <th>Porcentaje de Similitud</th>
+                <th>Nivel de Confianza</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Juan Pérez</td>
+                <td>5 años</td>
+                <td>Ingeniería en Sistemas Computacionales</td>
+                <td>Doctorado</td>
+                <td>90%</td>
+                <td>9.15</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>María López</td>
+                <td>3 años</td>
+                <td>Ingeniería de Software</td>
+                <td>Maestría</td>
+                <td>80%</td>
+                <td>8.20</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Cristopher Borbor</td>
+              <td>3 años</td>
+              <td>Ingeniería Civil</td>
+              <td>Maestría</td>
+              <td>60%</td>
+              <td>6.85</td>
+          </tr>
+            <!-- Agrega más filas según sea necesario -->
+        </tbody>
+    </table>
+    </ul>
+    <button type="submit">Descargar en Excel</button>
+  </div>
+
+  <div class="info-container">
+    <ul id="historial-busqueda">
+      <!-- Lista de docentes que coinciden con la búsqueda -->
+       <h2>Historial de Busquedas<hr class="line"></h2>
+       <table class="table table-striped table-hover table-bordered table-sm bg-white">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Parámetros de busqueda</th>
+                <th>Nivel de Estudio</th>
+                <th>Años de Esperiencia</th>
+                <th>Porcentaje de Similitud</th>
+                <th>Nivel de Confianza</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cristopher Borbor</td>
+                <td>Nivel de Estudio, Años de experiencia, Habilidades e intereses </td>
+                <td>Doctorado</td>
+                <td>10</td>
+                <td>85%</td>
+                <td>8.12</td>
+                <td>11/06/2024</td>
+                <td>09:25</td>
+            </tr>
+            <tr>
+                <td>Cristopher Borbor</td>
+                <td>Nivel de Estudio, Habilidades e intereses </td>
+                <td>Licenciatura</td>
+                <td></td>
+                <td>62%</td>
+                <td>6.15</td>
+                <td>11/06/2024</td>
+                <td>09:35</td>
+            </tr>
+            <tr>
+                <td>Cristopher Borbor</td>
+                <td>Años de experiencia, Habilidades e intereses </td>
+                <td></td>
+                <td>25</td>
+                <td>75%</td>
+                <td>7.85</td>
+                <td>11/06/2024</td>
+                <td>09:45</td>
+          </tr>
+            <!-- Agrega más filas según sea necesario -->
+        </tbody>
+    </table>
+    </ul>
+    <!--button type="submit"></button-->
+  </div>
   
   <!--script src="/static/busqueda_inteligente.js"></script-->
   <script src="{{ url_for('static', filename='js/busqueda_inteligente.js') }}"></script>
-
 
   {% endblock %}

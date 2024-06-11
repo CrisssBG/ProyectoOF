@@ -10,66 +10,21 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
+  <div class="container">
+    <h1>SIATH</h1>
+    <div class="info-container">
+      <p>
+          En esta aplicación, utilizamos una técnica llamada <strong>ontología difusa</strong> para encontrar docentes que se ajusten a ciertos criterios específicos, como habilidades y experiencia.
+      </p>
+      <p>
+          La ontología difusa es una herramienta poderosa en la inteligencia artificial que nos permite manejar la incertidumbre y la imprecisión en nuestros datos, lo que es especialmente útil cuando tratamos con características humanas que no son fácilmente cuantificables.
+      </p>
+      <p>
+          Utiliza los enlaces y formularios proporcionados para navegar por la aplicación y encontrar a los docentes que necesitas para tus proyectos.
+      </p>
+    </div>
 
-<form action="/add_contact" method="POST">
-    <input type="text" name="nombre" placeholder="Nombre">
-    <input type="text" name="experiencia" placeholder="Experiencia">
-    <input type="text" name="universidades" placeholder="Universidades">
-    <input type="text" name="nivel_academico" placeholder="Nivel academico">
-    <label>Habilidades:</label>
-    <ul>
-        <li>
-            <input type="checkbox" id="arte" name="habilidades[]" value="1">
-            <label for="arte">Arte</label>
-        </li>
-        <li>
-            <input type="checkbox" id="musica" name="habilidades[]" value="2">
-            <label for="musica">Música</label>
-        </li>
-        <li>
-            <input type="checkbox" id="programacion" name="habilidades[]" value="3">
-            <label for="programacion">Programación</label>
-        </li>
-        <!-- Agregar más habilidades según sea necesario -->
-    </ul>
-    <button type="submit">
-        Save
-    </button>
-</form>
+    <!-- Aquí puedes agregar más contenido según sea necesario -->
 
-<!--a href="{{ url_for('docentes.busqueda_inteligente') }}" class="btn btn-primary">Búsqueda Inteligente</a-->
-<button type="submit">
-  <a href="{{ url_for('docentes.busqueda_inteligente') }}" class="btn btn-primary">Búsqueda Inteligente</a>
-  <!--a href="{{ url_for('static', filename='js/busqueda_inteligente.js') }}" class="btn btn-primary">Búsqueda Inteligente</a-->
-</button>
-
-<table class="table table-striped table-hover table-bordered table-sm bg-white">
-    <thead>
-      <tr>
-        <td>ID</td>
-        <td>Nombre</td>
-        <td>Experiencia</td>
-        <td>Universidades</td>
-        <td>Nivel academico</td>
-        <th>Habilidades</th>
-        <td>Operations</td>
-      </tr>
-    </thead>
-    <tbody>
-      {% for contact in contacts %}
-      <tr>
-        <td>{{ contact.0 }}</td>
-        <td>{{ contact.1 }}</td>
-        <td>{{ contact.2 }}</td>
-        <td>{{ contact.3 }}</td>
-        <td>{{ contact.4 }}</td>
-        <td>{{ contact[5] }}</td> <!-- Esta columna mostrará las habilidades -->
-        <td>
-          <a href="/edit/{{contact.0}}" class="btn btn-secondary">Edit</a>
-          <a href="/delete/{{contact.0}}" class="btn btn-danger btn-delete">Delete</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+</div>
   {% endblock %}

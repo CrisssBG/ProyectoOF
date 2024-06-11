@@ -3,6 +3,7 @@
 
 {% block body %}
 
+<h1>Editar</h1>
 <form action="/update/{{contact.0}}" method="POST">
     <input type="text" name="nombre" placeholder="Nombre" value="{{ contact.1 }}">
     <input type="text" name="experiencia" placeholder="Experiencia" value="{{ contact.2 }}">
@@ -29,4 +30,5 @@
         Save
     </button>
 </form>
+
 {% endblock %}

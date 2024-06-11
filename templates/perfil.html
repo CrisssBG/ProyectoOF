@@ -1,0 +1,396 @@
+<!--perfil.html-->
+{% extends 'layout.html' %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages()  %}
+    {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <h1>Perfil</h1>
+    <!--div id="edit-message" style="display: none; color: green; font-weight: bold;"></div> <!- Elemento para el mensaje -->
+    <div id="personal-info-container" style="position: relative" class="personal-info-container" ;>
+        <a href="javascript:void(0);" onclick="enableEdit()">
+            <!--i id="icon-modify-datosP" class="fas fa-cog modify-profile-icon"></i-->
+            <i class="fas fa-cog modify-profile-icon"></i>
+        </a>
+        <div id="edit-message" class="edit-message" style="display: none;">EDICIÓN HABILITADA</div>
+        <h2>Datos Personales <hr class="line"></h2>
+        <!--div id="edit-message" style="display: none; color: green; font-weight: bold; margin-bottom: 10px;">
+            EDICIÓN DE DATOS PERSONALES HABILITADA
+        </div-->
+        <div class="personal-info-box">
+            <div class="personal-info-column left-column">
+                <form action="/add_contact" method="POST">
+                    <div class="form-group">
+                        <label for="nombre"> Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" value="Cristopher" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos:</label>
+                        <input type="text" id="apellidos" name="apellidos" value="Borbor" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="cedula">Cédula:</label>
+                        <input type="text" id="cedula" name="cedula" value="0952517282" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="celular">Celular:</label>
+                        <input type="text" id="celular" name="celular" value="0990068113" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo:</label>
+                        <input type="email" id="correo" name="correo" value="cristopher.borborg@ug.edu.ec" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Género:</label>
+                        <input type="radio" id="genero-masculino" name="genero" value="masculino" disabled>
+                        <label for="genero-masculino">Masculino</label>
+                        <input type="radio" id="genero-femenino" name="genero" value="femenino" disabled>
+                        <label for="genero-femenino">Femenino</label>
+                        <input type="radio" id="genero-otro" name="genero" value="otro" disabled>
+                        <label for="genero-otro">Otro</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="nivel_estudio"> <strong>Nivel de Estudio:</strong></label><br>
+                        <input type="checkbox" id="tecnologo" name="nivel_estudio" value="Tecnologo" disabled>
+                        <label for="Tecnologo">Tecnólogo</label><br>
+                        <input type="checkbox" id="licenciatura" name="nivel_estudio" value="Licenciatura" disabled>
+                        <label for="Licenciatura">Licenciatura</label><br>
+                        <input type="checkbox" id="especializacion" name="nivel_estudio" value="Especializacion" disabled>
+                        <label for="Especializacion">Especialización</label><br>
+                        <input type="checkbox" id="maestria" name="nivel_estudio" value="Maestria" disabled>
+                        <label for="Maestria">Maestría</label><br>
+                        <input type="checkbox" id="doctorado" name="nivel_estudio" value="Doctorado" disabled>
+                        <label for="Doctorado">Doctorado</label><br>
+                        <input type="checkbox" id="posdoctorado" name="nivel_estudio" value="Posdoctorado" disabled>
+                        <label for="Posdoctorado">Posdoctorado</label><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="carrera"> <strong>Carrera:</strong></label><br>
+                        <input type="checkbox" id="Civil" name="carrera" value="Ingeniería Civil" disabled>
+                        <label for="Civil">Ingeniería Civil</label><br>
+                        <input type="checkbox" id="Software" name="carrera" value="Carrera de Software" disabled>
+                        <label for="Software">Carrera de Software</label><br>
+                        <input type="checkbox" id="TI" name="carrera" value="Tecnología de Información" disabled>
+                        <label for="TI">Tecnología de Información</label><br>
+                        <input type="checkbox" id="Sistemas" name="carrera" value="Ingeniería en Sistemas Computacionales" disabled>
+                        <label for="Sistemas">Ingeniería en Sistemas Computacionales</label><br>
+                        <input type="checkbox" id="Networking" name="carrera" value="Ingeniería en Networking y Telecomunicaciones" disabled>
+                        <label for="Networking">Ingeniería en Networking y Telecomunicaciones</label><br>
+                    </div>
+                </form>
+            </div>
+
+            <div class="personal-info-column right-column">
+                <form action="/add_contact" method="POST">
+                    <div class="form-group">
+                        <label for="imagen_perfil"><strong>Imagen de Perfil:</strong></label><br>
+                        <div class="custom-file"><br>
+                            <input type="file" class="custom-file-input" id="imagen_perfil" name="imagen_perfil" accept="image/*" onchange="previewImage(this)" disabled>
+                            <!--label class="custom-file-label" for="imagen_perfil"></label-->
+                        </div>
+                        <div id="imagen_perfil_preview_container" style="display: none;">
+                            <img id="imagen_perfil_preview" src="#" alt="Vista previa de la imagen" style="max-width: 200px; max-height: 200px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="disponibilidad"><strong>Disponibilidad Colaborativa:</strong></label><br>
+                        <div class="range-container">
+                            <input type="range" id="disponibilidad-range" name="disponibilidad" min="0" max="100" value="50" onchange="updateIcon(this.value)" disabled>
+                            <div class="icon-container">
+                                <i id="range-icon" class="fas fa-meh"></i> <!-- Icono inicial -->
+                            </div>
+                        </div>
+                        <span id="range-value">50</span> <!-- Elemento para mostrar el valor seleccionado -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--div id="edit-message" class="edit-message" style="display: none;">EDICIÓN HABILITADA</div-->
+    <div id="personal-habilidades-container" style="position: relative" class="personal-habilidades-container" ;>
+        <a href="javascript:void(0);" onclick="enableEditHabilidades()">
+            <!--i id="icon-modify-habilidadesP" class="fas fa-cog modify-profile-icon"></i-->
+            <i class="fas fa-cog modify-profile-icon"></i>
+        </a>
+        <div id="edit-messageH" class="edit-messageH" style="display: none;">EDICIÓN HABILITADA</div>
+        <h2>Habilidades e Intereses<hr class="line"></h2>
+        <div class="personal-info-box">
+            <!-- Primera Fila -->
+            <div class="personalH-info-column first-row">
+                <form action="/add_contact" method="POST">
+                    <div class="form-groupP">
+                        <label for="programacion"><strong>Programación:</strong></label><br>
+                        <progress id="prog_programacion" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="desarrollo_software"><strong>Desarrollo de Software:</strong></label><br>
+                        <progress id="prog_desarrollo_software" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="analisis_datos"><strong>Análisis de Datos:</strong></label><br>
+                        <progress id="prog_analisis_datos" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="base_datos"><strong>Gestión en Base de Datos:</strong></label><br>
+                        <progress id="prog_base_datos" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="diseño_grafico"><strong>Diseño de Interfaz:</strong></label><br>
+                        <progress id="prog_diseño_grafico" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="redes"><strong>Redes:</strong></label><br>
+                        <progress id="prog_redes" max="100" value="50"></progress>
+                    </div>
+                </form>
+            </div>
+    
+            <!-- Segunda Fila -->
+            <div class="personalH-info-column second-row">
+                <form action="/add_contact" method="POST">
+                    <div class="form-groupP">
+                        <label for="sistemas_operativos"><strong>Sistemas Operativos:</strong></label><br>
+                        <progress id="prog_sistemas_operativos" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="front_end"><strong>Desarrollo Front-end:</strong></label><br>
+                        <progress id="prog_front_end" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="back_end"><strong>Desarrollo Back-end:</strong></label><br>
+                        <progress id="prog_back_end" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="seguridad_informatica"><strong>Seguridad Informática:</strong></label><br>
+                        <progress id="prog_seguridad_informatica" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="servidores_nube"><strong>Gestión de Servidores en la Nube:</strong></label><br>
+                        <progress id="prog_servidores_nube" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="resolucion_problemas"><strong>Resolución de Problemas:</strong></label><br>
+                        <progress id="prog_resolucion_problemas" max="100" value="50"></progress>
+                    </div>
+                </form>
+            </div>
+    
+            <!-- Tercera Fila -->
+            <div class="personalH-info-column third-row">
+                <form action="/add_contact" method="POST">
+                    <div class="form-groupP">
+                        <label for="trabajo_equipo"><strong>Trabajo en equipo:</strong></label><br>
+                        <progress id="prog_trabajo_equipo" max="100" value="50"></progress>
+                    </div>
+                    <div class="form-group">
+                        <label for="intereses"> <strong>Intereses:</strong></label><br>
+                        <input type="checkbox" id="musica" name="carrera" value="Musica" disabled>
+                        <label for="musica">Música</label><br>
+                        <input type="checkbox" id="deporte" name="carrera" value="Deporte" disabled>
+                        <label for="deporte">Deportes</label><br>
+                        <input type="checkbox" id="cine" name="carrera" value="Tecnología de Información" disabled>
+                        <label for="cine">Cine</label><br>
+                        <input type="checkbox" id="libros" name="carrera" value="Libros" disabled>
+                        <label for="libros">Libros</label><br>
+                        <input type="checkbox" id="baile" name="carrera" value="Baile" disabled>
+                        <label for="baile">Baile</label><br>
+                        <input type="checkbox" id="ciencia" name="carrera" value="Ciencia" disabled>
+                        <label for="ciencia">Ciencia</label><br>
+                        <input type="checkbox" id="otros" name="carrera" value="Otros" disabled>
+                        <label for="Otros">Otros:</label><br><br>
+                        <input type="text" id="Otros" name="Otros" disabled>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--div class="scroll-to-bottom" onclick="scrollToBottom()">Guardar <i class="fas fa-arrow-down"></i></div-->
+<!--div class="scroll-to-bottom" id="scrollToBottomButton" onclick="scrollToBottom()">¡Actualizalo! <i class="fas fa-arrow-down"></i></div-->
+
+<!--button type="submit">Actualizar datos</button-->
+
+<button style="display: none" id="updateButton" type="submit">Actualizar datos</button> <!-- Botón para actualizar datos -->
+
+<script>
+
+    /*function scrollToBottom() {
+        //window.scrollTo(0, document.body.scrollHeight);
+        //document.querySelector('.scroll-to-bottom').style.display = 'none';
+        window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth' // Esto hace que el desplazamiento sea suave
+    });
+    }*/
+
+    var datosModificados = false;
+/*
+    window.addEventListener('scroll', function() {
+        var scrollToBottomButton = document.getElementById('scrollToBottomButton');
+        // Verifica si el usuario está cerca del fondo de la página
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            scrollToBottomButton.style.display = 'block'; // Muestra el botón en cualquier otro caso
+        } else {
+            scrollToBottomButton.style.display = 'none'; // Oculta el botón si el usuario está en la parte inferior
+        }
+    });
+
+    function scrollToBottom() {
+        var scrollStep = window.scrollY / (500 / 15),
+            scrollInterval = setInterval(function(){
+            if ( (window.innerHeight + window.scrollY) < document.body.offsetHeight ) {
+                window.scrollBy( 0, scrollStep );
+            }
+            else clearInterval(scrollInterval);
+        },15);
+    }
+
+    function enableEdit() {
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => input.disabled = false);
+        
+        const editMessage = document.getElementById('edit-message');
+        //editMessage.textContent = 'EDICIÓN DE DATOS PERSONALES HABILITADA';
+        editMessage.style.display = 'block';
+
+        const personalInfoContainer = document.getElementById('personal-info-container');
+        personalInfoContainer.classList.add('green-border');
+    }*/
+
+    window.addEventListener('scroll', function() {
+        var scrollToBottomButton = document.getElementById('scrollToBottomButton');
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            scrollToBottomButton.style.display = 'none';
+        } else {
+            scrollToBottomButton.style.display = 'block';
+        }
+    });
+
+    function scrollToBottom() {
+        var scrollStep = window.scrollY / (100 / 15),
+            scrollInterval = setInterval(function(){
+            if ( (window.innerHeight + window.scrollY) < document.body.offsetHeight ) {
+                window.scrollBy( 0, scrollStep );
+            }
+            else clearInterval(scrollInterval);
+        },15);
+    }
+
+    function enableEdit() {
+        const inputs = document.querySelectorAll('.personal-info-column input');
+        //inputs.forEach(input => input.disabled = false);
+        inputs.forEach(input => input.disabled = !input.disabled); // Alterna el estado de habilitado/deshabilitado
+        
+        const editMessage = document.getElementById('edit-message');
+        //editMessage.style.display = 'block';
+        editMessage.style.display = editMessage.style.display === 'none' ? 'block' : 'none'; // Alterna la visibilidad del mensaje
+
+        const personalInfoContainer = document.getElementById('personal-info-container');
+        personalInfoContainer.classList.toggle('green-border');
+
+        // Muestra el botón "¡Actualízalo!"
+        //showUpdateButton();
+
+        ///const updateButton = document.getElementById('updateButton');
+        //updateButton.style.display = 'block'; // Muestra el botón "Actualizar datos"
+        updateButton.style.display = updateButton.style.display === 'none' ? 'block' : 'none'; // Alterna la visibilidad del botón de actualización
+    }
+
+    function enableEditHabilidades() {
+        const checkboxes = document.querySelectorAll('.personalH-info-column input[type="checkbox"]');
+        // Habilitar/deshabilitar los checkboxes
+        checkboxes.forEach(checkbox => checkbox.disabled = !checkbox.disabled);
+
+        const otrosInput = document.getElementById('Otros');
+        otrosInput.disabled = !otrosInput.disabled;
+
+        //const anyCheckboxEnabled = Array.from(checkboxes).some(checkbox => !checkbox.disabled);
+        
+        const editMessage = document.getElementById('edit-messageH');
+        editMessage.style.display = editMessage.style.display === 'none' ? 'block' : 'none'; // Mostrar/ocultar mensaje de edición
+
+        //const editMessage = document.getElementById('edit-message');
+        //editMessage.style.display = anyCheckboxEnabled ? 'block' : 'none'; // Mostrar/ocultar mensaje de edición
+
+        const habilidadesContainer = document.querySelector('.personal-habilidades-container');
+        habilidadesContainer.classList.toggle('green-border'); // Cambiar estilo para indicar edición
+
+
+        //const personalInfoContainer = document.getElementById('personal-info-container');
+        //personalInfoContainer.classList.toggle('green-border');
+
+
+        ///const updateButton = document.getElementById('updateButton');
+        updateButton.style.display = updateButton.style.display === 'none' ? 'block' : 'none'; // Mostrar/ocultar botón de actualización
+    }
+
+    function checkEditStatus() {
+        const editEnabled = !document.querySelectorAll('.personal-info-column input:disabled').length && !document.querySelectorAll('.personalH-info-column input[type="checkbox"]:disabled').length;
+        const editMessage = document.getElementById('edit-message');
+        editMessage.style.display = editEnabled ? 'block' : 'none';
+        //editMessage.style.display = editMessage.style.display === 'none' ? 'block' : 'none'; // Mostrar/ocultar mensaje de edición
+    }
+
+    // Llamar a checkEditStatus después de llamar a las funciones enableEdit() y enableEditHabilidades()
+    //enableEdit();
+    //enableEditHabilidades();
+    checkEditStatus();
+
+    function updateIcon(value) {
+    const icon = document.getElementById('range-icon');
+    const valueSpan = document.getElementById('range-value');
+    valueSpan.textContent = value; // Actualiza el valor mostrado en el span
+    if (value < 25) {
+        icon.className = 'fas fa-frown icon-sad'; // Icono de cara triste
+    } else if (value < 60) {
+        icon.className = 'fas fa-meh icon-neutral'; // Icono de cara normal
+    } else if (value < 80) {
+        icon.className = 'fas fa-smile icon-happy'; // Icono de cara feliz
+    } else {
+        icon.className = 'fas fa-grin-stars icon-very-happy'; // Icono de cara super feliz
+    }
+    }
+    // Inicializa el icono con el valor inicial del rango
+    document.addEventListener('DOMContentLoaded', function() {
+        updateIcon(document.getElementById('disponibilidad-range').value);
+        updateIconAndValue(initialValue);
+    });
+
+    function previewImage(input) {
+        const previewContainer = document.getElementById('imagen_perfil_preview_container');
+        const preview = document.getElementById('imagen_perfil_preview');
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = function() {
+            preview.src = reader.result;
+            previewContainer.style.display = 'block';
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+            previewContainer.style.display = 'none';
+        }
+    }
+    document.addEventListener('DOMContentLoaded', (event) => {
+            const ranges = document.querySelectorAll('input[type="range"]');
+            ranges.forEach(range => {
+                const progress = document.getElementById('prog_' + range.id);
+                range.addEventListener('input', function() {
+                    progress.value = range.value;
+                });
+            });
+        });
+</script>
+{% endblock %}

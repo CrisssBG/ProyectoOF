@@ -21,8 +21,8 @@ ontologia_fuzzy = OntologiaFuzzy()
 #def init_docente(app):
     
 #@app.get('/')
-@docentes_bp.route('/')
-def index():
+@docentes_bp.route('/register')
+def register():
     cur = mysql.connection.cursor()
     #cur.execute('SELECT * FROM docentes')
     cur.execute('''
@@ -34,7 +34,7 @@ def index():
     ''')
     data = cur.fetchall()
     cur.close()
-    return render_template('index.html', contacts=data)
+    return render_template('register.html', contacts=data)
 
 # Ruta para la página de búsqueda inteligente
 @docentes_bp.route('/busqueda_inteligente', methods=['GET'])
@@ -91,7 +91,7 @@ def add_contact():
         mysql.connection.commit()
         cur.close()
         flash('Contact Added Successfully')
-        return redirect(url_for('docentes.index'))
+        return redirect(url_for('docentes.register'))
 
 #@app.route('/edit/<id>')
 @docentes_bp.route('/edit/<id>')
@@ -132,7 +132,7 @@ def update_contact(id):
         cur.close()
 
         flash('Docente Updated Successfully')
-        return redirect(url_for('docentes.index'))
+        return redirect(url_for('docentes.register'))
 
 #@app.route('/delete/<string:id>')
 @docentes_bp.route('/delete/<string:id>')
@@ -145,4 +145,4 @@ def delete_contact(id):
     cur.execute('DELETE FROM docente_habilidades WHERE id_docente = %s', (id,))
     mysql.connection.commit()
     flash('Contact Removed Successfully')
-    return redirect(url_for('docentes.index'))
+    return redirect(url_for('docentes.register'))

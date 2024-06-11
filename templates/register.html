@@ -1,0 +1,312 @@
+<!--register.html-->
+{% extends 'layout.html' %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages()  %}
+    {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <h1>Registro</h1>
+    <div class="personal-info-container">
+        <h2>Datos Personales <hr class="line"></h2>
+        <div class="personal-info-box">
+            <div class="personal-info-column left-column">
+                <form action="/add_contact" method="POST">
+                    <div class="form-group">
+                        <label for="nombre"> Nombre:</label>
+                        <input type="text" id="nombre" name="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos:</label>
+                        <input type="text" id="apellidos" name="apellidos">
+                    </div>
+                    <div class="form-group">
+                        <label for="cedula">Cédula:</label>
+                        <input type="text" id="cedula" name="cedula">
+                    </div>
+                    <div class="form-group">
+                        <label for="celular">Celular:</label>
+                        <input type="text" id="celular" name="celular">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo:</label>
+                        <input type="email" id="correo" name="correo">
+                    </div>
+                    <div class="form-group">
+                        <label>Género:</label>
+                        <input type="radio" id="genero-masculino" name="genero" value="masculino">
+                        <label for="genero-masculino">Masculino</label>
+                        <input type="radio" id="genero-femenino" name="genero" value="femenino">
+                        <label for="genero-femenino">Femenino</label>
+                        <input type="radio" id="genero-otro" name="genero" value="otro">
+                        <label for="genero-otro">Otro</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="personal-info-column right-column">
+                <form action="/add_contact" method="POST">
+                    <div class="form-group">
+                        <label for="nivel_estudio"> <strong>Nivel de Estudio:</strong></label><br>
+                        <input type="checkbox" id="tecnologo" name="nivel_estudio" value="Tecnologo">
+                        <label for="Tecnologo">Tecnólogo</label><br>
+                        <input type="checkbox" id="licenciatura" name="nivel_estudio" value="Licenciatura">
+                        <label for="Licenciatura">Licenciatura</label><br>
+                        <input type="checkbox" id="especializacion" name="nivel_estudio" value="Especializacion">
+                        <label for="Especializacion">Especialización</label><br>
+                        <input type="checkbox" id="maestria" name="nivel_estudio" value="Maestria">
+                        <label for="Maestria">Maestría</label><br>
+                        <input type="checkbox" id="doctorado" name="nivel_estudio" value="Doctorado">
+                        <label for="Doctorado">Doctorado</label><br>
+                        <input type="checkbox" id="posdoctorado" name="nivel_estudio" value="Posdoctorado">
+                        <label for="Posdoctorado">Posdoctorado</label><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="carrera"> <strong>Carrera:</strong></label><br>
+                        <input type="checkbox" id="Civil" name="carrera" value="Ingeniería Civil">
+                        <label for="Civil">Ingeniería Civil</label><br>
+                        <input type="checkbox" id="Software" name="carrera" value="Carrera de Software">
+                        <label for="Software">Carrera de Software</label><br>
+                        <input type="checkbox" id="TI" name="carrera" value="Tecnología de Información">
+                        <label for="TI">Tecnología de Información</label><br>
+                        <input type="checkbox" id="Sistemas" name="carrera" value="Ingeniería en Sistemas Computacionales">
+                        <label for="Sistemas">Ingeniería en Sistemas Computacionales</label><br>
+                        <input type="checkbox" id="Networking" name="carrera" value="Ingeniería en Networking y Telecomunicaciones">
+                        <label for="Networking">Ingeniería en Networking y Telecomunicaciones</label><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="disponibilidad"><strong>Disponibilidad Colaborativa:</strong></label><br>
+                        <div class="range-container">
+                            <input type="range" id="disponibilidad-range" name="disponibilidad" min="0" max="100" value="50" onchange="updateIcon(this.value)">
+                            <div class="icon-container">
+                                <i id="range-icon" class="fas fa-meh"></i> <!-- Icono inicial -->
+                            </div>
+                        </div>
+                        <span id="range-value">50</span> <!-- Elemento para mostrar el valor seleccionado -->
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="personal-habilidades-container">
+        <h2>Habilidades Técnicas<hr class="line"></h2>
+        <div class="personal-info-box">
+            <div class="personal-info-column left-column">
+                <form action="/add_contact" method="POST">
+                    <div class="form-group">
+                        <label for="programacion"><strong>Programación:</strong></label><br>
+                        <input type="range" id="programacion" name="programacion" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="desarrollo_software"><strong>Desarrollo de Software:</strong></label><br>
+                        <input type="range" id="desarrollo_software" name="desarrollo_software" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="analisis_datos"><strong>Análisis de Datos:</strong></label><br>
+                        <input type="range" id="analisis_datos" name="analisis_datos" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="base_datos"><strong>Gestión en Base de Datos:</strong></label><br>
+                        <input type="range" id="base_datos" name="base_datos" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="diseño_grafico"><strong>Diseño de Interfaz:</strong></label><br>
+                        <input type="range" id="diseño_grafico" name="diseño_grafico" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="redes"><strong>Redes:</strong></label><br>
+                        <input type="range" id="redes" name="redes" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="sistemas_operativos"><strong>Sistemas Operativos:</strong></label><br>
+                        <input type="range" id="sistemas_operativos" name="sistemas_operativos" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="front_end"><strong>Desarrollo Front-end:</strong></label><br>
+                        <input type="range" id="front_end" name="front_end" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="back_end"><strong>Desarrollo Back-end:</strong></label><br>
+                        <input type="range" id="back_end" name="back_end" min="0" max="100" value="50"><br>
+                    </div>
+                </form>
+            </div>
+
+            <div class="personal-info-column right-column">
+                <form action="/add_contact" method="POST">
+                    <div class="form-group">
+                        <label for="seguridad_informatica"><strong>Seguridad Informática:</strong></label><br>
+                        <input type="range" id="seguridad_informatica" name="seguridad_informatica" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="servidores_nube"><strong>Gestión de Servidores en la Nube:</strong></label><br>
+                        <input type="range" id="servidores_nube" name="servidores_nube" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="resolucion_problemas"><strong>Resolución de Problemas:</strong></label><br>
+                        <input type="range" id="resolucion_problemas" name="resolucion_problemas" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="trabajo_equipo"><strong>Trabajo en equipo:</strong></label><br>
+                        <input type="range" id="trabajo_equipo" name="trabajo_equipo" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="desarrollo_web"><strong>Desarrollo Web:</strong></label><br>
+                        <input type="range" id="desarrollo_web" name="desarrollo_web" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="diseño_grafico"><strong>Diseño Gráfico:</strong></label><br>
+                        <input type="range" id="diseño_grafico" name="diseño_grafico" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="diseno_3d"><strong>Diseño 3D:</strong></label><br>
+                        <input type="range" id="diseno_3d" name="diseno_3d" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="diseno_branding"><strong>Diseño Branding:</strong></label><br>
+                        <input type="range" id="diseno_branding" name="diseno_branding" min="0" max="100" value="50"><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="animacion_grafica"><strong>Animación Gráfica:</strong></label><br>
+                        <input type="range" id="animacion_grafica" name="animacion_grafica" min="0" max="100" value="50"><br>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="personal-habilidades-container">
+        <h2>Capacidades extracurriculares<hr class="line"></h2>
+        <div class="personal-info-box">
+            <div class="personal-info-column left-column">
+                <form action="/add_contact" method="POST">
+                    <div class="form-group">
+                        <label for="intereses"> <strong>Intereses:</strong></label><br>
+                        <input type="checkbox" id="musica" name="carrera" value="Musica">
+                        <label for="musica">Música</label><br>
+                        <input type="checkbox" id="deporte" name="carrera" value="Deporte">
+                        <label for="deporte">Deportes</label><br>
+                        <input type="checkbox" id="cine" name="carrera" value="Tecnología de Información">
+                        <label for="cine">Cine</label><br>
+                        <input type="checkbox" id="libros" name="carrera" value="Libros">
+                        <label for="libros">Libros</label><br>
+                        <input type="checkbox" id="baile" name="carrera" value="Baile">
+                        <label for="baile">Baile</label><br>
+                        <input type="checkbox" id="ciencia" name="carrera" value="Ciencia">
+                        <label for="ciencia">Ciencia</label><br>
+                        <input type="checkbox" id="otros" name="carrera" value="Otros">
+                        <label for="otros">Otros</label><br><br>
+                        <input type="text" id="otros" name="otros">
+                    </div>
+                </form>
+            </div>
+            <div class="personal-info-column right-column">
+                <form action="/add_contact" method="POST">
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+<button type="submit">Guardar</button>
+
+<script>
+    function updateIcon(value) {
+    const icon = document.getElementById('range-icon');
+    const valueSpan = document.getElementById('range-value');
+    valueSpan.textContent = value; // Actualiza el valor mostrado en el span
+    if (value < 25) {
+        icon.className = 'fas fa-frown icon-sad'; // Icono de cara triste
+    } else if (value < 60) {
+        icon.className = 'fas fa-meh icon-neutral'; // Icono de cara normal
+    } else if (value < 80) {
+        icon.className = 'fas fa-smile icon-happy'; // Icono de cara feliz
+    } else {
+        icon.className = 'fas fa-grin-stars icon-very-happy'; // Icono de cara super feliz
+    }
+    }
+    // Inicializa el icono con el valor inicial del rango
+    document.addEventListener('DOMContentLoaded', function() {
+        updateIcon(document.getElementById('disponibilidad-range').value);
+        updateIconAndValue(initialValue);
+    });
+</script>
+
+<h2>Registro</h2>
+
+<form action="/add_contact" method="POST">
+    <input type="text" name="nombre" placeholder="Nombre">
+    <input type="text" name="experiencia" placeholder="Experiencia">
+    <input type="text" name="universidades" placeholder="Universidades">
+    <input type="text" name="nivel_academico" placeholder="Nivel academico">
+    <label>Habilidades:</label>
+    <ul>
+        <li>
+            <input type="checkbox" id="arte" name="habilidades[]" value="1">
+            <label for="arte">Arte</label>
+        </li>
+        <li>
+            <input type="checkbox" id="musica" name="habilidades[]" value="2">
+            <label for="musica">Música</label>
+        </li>
+        <li>
+            <input type="checkbox" id="programacion" name="habilidades[]" value="3">
+            <label for="programacion">Programación</label>
+        </li>
+        <!-- Agregar más habilidades según sea necesario -->
+    </ul>
+    <form action="#">
+        Seleccione el nivel de conocimiento:
+        <input type="range" id="temperatura" min="0" max="100">
+        <br>
+        <input type="submit" value="Confirmar">
+      </form>
+    <button type="submit">
+        Save
+    </button>
+</form>
+
+<!--a href="{{ url_for('docentes.busqueda_inteligente') }}" class="btn btn-primary">Búsqueda Inteligente</a-->
+<button type="submit">
+  <a href="{{ url_for('docentes.busqueda_inteligente') }}" class="btn btn-primary">Búsqueda Inteligente</a>
+  <!--a href="{{ url_for('static', filename='js/busqueda_inteligente.js') }}" class="btn btn-primary">Búsqueda Inteligente</a-->
+</button>
+
+<table class="table table-striped table-hover table-bordered table-sm bg-white">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Nombre</td>
+        <td>Experiencia</td>
+        <td>Universidades</td>
+        <td>Nivel academico</td>
+        <th>Habilidades</th>
+        <td>Operations</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contact in contacts %}
+      <tr>
+        <td>{{ contact.0 }}</td>
+        <td>{{ contact.1 }}</td>
+        <td>{{ contact.2 }}</td>
+        <td>{{ contact.3 }}</td>
+        <td>{{ contact.4 }}</td>
+        <td>{{ contact[5] }}</td> <!-- Esta columna mostrará las habilidades -->
+        <td>
+          <a href="/edit/{{contact.0}}" class="btn btn-secondary">Edit</a>
+          <a href="/delete/{{contact.0}}" class="btn btn-danger btn-delete">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endblock %}
