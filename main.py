@@ -12,7 +12,7 @@ init_connection(app)
 # Registra el Blueprint de docentes
 app.register_blueprint(docentes_bp)
 
-#Settings jjjjj
+#Settings jjjjjj
 #app.secret_key = 'mysecretkey'
 
 # Crear instancia de la ontología difusa
