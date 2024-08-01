@@ -4,12 +4,356 @@
 {% block body %}
 
 <form id="form-busqueda" method="POST">
-    <h1>Busqueda Inteligente</h1>
+    <h1>Búsqueda</h1>
     <div class="info-container">
-        <h2>Parámetros<hr class="line"></h2>
+        <h2>Tipos de Búsquedas<hr class="line"></h2>
 
-        <label for="experiencia"><strong>Años de experiencia:</strong></label>
-        <input type="number" id="experiencia" name="experiencia"><br><br>
+        <!-- <div id="content" class="blur"> -->
+        <div class="seccion">
+            <div class="titulo-seccion" onclick="toggleSeccion('seccion1')">
+                <h4 style="margin-top: 0px; margin-bottom: 0px;">Búsqueda con Datos Difusos</h4>
+                <i id="icono-seccion1" class="fas fa-chevron-down"></i>
+            </div>
+            <div id="seccion1" class="contenido-seccion" style="background-color: #0016790e;"><br>
+                <!-- <label style="margin-left: 28px;" for="experiencia"><strong>Años mínimos de experiencia:</strong></label>
+                <input type="number" id="experiencia" name="experiencia"><br><br> -->
+                <form action="/busqueda_inteligente" method="POST">
+                    
+                    <div style=" display: flex; justify-content: space-between;">
+                        <div style="margin-left: 20px;">
+                            <!-- <form action="/add_contact" method="POST"> -->
+                                <div class="form-group">
+                                    <h5 style="width: 400px; font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px; margin-top: -5px;">Habilidades Técnicas<!--hr--></h5>
+                                    <label for="desarrollo_arquitectura"><strong>Desarrollo y Arquitectura de Software:</strong></label><br>
+                                    <label style="font-size: 11px; color: #585858;">Desarrollo de Software, Desarrollo Front-end y Desarrollo Back-end.</label><br>
+                                    <div class="range-container">
+                                        <input type="range" id="desarrollo_arquitectura" name="desarrollo_arquitectura" min="0" max="100" value="0"><br>
+                                        <div class="icon-container">
+                                            <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                        </div>
+                                        <span class="triangle" style="border-bottom-color: blue;"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gestion_analisis_datos"><strong>Gestión y Análisis de Datos:</strong></label><br>
+                                    <label style="font-size: 11px; color: #585858;">Análisis de Datos, Gestión en Base de Datos y Business Intelligence (BI).</label><br>
+                                    <div class="range-container">
+                                        <input type="range" id="gestion_analisis_datos" name="gestion_analisis_datos" min="0" max="100" value="0"><br>
+                                        <div class="icon-container">
+                                            <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                        </div>
+                                        <span class="triangle" style="border-bottom-color: blue;"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="disenio_interfaz_multimedia"><strong>Diseño de Interfaz y Multimedia:</strong></label><br>
+                                    <label style="font-size: 11px; color: #585858;">Diseño de Interfaz, Animación Gráfica y Prototipado.</label><br>
+                                    <div class="range-container">
+                                        <input type="range" id="disenio_interfaz_multimedia" name="disenio_interfaz_multimedia" min="0" max="100" value="0"><br>
+                                        <div class="icon-container">
+                                            <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                        </div>
+                                        <span class="triangle" style="border-bottom-color: blue;"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="seguridad_cloud_computing"><strong>Seguridad y Cloud Computing:</strong></label><br>
+                                    <label style="font-size: 11px; color: #585858;">Seguridad Informática, Gestión de Servidores en la Nube y Criptografía.</label><br>
+                                    <div class="range-container">
+                                        <input type="range" id="seguridad_cloud_computing" name="seguridad_cloud_computing" min="0" max="100" value="0"><br>
+                                        <div class="icon-container">
+                                            <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                        </div>
+                                        <span class="triangle" style="border-bottom-color: blue;"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="infraestructura_comunicaciones"><strong>Infraestructura y Comunicaciones:</strong></label><br>
+                                    <label style="font-size: 11px; color: #585858;">Redes, Sistemas Operativos y Administración de Servidores.</label><br>
+                                    <div class="range-container">
+                                        <input type="range" id="infraestructura_comunicaciones" name="infraestructura_comunicaciones" min="0" max="100" value="0"><br>
+                                        <div class="icon-container">
+                                            <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                        </div>
+                                        <span class="triangle" style="border-bottom-color: blue;"></span>
+                                    </div>
+                                </div>
+                            <!-- </form> -->
+                            
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div class="form-group">
+                                <h5 style="width: 400px; font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px; margin-top: -5px;">Habilidades Blandas<!--hr--></h5>
+                                <label for="habilidad_liderazgo_efectivo"><strong>Habilidad de Liderazgo Efectivo:</strong></label><br>
+                                <label style="font-size: 11px; color: #585858;">Liderazgo, Gestión de tiempo y Resolución de problemas.</label>
+                                <div class="range-container">
+                                    <input type="range" id="habilidad_liderazgo_efectivo" name="habilidad_liderazgo_efectivo" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="habilidad_comunicacion_relaciones_i"><strong>Habilidad de Comunicación y Relaciones Interpersonales:</strong></label><br>
+                                <label style="font-size: 11px; color: #585858;">Comunicación asertiva, Trabajo en equipo y Empatía.</label>
+                                <div class="range-container">
+                                    <input type="range" id="habilidad_comunicacion_relaciones_i" name="habilidad_comunicacion_relaciones_i" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="habilidad_innovacion_creatividad"><strong>Habilidad de Innovación y Creatividad:</strong></label><br>
+                                <label style="font-size: 11px; color: #585858;">Creatividad, Pensamiento crítico y Adaptabilidad.</label>
+                                <div class="range-container">
+                                    <input type="range" id="habilidad_innovacion_creatividad" name="habilidad_innovacion_creatividad" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="habilidad_manejo_bienestar_personal"><strong>Habilidad de Manejo y Bienestar Personal:</strong></label><br>
+                                <label style="font-size: 11px; color: #585858;">Tolerancia al estrés, Resiliencia y Manejo e inteligencia emocional.</label>
+                                <div class="range-container">
+                                    <input type="range" id="habilidad_manejo_bienestar_personal" name="habilidad_manejo_bienestar_personal" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; display: flex;">
+                        <div style="width: 52%; margin-left: 20px; margin-top: 25px;">
+                            <label style="margin-left: 28px; " for="nivel_estudio"><strong>Nivel de estudio:</strong></label>
+                            <select style="padding: 6px; border-radius: 10px; border: 1px solid #ccc;" id="nivel_estudio" name="nivel_estudio">
+                                <option value="" selected disabled>Seleccionar</option>
+                                <option value="Tecnologo">Tecnólogo</option>
+                                <option value="Licenciatura">Licenciatura</option>
+                                <option value="Especialización">Especialización</option>
+                                <option value="Maestria">Maestría</option>
+                                <option value="Doctorado">Doctorado</option>
+                                <option value="Posdoctorado">Posdoctorado</option>
+                                <!-- Agrega más habilidades según sea necesario -->
+                            </select><br><br>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <h5 style="width: 400px; font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px; margin-top: -25px;">Habilidades Extracurriculares</h5>
+                                <label for="creacion_contenidos_visuales"><strong>Creación y Diseño de Contenidos Visuales:</strong></label><br>
+                                <label style="font-size: 11px; color: #585858;">Diseño gráfico, Edición de video y Fotografía.</label>
+                                <div class="range-container">
+                                    <input type="range" id="creacion_contenidos_visuales" name="creacion_contenidos_visuales" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> 
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="estrategia_medios_digitales"><strong>Estrategia y Comunicación en Medios Digitales:</strong></label><br>
+                                <label style="font-size: 11px; color: #585858;">Manejo de redes sociales, Marketing digital y Redacción creativa.</label>
+                                <div class="range-container">
+                                    <input type="range" id="estrategia_medios_digitales" name="estrategia_medios_digitales" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div>
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="desarrollo_profesional"><strong>Desarrollo Personal y Profesional:</strong></label><br>
+                                <label style="font-size: 11px; color: #585858;">Técnicas de presentación, Negociación, Habilidades de ventas.</label>
+                                <div class="range-container">
+                                    <input type="range" id="desarrollo_profesional" name="desarrollo_profesional" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> 
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="idiomas_tecnicas_relajacion"><strong>Idiomas y Técnicas de Relajación:</strong></label><br>
+                                <label style="font-size: 11px; color: #585858;">Idiomas extranjeros, Animación 3D y Mindfulness y meditación.</label>
+                                <div class="range-container">
+                                    <input type="range" id="idiomas_tecnicas_relajacion" name="idiomas_tecnicas_relajacion" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> 
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <br><br>
+                        </div>
+        
+                    </div>
+                    <br><button type="submit">Buscar</button><br>
+                </form>
+            </div>
+        </div>
+        
+        <div class="seccion">
+            <div class="titulo-seccion" onclick="toggleSeccion('seccion2')">
+                <h4 style="margin-top: 0px; margin-bottom: 0px;">Búsqueda Avanzada</h4>
+                <i id="icono-seccion2" class="fas fa-chevron-down"></i>
+            </div>
+            <div id="seccion2" class="contenido-seccion" style="background-color: #0016790e;"><br>
+                <form action="/busqueda_avanzada" method="POST">
+                    
+                    <div style=" display: flex; justify-content: space-between;">
+                        <div class="form-group" style="margin-left: 20px;">
+                            <h5 style="width: 400px; font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px; margin-top: -5px; margin-bottom: 15px;">Habilidades Técnicas</h5>
+                            <!-- <label for="habilidades_tecnicas"><br><strong>Habilidades Técnicas:</strong></label><br> -->
+                                <input style="margin-top: 10px;" type="checkbox" id="desarrollo_software" name="habilidades_tecnicas" value="desarrollo_software">
+                                <label for="desarrollo_software">Desarrollo de Software</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="desarrollo_frontend" name="habilidades_tecnicas" value="desarrollo_frontend">
+                                <label for="desarrollo_frontend">Desarrollo Front-end</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="desarrollo_backend" name="habilidades_tecnicas" value="desarrollo_backend">
+                                <label for="desarrollo_backend">Desarrollo Back-end</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="redes" name="habilidades_tecnicas" value="redes">
+                                <label for="redes">Redes</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="analisis_datos" name="habilidades_tecnicas" value="analisis_datos">
+                                <label for="analisis_datos">Análisis de Datos</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="gestion_base_datos" name="habilidades_tecnicas" value="gestion_base_datos">
+                                <label for="gestion_base_datos">Gestión en Base de Datos</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="business_intelligence_bi" name="habilidades_tecnicas" value="business_intelligence_bi">
+                                <label for="business_intelligence_bi">Business Intelligence (BI)</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="sistemas_operativos" name="habilidades_tecnicas" value="sistemas_operativos">
+                                <label for="sistemas_operativos">Sistemas Operativos</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="disenio_interfaz" name="habilidades_tecnicas" value="disenio_interfaz">
+                                <label for="disenio_interfaz">Diseño de Interfaz</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="animacion_grafica" name="habilidades_tecnicas" value="animacion_grafica">
+                                <label for="animacion_grafica">Animación Gráfica</label><br>
+                                <input style="margin-top: 8px;" type="checkbox" id="prototipado" name="habilidades_tecnicas" value="prototipado">
+                                <label for="prototipado">Prototipado</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="administracion_servidores" name="habilidades_tecnicas" value="administracion_servidores">
+                                <label for="administracion_servidores">Administración de Servidores</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="seguridad_informatica" name="habilidades_tecnicas" value="seguridad_informatica">
+                                <label for="seguridad_informatica">Seguridad Informática</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="gestion_servidores_nube" name="habilidades_tecnicas" value="gestion_servidores_nube">
+                                <label for="gestion_servidores_nube">Gestión de Servidores en la Nube</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="criptografia" name="habilidades_tecnicas" value="criptografia">
+                                <label for="criptografia">Criptografía</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="aprendizaje_automatico_machine_learning" name="habilidades_tecnicas" value="aprendizaje_automatico_machine_learning">
+                                <label for="aprendizaje_automatico_machine_learning">Aprendizaje Automático (Machine Learning)</label><br>
+                        </div>
+                
+                        <div class="form-group" style="margin-left: 20px;">
+                            <h5 style="width: 400px; font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px; margin-top: -5px; margin-bottom: 15px;">Habilidades Blandas</h5>
+                            <!-- <label for="habilidades_blandas"><br><strong>Habilidades Blandas:</strong></label><br> -->
+                            <input style="margin-top: 10px;" type="checkbox" id="comunicacion_asertiva" name="habilidades_blandas" value="comunicacion_asertiva">
+                            <label for="comunicacion_asertiva">Comunicación asertiva</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="trabajo_equipo" name="habilidades_blandas" value="trabajo_equipo">
+                            <label for="trabajo_equipo">Trabajo en equipo</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="resolucion_problemas" name="habilidades_blandas" value="resolucion_problemas">
+                            <label for="resolucion_problemas">Resolución de problemas</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="adaptabilidad" name="habilidades_blandas" value="adaptabilidad">
+                            <label for="adaptabilidad">Adaptabilidad</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="empatia" name="habilidades_blandas" value="empatia">
+                            <label for="empatia">Empatía</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="tolerancia_estres" name="habilidades_blandas" value="tolerancia_estres">
+                            <label for="tolerancia_estres">Tolerancia al estrés</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="creatividad" name="habilidades_blandas" value="creatividad">
+                            <label for="creatividad">Creatividad</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="liderazgo" name="habilidades_blandas" value="liderazgo">
+                            <label for="liderazgo">Liderazgo</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="gestion_tiempo" name="habilidades_blandas" value="gestion_tiempo">
+                            <label for="gestion_tiempo">Gestión de tiempo</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="resiliencia" name="habilidades_blandas" value="resiliencia">
+                            <label for="resiliencia">Resiliencia</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="pensamiento_critico" name="habilidades_blandas" value="pensamiento_critico">
+                            <label for="pensamiento_critico">Pensamiento crítico</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="manejo_inteligencia_emocional" name="habilidades_blandas" value="manejo_inteligencia_emocional">
+                            <label for="manejo_inteligencia_emocional">Manejo e inteligencia emocional</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="seleccionar_todo" onclick="seleccionarTodo(this)">
+                            <label for="seleccionar_todo">Seleccionar todo</label><br>
+                        </div>
+                        
+                    </div>
+                    <div style="margin-top: 20px; display: flex;">
+                            <div style="width: 100%;">
+                                <br><label style="margin-left: 20px;" for="anios_exp_informatica"><strong>Años mínimos de experiencia:</strong></label>
+                                <input type="number" id="anios_exp_informatica" name="anios_exp_informatica"><br><br>
+
+                                <label style="margin-left: 20px;" for="nivel_estudio"><strong>Nivel de estudio:</strong></label>
+                                <select style="padding: 6px; border-radius: 10px; border: 1px solid #ccc;" id="nivel_estudio" name="nivel_estudio">
+                                    <option value="" selected disabled>Seleccionar</option>
+                                    <option value="Tecnologo">Tecnólogo</option>
+                                    <option value="Licenciatura">Licenciatura</option>
+                                    <option value="Especialización">Especialización</option>
+                                    <option value="Maestria">Maestría</option>
+                                    <option value="Doctorado">Doctorado</option>
+                                    <option value="Posdoctorado">Posdoctorado</option>
+                                    <!-- Agrega más habilidades según sea necesario -->
+                                </select><br>
+                            </div>
+                            <div class="form-group" style="margin-left: 20px;">
+                                <h5 style="width: 400px; font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px; margin-top: -5px; margin-bottom: 15px;">Habilidades Extracurriculares</h5>
+                                <!-- <label for="habilidades_blandas"><br><strong>Habilidades Blandas:</strong></label><br> -->
+                                <input style="margin-top: 5px;" style="margin-top: 10px;" type="checkbox" id="manejo_redes_sociales" name="habilidades_extracurriculares" value="manejo_redes_sociales">
+                                <label for="manejo_redes_sociales">Manejo de redes sociales</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="marketing_digital" name="habilidades_extracurriculares" value="marketing_digital">
+                                <label for="marketing_digital">Marketing digital</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="edicion_video" name="habilidades_extracurriculares" value="edicion_video">
+                                <label for="edicion_video">Edición de video</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="idiomas_extranjeros" name="habilidades_extracurriculares" value="idiomas_extranjeros">
+                                <label for="idiomas_extranjeros">Idiomas extranjeros</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="tecnicas_presentacion" name="habilidades_extracurriculares" value="tecnicas_presentacion">
+                                <label for="tecnicas_presentacion">Técnicas de presentación</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="redaccion_creativa" name="habilidades_extracurriculares" value="redaccion_creativa">
+                                <label for="redaccion_creativa">Redacción creativa</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="diseno_grafico" name="habilidades_extracurriculares" value="diseno_grafico">
+                                <label for="diseno_grafico">Diseño gráfico</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="fotografia" name="habilidades_extracurriculares" value="fotografia">
+                                <label for="fotografia">Fotografía</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="animacion_3d" name="habilidades_extracurriculares" value="animacion_3d">
+                                <label for="animacion_3d">Animación 3D</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="negociacion" name="habilidades_extracurriculares" value="negociacion">
+                                <label for="negociacion">Negociación</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="habilidades_ventas" name="habilidades_extracurriculares" value="habilidades_ventas">
+                                <label for="habilidades_ventas">Habilidades de ventas</label><br>
+                                <input style="margin-top: 5px;" type="checkbox" id="mindfulness_meditacion" name="habilidades_extracurriculares" value="mindfulness_meditacion">
+                                <label for="mindfulness_meditacion">Mindfulness y meditación</label><br>
+                                <!-- <input type="checkbox" id="seleccionar_todo" onclick="seleccionarTodo(this)">
+                                <label for="seleccionar_todo">Seleccionar todo</label><br> -->
+                            </div>
+                    </div>
+                    
+                    <br><button type="submit">Buscar</button><br>
+                </form>
+            </div>
+        </div>
+        
+        <div class="seccion">
+            <div class="titulo-seccion" onclick="toggleSeccion('seccion3')">
+                <h4 style="margin-top: 0px; margin-bottom: 0px;">Búsqueda Inteligente</h4>
+                <i id="icono-seccion3" class="fas fa-chevron-down"></i>
+            </div>
+            <div id="seccion3" class="contenido-seccion" style="background-color: #0016790e;">
+                <form action="/busqueda_ia" method="POST">
+                    <div style="text-align: center;"><br>
+                        <label for="mensaje"><strong>Busqueda Inteligente:</strong></label>
+                        <input type="text" id="mensaje" name="mensaje" style="width: 600px; /*border: 5px solid #007bff;*/" placeholder="Magíster con concimiento en Diseño Web y Base de Datos. Mínimo 8 años de Experiencia."><br>
+                        <label style="color: red; margin-right: 250px; font-size: 12px;" for="beta">*Busqueda en etapa de prueba*</label></label><br><br>
+                    </div>
+                    <br><button type="submit">Buscar</button><br>
+                </form>
+            </div>
+        <!-- </div> -->
+        <br>
+    </div>
+
+
+        
+        <!--hr-->
+
+        
 
         <!--label for="habilidad">Habilidad:</label>
         <select id="habilidad" name="habilidad">
@@ -18,39 +362,29 @@
             <option value="musica">Música</option>
             <option value="programacion">Programación</option>
             <-- Agrega más habilidades según sea necesario -->
-        <div class="form-group">
-            <label for="intereses"> <strong>Intereses:</strong></label><br>
-            <input type="checkbox" id="musica" name="carrera" value="Musica">
-            <label for="musica">Música</label><br>
-            <input type="checkbox" id="deporte" name="carrera" value="Deporte">
-            <label for="deporte">Deportes</label><br>
-            <input type="checkbox" id="cine" name="carrera" value="Tecnología de Información">
-            <label for="cine">Cine</label><br>
-            <input type="checkbox" id="libros" name="carrera" value="Libros">
-            <label for="libros">Libros</label><br>
-            <input type="checkbox" id="baile" name="carrera" value="Baile">
-            <label for="baile">Baile</label><br>
-            <input type="checkbox" id="ciencia" name="carrera" value="Ciencia">
-            <label for="ciencia">Ciencia</label><br>
-            <input type="checkbox" id="otros" name="carrera" value="Otros">
-            <label for="otros">Otros</label><br><br>
-            <!--input type="text" id="otros" name="otros"-->
-        </div>
-        </select><br>
         
-        <label for="nivel_estudio"><strong>Nivel de estudio:</strong></label>
-        <select id="nivel_estudio" name="nivel_estudio">
-            <option value="">Seleccionar</option>
-            <option value="Tecnologo">Tecnólogo</option>
-            <option value="Licenciatura">Licenciatura</option>
-            <option value="Especialización">Especialización</option>
-            <option value="Maestria">Maestría</option>
-            <option value="Doctorado">Doctorado</option>
-            <option value="Posdoctorado">Posdoctorado</option>
-            <!-- Agrega más habilidades según sea necesario -->
-        </select><br><br><br><br><br>
-        <hr>
-        <h2>Habilidades e Intereses</h2>
+        <!--/select-->
+        
+        
+
+        <!--
+        <form id="habilidades-form">
+            <label style="margin-left: 28px;" for="tipo-habilidad"><strong>Selecciona el tipo de habilidad:</strong></label>
+            <select id="tipo-habilidad" onchange="mostrarCampos()">
+                <option value="">Selecciona...</option>
+                <option value="tecnica">Habilidades Técnicas</option>
+                <option value="blanda">Habilidades Blandas</option>
+            </select>
+        
+            <div id="campos-container">
+                <-- Aquí se mostrarán dinámicamente los campos ->
+            </div><br><br><br>
+        </form>
+
+        -->
+
+
+        <!--h2>Habilidades e Intereses</h2>
         <div class="personal-info-box">
           <div class="personal-info-column left-column">
               <form action="/add_contact" method="POST">
@@ -133,16 +467,517 @@
                   </div>
               </form>
           </div>
-      </div>
+      </div-->
 
-        <button type="submit">Buscar</button>
+      
+
+        <!--br><button type="submit">Buscar</button-->
     </div>
     <!--button type="button" onclick="buscarDocentes()">Buscar</button-->
 </form>
+<!-- <button id="toggleButton" type="submit" style="position: relative; z-index: 5;" onclick="hideLoading()">REALIZAR BÚSQUEDA</button> -->
+
+
+<!-- <form action="{{ url_for('download_excel') }}" method="POST"> -->
+    <!-- <div class="info-container">
+        <ul id="resultado-busqueda">
+            <h2>Resultado de la Búsqueda<hr class="line"></h2>
+            {% if docente %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nombre y Apellido</th>
+                            <th>Cédula</th>
+                            <th>Celular</th>
+                            <th>Email</th>
+                            <th>Género</th>
+                            <th>Nivel de Estudio</th>
+                            <th>Carrera</th>
+                            <th>Disponibilidad</th>
+                            <th>Desarrollo y Arquitectura de Software</th>
+                            <th>Gestión y Análisis de Datos</th>
+                            <th>Diseño de Interfaz y Multimedia</th>
+                            <th>Seguridad y Cloud Computing</th>
+                            <th>Infraestructura y Comunicaciones</th>
+                            <th>Porcentaje de Similitud</th>
+                            <th>Nivel de Confianza</th>
+                        </tr>
+                        <style>
+                            .table-responsive {
+                                overflow-x: auto; /* Permite desplazamiento horizontal */
+                                max-width: 100%; /* Limita el ancho máximo */
+                                margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
+                            }
+                        </style>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: rgba(97, 202, 37, 0.37);">
+                            <td>
+                                <div class="form-group">
+                                    <div class="custom-file">
+                                        {% if imagen_pb %}
+                                        <img src="{{ url_for('static', filename='images/profile_pics/' + imagen_pb) }}" style="max-width: 50px; max-height: 50px; border-radius: 5px; border: 1px solid #ddd;" alt="Imagen de Perfil">
+                                        {% else %}
+                                        <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 50px; max-height: 50px;" alt="Imagen Predeterminada">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ docente[0] }} {{ docente[1] }}</td>
+                            <td>{{ docente[2] }}</td>
+                            <td>{{ docente[3] }}</td>
+                            <td>{{ docente[4] }}</td>
+                            <td>{{ docente[5] }}</td>
+                            <td>{{ docente[6] }}</td>
+                            <td>{{ docente[7] }}</td>
+                            <td>{{ docente[9] }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso / 10) }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_g / 10) }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_d / 10) }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_s / 10) }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_i / 10) }}</td>
+                            <td>{{ similitud|round(2) }}%</td>
+                            <td>{{ nivel_confianza|round(2) }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No se encontraron resultados.</p>
+            {% endif %}
+
+            <input type="hidden" name="docente_id" value="{{ docente_id }}">
+
+            <-- <form action="{{ url_for('download_excel') }}" method="POST">
+                <button type="submit">Descargar en Excel</button>
+            </form> ->
+
+            {% if resultados_aproximados %}
+                <h2>Resultados Aproximados</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                        <thead>
+                            <tr>
+                                <th>ID Habilidades T.B</th>
+                                <th>Resultado Difuso</th>
+                            </tr>
+                            {% for resultado in resultados_aproximados %}
+                            <style>
+                                .table-responsive {
+                                    overflow-x: auto; /* Permite desplazamiento horizontal */
+                                    max-width: 100%; /* Limita el ancho máximo */
+                                    margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
+                                }
+                            </style>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: rgba(97, 202, 37, 0.37);">
+                                <td>{{ resultado[0] }}</td>
+                                <td>{{ "%.2f"|format(resultado[1] / 10) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        {% else %}
+                        <p>No se encontraron resultados aproximados.</p>
+                        {% endif %}
+                    </table>
+                    <form action="{{ url_for('download_excel') }}" method="POST">
+                        <button type="submit">Descargar en Excel</button>
+                    </form>
+                </div>
+            
+        </ul>
+    </div> -->
+        <!-- Lista de docentes que coinciden con la búsqueda -->
+
+{% if tipo_busqueda == 'inteligente' %}
+
+    <div class="info-container">
+        {% if docentes %}
+            <ul id="resultado-busqueda">
+                <h2>Resultado de la Búsqueda<hr class="line"></h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                            <thead>
+                                <tr style="background-color: #004484; color: #fff;">
+                                    <th style="font-size: 14px; background-color: rgb(248, 190, 0); padding-left: 10px; padding-right: 10px; cursor: pointer;" title="El nivel de confianza varía dependiendo de la cantidad de parámetros elegidos (Mientras más parámetros, más exacto será el Nivel de Confianza)">Nivel de Confianza</th>
+                                    <!-- <th style="font-size: 14px; background-color: rgb(248, 190, 0); padding-left: 10px; padding-right: 10px; cursor: pointer;" title="El nivel de confianza varía dependiendo de la cantidad de parámetros elegidos (Mientras más parámetros, más exacto será el Nivel de Confianza)"  onclick="mostrarMensajeNivelConfianza()">Nivel de Confianza</th> -->
+                                    <th style="font-size: 14px;">Foto</th>
+                                    <th style="font-size: 14px;">Nombre y Apellido</th>
+                                    <th style="font-size: 14px;">Cédula</th>
+                                    <th style="font-size: 14px;">Celular</th>
+                                    <th style="font-size: 14px;">Email</th>
+                                    <th style="font-size: 14px;">Género</th>
+                                    <th style="font-size: 14px;">Nivel de Estudio</th>
+                                    <th style="font-size: 14px;">Carrera</th>
+                                    <th style="font-size: 14px;">Disponibilidad</th>
+                                    <th style="font-size: 14px;">Años de Experiencia Informática</th>
+                                    <th style="font-size: 14px;">Desarrollo y Arquitectura de Software</th>
+                                    <th style="font-size: 14px;">Gestión y Análisis de Datos</th>
+                                    <th style="font-size: 14px;">Diseño de Interfaz y Multimedia</th>
+                                    <th style="font-size: 14px;">Seguridad y Cloud Computing</th>
+                                    <th style="font-size: 14px;">Infraestructura y Comunicaciones</th>
+                                    <th style="font-size: 14px;">Habilidad de Liderazgo Efectivo</th>
+                                    <th style="font-size: 14px;">Habilidad de Liderazgo Efectivo</th>
+                                    <th style="font-size: 14px;">Habilidad de Innovación y Creatividad</th>
+                                    <th style="font-size: 14px;">Habilidad de Manejo y Bienestar Personal</th>
+                                    <th style="font-size: 14px;">Creación y Diseño de Contenidos Visuales</th>
+                                    <th style="font-size: 14px;">Estrategia y Comunicación en Medios Digitales</th>
+                                    <th style="font-size: 14px;">Desarrollo Personal y Profesional</th>
+                                    <th style="font-size: 14px;">Idiomas y Técnicas de Relajación</th>
+                                    <th style="font-size: 14px; background-color: rgb(248, 190, 0); padding-left: 10px; padding-right: 10px;">Porcentaje de Similitud</th>
+                                </tr>
+                                <style>
+                                    .table-responsive {
+                                        overflow-x: auto; /* Permite desplazamiento horizontal */
+                                        max-width: 100%; /* Limita el ancho máximo */
+                                        margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
+                                        margin-top: 20px;
+                                    }
+                                    .table th{
+                                        padding-top: 8px;
+                                        padding-bottom: 8px;
+                                    }
+                                </style>
+                            </thead>
+                            <tbody>
+                                {% for i in range(docentes|length) %}
+                                <tr {% if i < 3 %} style="background-color: rgba(97, 202, 37, 0.37);" {% else %} style="background-color: rgba(202, 199, 37, 0.37);" {% endif %}>
+                                    <td style="background-color: rgba(255, 251, 0, 0.836);"><strong>{{ nivel_confianza_list[i]|round(2) }}%</strong></td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                {% if docentes[i]['imagen_pb'] %}
+                                                    <img src="{{ url_for('static', filename='images/profile_pics/' + docentes[i]['imagen_pb']) }}" style="max-width: 50px; max-height: 50px; border-radius: 5px; border: 1px solid #ddd;" alt="Imagen de Perfil">
+                                                {% else %}
+                                                    <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 50px; max-height: 50px;" alt="Imagen Predeterminada">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ docentes[i]['nombre'] }} {{ docentes[i]['apellido'] }}</td>
+                                    <td>{{ docentes[i]['cedula'] }}</td>
+                                    <td>{{ docentes[i]['celular'] }}</td>
+                                    <td>{{ docentes[i]['email'] }}</td>
+                                    <td>{{ docentes[i]['genero'] }}</td>
+                                    <td>{{ docentes[i]['nvl_estudio'] }}</td>
+                                    <td style="font-size: 12px;">{{ docentes[i]['carrera'] }}</td>
+                                    <td>{{ docentes[i]['disponibilidad_c'] }}</td>
+                                    <td>{{ docentes[i]['anios_exp_informatica'] }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_g_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_d_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_s_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_i_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_bhl_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_bhc_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_bhi_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_bhm_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_ecd_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_eec_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_edp_list[i] / 10) }}</td>
+                                    <td>{{ "%.2f"|format(resultado_difuso_eit_list[i] / 10) }}</td>
+                                    <td style="background-color: rgb(255, 251, 0);"><strong>{{ similitud_list[i]|round(2) }}%</strong></td>
+                                </tr>
+                                <style>
+                                    .table td{
+                                        font-size: 14px;
+                                        /* margin-bottom: 20px; 
+                                        margin-top: 20px; */
+                                        padding-bottom: 5px;
+                                        padding-top: 5px;
+                                    }
+                                </style>
+                                {% endfor %}
+                            </tbody>
+                            
+                        </table>
+                    </div>
+            </ul>
+            <form action="{{ url_for('download_excel') }}" method="POST">
+                <button type="submit">Descargar en Excel</button>
+            </form>
+        {% else %}
+            <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% if tipo_busqueda == 'avanzada' %}
+
+    <div class="info-container">
+        
+        {% if docentes %}
+            <ul id="resultado-busqueda">
+                <h2>Resultado de la Búsqueda<hr class="line"></h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                        <thead>
+                            <tr style="background-color: #004484; color: #fff;">
+                                <th style="font-size: 14px;">Foto</th>
+                                <th style="font-size: 14px;">Nombre y Apellido</th>
+                                <th style="font-size: 14px;">Cédula</th>
+                                <th style="font-size: 14px;">Celular</th>
+                                <th style="font-size: 14px;">Email</th>
+                                <th style="font-size: 14px;">Género</th>
+                                <th style="font-size: 14px;">Nivel de Estudio</th>
+                                <th style="font-size: 14px;">Carrera</th>
+                                <th style="font-size: 14px;">Disponibilidad</th>
+                                <th style="font-size: 14px;">Años de Experiencia Informática</th>
+                                {% for habilidad in habilidades_tecnicas %}
+                                    <th style="font-size: 14px;">{{ habilidad|replace('_', ' ')|title }}</th>
+                                {% endfor %}
+
+                                {% for habilidad in habilidades_blandas %}
+                                    <th style="font-size: 14px;">{{ habilidad|replace('_', ' ')|title }}</th>
+                                {% endfor %}
+                            </tr>
+                            <style>
+                                .table-responsive {
+                                    overflow-x: auto; /* Permite desplazamiento horizontal */
+                                    max-width: 100%; /* Limita el ancho máximo */
+                                    margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
+                                    margin-top: 20px;
+                                }
+                                .table th{
+                                    padding-top: 8px;
+                                    padding-bottom: 8px;
+                                }
+                            </style>
+                        </thead>
+                        <tbody>
+                            {% for docente in docentes %}
+                            <tr {% if loop.index <= 3 %} style="background-color: rgba(97, 202, 37, 0.37);" {% else %} style="background-color: rgba(202, 199, 37, 0.37);" {% endif %}>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            {% if docente[8] %}
+                                                <img src="{{ url_for('static', filename='images/profile_pics/' + docente[8]) }}" style="max-width: 50px; max-height: 50px; border-radius: 5px; border: 1px solid #ddd;" alt="Imagen de Perfil">
+                                            {% else %}
+                                                <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 50px; max-height: 50px;" alt="Imagen Predeterminada">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ docente[0] }} {{ docente[1] }}</td>
+                                <td>{{ docente[2] }}</td>
+                                <td>{{ docente[3] }}</td>
+                                <td>{{ docente[4] }}</td>
+                                <td>{{ docente[5] }}</td>
+                                <td>{{ docente[6] }}</td>
+                                <td style="font-size: 12px;">{{ docente[7] }}</td>
+                                <td>{{ docente[9] }}</td>
+                                <td>{{ docente[10] }}</td>
+                                {% for habilidad in habilidades_tecnicas %}
+                                    {% set value = docente[loop.index + 10] %}
+                                    {% set classification = classify_skill(value) %}
+                                    <td>
+                                        <div class="{{ classification[1] }}">{{ classification[0] }}</div>
+                                        <div class="{{ classification[2] }}"></div>
+                                    </td>
+                                {% endfor %}
+                                {% for habilidad in habilidades_blandas %}
+                                    {% set value = docente[loop.index + 10 + habilidades_tecnicas|length] %}
+                                    {% set classification = classify_skill(value) %}
+                                    <td>
+                                        <div class="{{ classification[1] }}">{{ classification[0] }}</div>
+                                        <div class="{{ classification[2] }}"></div>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <form action="{{ url_for('download_excel') }}" method="POST">
+                    <button type="submit">Descargar en Excel</button>
+                </form>
+        {% else %}
+            <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
+        {% endif %}
+    </div>
+    {% set tipo_busqueda = 'inteligente' %}
+{% endif %}
+
+{% if tipo_busqueda == 'ia' %}
+
+    <div class="info-container">
+        
+        {% if docentes_data  %}
+            <ul id="resultado-busqueda">
+                <h2>Resultado de la Búsqueda<hr class="line"></h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                        <thead>
+                            <tr style="background-color: #004484; color: #fff;">
+                                <th style="font-size: 14px;">Foto</th>
+                                <th style="font-size: 14px;">Nombre y Apellido</th>
+                                <th style="font-size: 14px;">Cédula</th>
+                                <th style="font-size: 14px;">Celular</th>
+                                <th style="font-size: 14px;">Email</th>
+                                <th style="font-size: 14px;">Género</th>
+                                <th style="font-size: 14px;">Nivel de Estudio</th>
+                                <th style="font-size: 14px;">Carrera</th>
+                                <th style="font-size: 14px;">Disponibilidad</th>
+                                <th style="font-size: 14px;">Años de Experiencia Informática</th>
+                                {% for habilidad in habilidades_tecnicas %}
+                                    <th style="font-size: 14px;">{{ habilidad|replace('_', ' ')|title }}</th>
+                                {% endfor %}
+
+                                {% for habilidad in habilidades_blandas %}
+                                    <th style="font-size: 14px;">{{ habilidad|replace('_', ' ')|title }}</th>
+                                {% endfor %}
+                            </tr>
+                            <style>
+                                .table-responsive {
+                                    overflow-x: auto; /* Permite desplazamiento horizontal */
+                                    max-width: 100%; /* Limita el ancho máximo */
+                                    margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
+                                    margin-top: 20px;
+                                }
+                                .table th{
+                                    padding-top: 8px;
+                                    padding-bottom: 8px;
+                                }
+                            </style>
+                        </thead>
+                        <tbody>
+                            {% for docente in docentes_data %}
+                            <tr {% if loop.index <= 3 %} style="background-color: rgba(97, 202, 37, 0.37);" {% else %} style="background-color: rgba(202, 199, 37, 0.37);" {% endif %}>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            {% if docente[8] %}
+                                                <img src="{{ url_for('static', filename='images/profile_pics/' + docente[8]) }}" style="max-width: 50px; max-height: 50px; border-radius: 5px; border: 1px solid #ddd;" alt="Imagen de Perfil">
+                                            {% else %}
+                                                <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 50px; max-height: 50px;" alt="Imagen Predeterminada">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ docente[0] }} {{ docente[1] }}</td>
+                                <td>{{ docente[2] }}</td>
+                                <td>{{ docente[3] }}</td>
+                                <td>{{ docente[4] }}</td>
+                                <td>{{ docente[5] }}</td>
+                                <td>{{ docente[6] }}</td>
+                                <td style="font-size: 12px;">{{ docente[7] }}</td>
+                                <td>{{ docente[9] }}</td>
+                                <td>{{ docente[10] }}</td>
+                                {% for habilidad in habilidades_tecnicas %}
+                                    {% set value = docente[loop.index + 10] %}
+                                    {% set classification = classify_skill(value) %}
+                                    <td>
+                                        <div class="{{ classification[1] }}">{{ classification[0] }}</div>
+                                        <div class="{{ classification[2] }}"></div>
+                                    </td>
+                                {% endfor %}
+                                {% for habilidad in habilidades_blandas %}
+                                    {% set value = docente[loop.index + 10 + habilidades_tecnicas|length] %}
+                                    {% set classification = classify_skill(value) %}
+                                    <td>
+                                        <div class="{{ classification[1] }}">{{ classification[0] }}</div>
+                                        <div class="{{ classification[2] }}"></div>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <form action="{{ url_for('download_excel') }}" method="POST">
+                    <button type="submit">Descargar en Excel</button>
+                </form>
+        {% else %}
+            <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
+        {% endif %}
+    </div>
+{% endif %}
+        
+    
+                    
+                <!-- Botón para descargar en Excel -->
+                
+            <!-- </div> -->
+        <!-- </form> -->
+    <!-- <head>
+        <title>Búsqueda Inteligente</title>
+    </head>
+    <body>
+        <h1>Resultado de la Búsqueda</h1>
+        
+        {% if docente %}
+        <h2>Datos del Docente Encontrado</h2>
+        <table border="1">
+            <tr>
+                <th>Foto</th>
+                <th>Nombre y Apellido</th>
+                <th>Cédula</th>
+                <th>Celular</th>
+                <th>Email</th>
+                <th>Género</th>
+                <th>Nivel de Estudio</th>
+                <th>Carrera</th>
+                <th>Disponibilidad</th>
+                <th>Resultado Difuso del Docente</th>
+                <th>Porcentaje de Similitud</th>
+                <th>Nivel de Confianza</th>
+
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            {% if docente[8] %}
+                                <img src="{{ url_for('static', filename='images/profile_pics/' + docente[8]) }}" style="max-width: 50px; max-height: 50px; border-radius: 5px; border: 1px solid #ddd;" alt="Imagen de Perfil">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 50px; max-height: 50px;" alt="Imagen Predeterminada">
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+                <td>{{ docente[0] }} {{ docente[1] }}</td>
+                <td>{{ docente[2] }}</td>
+                <td>{{ docente[3] }}</td>
+                <td>{{ docente[4] }}</td>
+                <td>{{ docente[5] }}</td>
+                <td>{{ docente[6] }}</td>
+                <td>{{ docente[7] }}</td>
+                
+                <td>{{ docente[9] }}</td>
+                <td>{{ "%.2f"|format(resultado_difuso / 10) }}</td> 
+            </tr>
+        </table>
+        {% else %}
+        <p>No se encontraron resultados.</p>
+        {% endif %}
+        
+        {% if resultados_aproximados %}
+        <h2>Resultados Aproximados</h2>
+        <table border="1">
+            <tr>
+                <th>ID Habilidades T.B</th>
+                <th>Resultado Difuso</th>
+            </tr>
+            {% for resultado in resultados_aproximados %}
+            <tr>
+                <td>{{ resultado.id_habilidades_t_b }}</td>
+                <td>{{ resultado.resultado_difuso }}</td>
+                <-- <td>{{ resultado['id_habilidades_t_b'] }}</td>
+                <td>{{ resultado['resultado_difuso'] }}</td> ->
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No se encontraron resultados aproximados.</p>
+        {% endif %}
+        
+    </body> -->
   
-  <div class="info-container">
+  <!-- <div class="info-container">
     <ul id="resultado-busqueda">
-      <!-- Lista de docentes que coinciden con la búsqueda -->
        <h2>Resultado de la Busqueda<hr class="line"></h2>
        <table class="table table-striped table-hover table-bordered table-sm bg-white">
         <thead>
@@ -184,16 +1019,14 @@
               <td>60%</td>
               <td>6.85</td>
           </tr>
-            <!-- Agrega más filas según sea necesario -->
         </tbody>
     </table>
     </ul>
     <button type="submit">Descargar en Excel</button>
-  </div>
+  </div> -->
 
-  <div class="info-container">
+  <!-- <div class="info-container">
     <ul id="historial-busqueda">
-      <!-- Lista de docentes que coinciden con la búsqueda -->
        <h2>Historial de Busquedas<hr class="line"></h2>
        <table class="table table-striped table-hover table-bordered table-sm bg-white">
         <thead>
@@ -239,14 +1072,219 @@
                 <td>11/06/2024</td>
                 <td>09:45</td>
           </tr>
-            <!-- Agrega más filas según sea necesario -->
         </tbody>
     </table>
     </ul>
-    <!--button type="submit"></button-->
-  </div>
+  </div> -->
   
   <!--script src="/static/busqueda_inteligente.js"></script-->
   <script src="{{ url_for('static', filename='js/busqueda_inteligente.js') }}"></script>
+  <script>
+
+    function updateIconH(value, parentElement) {
+        const iconText = parentElement.querySelector('.text-placeholder');
+        const triangle = parentElement.querySelector('.triangle');
+
+        if (value < 20) {
+            //iconText.textContent = 'Mínimo';
+            iconText.textContent = 'Desconoce';
+            iconText.className = 'text-placeholder text-minimo'; // Aplica clase para Mínimo
+            triangle.className = 'triangle triangle-minimo';
+
+            //iconText.classList.add('text-minimo'); // Aplicar clase para Mínimo si es necesario
+        } else if (value < 40) {
+            iconText.textContent = 'Principiante';
+            iconText.className = 'text-placeholder text-bajo'; // Aplica clase para Bajo
+            triangle.className = 'triangle triangle-bajo';
+            //iconText.classList.add('text-bajo'); // Aplicar clase para Bajo si es necesario
+        } else if (value < 60) {
+            iconText.textContent = 'Intermedio';
+            iconText.className = 'text-placeholder text-medio'; // Aplica clase para Medio
+            triangle.className = 'triangle triangle-medio';
+            //iconText.classList.add('text-medio'); // Aplicar clase para Medio si es necesario
+        } else if (value < 80) {
+            iconText.textContent = 'Avanzado';
+            iconText.className = 'text-placeholder text-alto'; // Aplica clase para Alto
+            triangle.className = 'triangle triangle-alto';
+            //iconText.classList.add('text-alto'); // Aplicar clase para Alto si es necesario
+        } else {
+            //iconText.textContent = 'Máximo';
+            iconText.textContent = 'Experto';
+            iconText.className = 'text-placeholder text-maximo'; // Aplica clase para Máximo
+            triangle.className = 'triangle triangle-maximo';
+            //iconText.classList.add('text-maximo'); // Aplicar clase para Máximo si es necesario
+        }
+    }
+
+    // Objeto con la información de todas las habilidades
+    const habilidades = {
+        tecnica: [
+            { nombre: 'Programación', id: 'programacion' },
+            { nombre: 'Desarrollo de Software', id: 'desarrollo_software' },
+            { nombre: 'Análisis de Datos', id: 'analisis_datos' },
+            { nombre: 'Gestión en Base de Datos', id: 'gestion_base_datos' },
+            { nombre: 'Diseño de Interfaz', id: 'disenio_interfaz' },
+            { nombre: 'Redes', id: 'redes' },
+            { nombre: 'Sistemas Operativos', id: 'sistemas_operativos' },
+            { nombre: 'Desarrollo Front-end', id: 'desarrollo_frontend' },
+            { nombre: 'Desarrollo Back-end', id: 'desarrollo_backend' },
+            { nombre: 'Seguridad Informática', id: 'seguridad_informatica' },
+            { nombre: 'Gestión de Servidores en la Nube', id: 'gestion_servidores_nube' },
+            { nombre: 'Animación Gráfica', id: 'animacion_grafica' }
+        ],
+        blanda: [
+            { nombre: 'Comunicación asertiva', id: 'comunicacion_asertiva' },
+            { nombre: 'Trabajo en equipo', id: 'trabajo_equipo' },
+            { nombre: 'Resolución de problemas', id: 'resolucion_problemas' },
+            { nombre: 'Adaptabilidad', id: 'adaptabilidad' },
+            { nombre: 'Empatía', id: 'empatia' },
+            { nombre: 'Tolerancia al estrés', id: 'tolerancia_estres' },
+            { nombre: 'Creatividad', id: 'creatividad' },
+            { nombre: 'Liderazgo', id: 'liderazgo' },
+            { nombre: 'Gestión de tiempo', id: 'gestion_tiempo' },
+            { nombre: 'Resiliencia', id: 'resiliencia' },
+            { nombre: 'Pensamiento crítico', id: 'pensamiento_critico' },
+            { nombre: 'Manejo e inteligencia emocional', id: 'manejo_inteligencia_emocional' }
+        ]
+    };
+
+    function mostrarCampos() {
+        var tipoSeleccionado = document.getElementById("tipo-habilidad").value;
+        var camposContainer = document.getElementById("campos-container");
+
+        // Borra los campos anteriores al cambiar la selección
+        camposContainer.innerHTML = "";
+
+        if (tipoSeleccionado === "tecnica" || tipoSeleccionado === "blanda") {
+            // Obtén el array de habilidades según el tipo seleccionado
+            var habilidadesArray = habilidades[tipoSeleccionado];
+
+            // Itera sobre el array y construye los campos
+            habilidadesArray.forEach(habilidad => {
+                camposContainer.innerHTML += `
+                    <div class="form-groupP">
+                        <label for="${habilidad.id}"><strong>${habilidad.nombre}:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="${habilidad.id}" name="${habilidad.id}" min="0" max="100" value="" onchange="updateIconH(this.value)" >
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder">Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle"></span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    }
+
+    function seleccionarTodo(checkbox) {
+        var checkboxes = document.getElementsByName('habilidades_blandas');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = checkbox.checked;
+        }
+    }
+
+    function toggleSeccion(idSeccion) {
+        var seccion = document.getElementById(idSeccion);
+        var icono = document.getElementById('icono-' + idSeccion);
+
+        if (seccion.style.display === 'none' || seccion.style.display === '') {
+            seccion.style.display = 'block';
+            icono.classList.remove('fa-chevron-down');
+            icono.classList.add('fa-chevron-left');
+        } else {
+            seccion.style.display = 'none';
+            icono.classList.remove('fa-chevron-left');
+            icono.classList.add('fa-chevron-down');
+        }
+        // // Redirigir a la página general de búsqueda
+        // window.location.href = '/busqueda_inteligente'; 
+    }
+
+     // Captura el elemento input de tipo range
+    var ranges = document.querySelectorAll('input[type="range"]');
+    var rangeTexts = document.querySelectorAll('.text-placeholder');
+
+    // Itera sobre cada input de tipo range
+    ranges.forEach(function(range, index) {
+        // Agrega un event listener para detectar el cambio en cada input de tipo range
+        range.addEventListener('input', function() {
+            // Actualiza el contenido del div con el valor seleccionado
+            rangeTexts[index].textContent = range.value/10;
+        });
+    });
+
+    function mostrarMensajeNivelConfianza() {
+        alert("El nivel de confianza varía dependiendo de la cantidad de parámetros elegidos (Mientras más parámetros, más exacto será el Nivel de Confianza)");
+    }
+
+    function hideLoading() {
+        var toggleButton = document.getElementById('toggleButton');
+        var loadingOverlay = document.getElementById('loadingOverlay');
+        var content = document.getElementById('content');
+
+        loadingOverlay.style.display = 'none'; // Oculta el overlay
+        content.style.filter = 'none'; // Remueve el blur del contenido
+        toggleButton.style.display = 'none'; // Oculta el botón
+    }
+
+    // Agrega un evento para el botón para que al hacer clic se llame a hideLoading
+    document.getElementById('toggleButton').addEventListener('click', hideLoading);
+
+
+    // function showLoading() {
+    // var toggleButton = document.getElementById('toggleButton');
+    //     document.getElementById('loadingOverlay').classList.add('active');
+    //     document.getElementById('content').classList.remove('blur');
+
+    //     // Establecer el valor de los progress a 0 antes de mostrar la carga
+    //     // document.getElementById('desarrollo_arquitectura').value = 0;
+    //     // document.getElementById('gestion_analisis_datos').value = 0;
+    //     // document.getElementById('disenio_interfaz_multimedia').value = 0;
+    //     // document.getElementById('seguridad_cloud_computing').value = 0;
+    //     // document.getElementById('infraestructura_comunicaciones').value = 0;
+
+    //     // setTimeout(function() {
+    //     //     toggleButton.style.display = 'none'; // Ocultar el botón al mostrar la carga
+    //     //     // document.getElementById('loadingOverlay').classList.remove('active');
+    //     //     document.getElementById('content').classList.remove('blur');
+    //     //     // document.getElementById('desarrollo_arquitectura').value = "{{ resultado_difuso }}";
+    //     //     // document.getElementById('gestion_analisis_datos').value = "{{ resultado_difuso_g }}";
+    //     //     // document.getElementById('disenio_interfaz_multimedia').value = "{{ resultado_difuso_d }}";
+    //     //     // document.getElementById('seguridad_cloud_computing').value = "{{ resultado_difuso_s }}";
+    //     //     // document.getElementById('infraestructura_comunicaciones').value = "{{ resultado_difuso_i }}";
+    //     //     // document.getElementById('habilidad_liderazgo_efectivo').value = "{{ resultado_difuso_bhl }}";
+    //     //     // document.getElementById('habilidad_comunicacion_relaciones_i').value = "{{ resultado_difuso_bhc }}";
+    //     //     // document.getElementById('habilidad_innovacion_creatividad').value = "{{ resultado_difuso_bhi }}";
+    //     //     // document.getElementById('habilidad_manejo_bienestar_personal').value = "{{ resultado_difuso_bhm }}";
+    //     //     // document.getElementById('creacion_contenidos_visuales').value = "{{ resultado_difuso_ecd }}";
+    //     //     // document.getElementById('estrategia_medios_digitales').value = "{{ resultado_difuso_eec }}";
+    //     //     // document.getElementById('desarrollo_profesional').value = "{{ resultado_difuso_edp }}";
+    //     //     // document.getElementById('idiomas_tecnicas_relajacion').value = "{{ resultado_difuso_eit }}";
+    //     // }, 2000); // Ajusta el tiempo de la animación de carga (en milisegundos)
+    // }
+
+    // document.getElementById('').addEventListener('click', function() {
+    //         window.location.href = '/busqueda_inteligente'; // Redirige a la página general de búsqueda
+    //     });
+
+    // document.addEventListener('DOMContentLoaded', (event) => {
+    //         window.location.href = '/busqueda_inteligente'; // Redirige a la página general de búsqueda
+    //     });
+
+    // document.querySelector('form').addEventListener('submit', function(event) {
+    //     console.log('Años de experiencia:', document.querySelector('#anios_exp_informatica').value);
+        
+    //     var nivelEstudio = Array.from(document.querySelectorAll('#nivel_estudio option:checked')).map(option => option.value);
+    //     console.log('Nivel de estudio:', nivelEstudio);
+        
+    //     var habilidadesTecnicas = Array.from(document.querySelectorAll('input[name="habilidades_tecnicas"]:checked')).map(input => input.value);
+    //     console.log('Habilidades técnicas:', habilidadesTecnicas);
+        
+    //     var habilidadesBlandas = Array.from(document.querySelectorAll('input[name="habilidades_blandas"]:checked')).map(input => input.value);
+    //     console.log('Habilidades blandas:', habilidadesBlandas);
+    // });
+
+  </script>
 
   {% endblock %}

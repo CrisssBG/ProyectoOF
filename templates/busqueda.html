@@ -1,0 +1,352 @@
+<!--busqueda.html-->
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<form id="form-busqueda" method="POST">
+    <h1>Búsqueda</h1>
+    <div class="info-container">
+        <h2>Tipos de Búsquedas<hr class="line"></h2>
+
+        <div class="seccion">
+            <div class="titulo-seccion" onclick="toggleSeccion('seccion1')">
+                <h4 style="margin-top: 0px; margin-bottom: 0px;">Búsqueda con Datos Difusos</h4>
+                <i id="icono-seccion1" class="fas fa-chevron-down"></i>
+            </div>
+            <div id="seccion1" class="contenido-seccion"><br>
+                <!-- <label style="margin-left: 28px;" for="experiencia"><strong>Años mínimos de experiencia:</strong></label>
+                <input type="number" id="experiencia" name="experiencia"><br><br> -->
+                <form action="/busqueda_inteligente" method="POST">
+                    <label style="margin-left: 28px; " for="nivel_estudio"><strong>Nivel de estudio:</strong></label>
+                    <select style="padding: 6px; border-radius: 10px; border: 1px solid #ccc;" id="nivel_estudio" name="nivel_estudio">
+                        <option value="" selected disabled>Seleccionar</option>
+                        <option value="Tecnologo">Tecnólogo</option>
+                        <option value="Licenciatura">Licenciatura</option>
+                        <option value="Especialización">Especialización</option>
+                        <option value="Maestria">Maestría</option>
+                        <option value="Doctorado">Doctorado</option>
+                        <option value="Posdoctorado">Posdoctorado</option>
+                        <!-- Agrega más habilidades según sea necesario -->
+                    </select><br><br>
+                    <div style="margin-left: 20px;">
+                        <!-- <form action="/add_contact" method="POST"> -->
+                            <div class="form-group">
+                                <label for="desarrollo_arquitectura"><strong>Desarrollo y Arquitectura de Software:</strong></label><br>
+                                <label style="font-size: 11px;">Desarrollo de Software,
+                                    Desarrollo Front-end,
+                                    Desarrollo Back-end,
+                                    Arquitectura de Software,
+                                    Metodologías de Desarrollo,
+                                    Control de Versiones,
+                                    Pruebas de Software</label><br>
+                                <div class="range-container">
+                                    <input type="range" id="desarrollo_arquitectura" name="desarrollo_arquitectura" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="gestion_analisis_datos"><strong>Gestión y Análisis de Datos:</strong></label><br>
+                                <label style="font-size: 11px;">Análisis de Datos
+                                    Gestión en Base de Datos
+                                    Minería de Datos
+                                    Big Data
+                                    Data Warehousing
+                                    Business Intelligence (BI)
+                                    ETL (Extract, Transform, Load)</label><br>
+                                <div class="range-container">
+                                    <input type="range" id="gestion_analisis_datos" name="gestion_analisis_datos" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="disenio_interfaz_multimedia"><strong>Diseño de Interfaz y Multimedia:</strong></label><br>
+                                <label style="font-size: 11px;">Diseño de Interfaz
+                                    Animación Gráfica
+                                    Experiencia de Usuario (UX)
+                                    Usabilidad
+                                    Diseño Visual
+                                    Prototipado
+                                    Herramientas de Diseño</label><br>
+                                <div class="range-container">
+                                    <input type="range" id="disenio_interfaz_multimedia" name="disenio_interfaz_multimedia" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="seguridad_cloud_computing"><strong>Seguridad y Cloud Computing:</strong></label><br>
+                                <label style="font-size: 11px;">Seguridad Informática
+                                    Gestión de Servidores en la Nube
+                                    Criptografía
+                                    Seguridad en Redes
+                                    Cumplimiento Normativo
+                                    Continuidad del Negocio y Planificación de la Recuperación ante Desastres (DRP)</label><br>
+                                <div class="range-container">
+                                    <input type="range" id="seguridad_cloud_computing" name="seguridad_cloud_computing" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="infraestructura_comunicaciones"><strong>Infraestructura y Comunicaciones:</strong></label><br>
+                                <label style="font-size: 11px;">Redes
+                                    Sistemas Operativos
+                                    Virtualización
+                                    Administración de Sistemas
+                                    Configuración de Redes
+                                    Administración de Servidores
+                                    Monitoreo y Gestión de Redes</label><br>
+                                <div class="range-container">
+                                    <input type="range" id="infraestructura_comunicaciones" name="infraestructura_comunicaciones" min="0" max="100" value="0"><br>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                        
+                    </div>
+                    <br><button type="submit">Buscar</button><br>
+                </form>
+            </div>
+        </div>
+        
+        <div class="seccion">
+            <div class="titulo-seccion" onclick="toggleSeccion('seccion2')">
+                <h4 style="margin-top: 0px; margin-bottom: 0px;">Búsqueda Avanzada</h4>
+                <i id="icono-seccion2" class="fas fa-chevron-down"></i>
+            </div>
+            <div id="seccion2" class="contenido-seccion"><br>
+                <label style="margin-left: 28px;" for="experiencia"><strong>Años mínimos de experiencia:</strong></label>
+                <input type="number" id="experiencia" name="experiencia"><br><br>
+
+                <label style="margin-left: 28px;" for="nivel_estudio"><strong>Nivel de estudio:</strong></label>
+                <select id="nivel_estudio" name="nivel_estudio">
+                    <option value="">Seleccionar</option>
+                    <option value="Tecnologo">Tecnólogo</option>
+                    <option value="Licenciatura">Licenciatura</option>
+                    <option value="Especialización">Especialización</option>
+                    <option value="Maestria">Maestría</option>
+                    <option value="Doctorado">Doctorado</option>
+                    <option value="Posdoctorado">Posdoctorado</option>
+                    <!-- Agrega más habilidades según sea necesario -->
+                </select><br><br>
+                <div class="form-group" style="margin-left: 20px;">
+                    <label for="habilidades_tecnicas"><br><strong>Habilidades Técnicas:</strong></label><br>
+                    
+                    <input type="checkbox" id="programacion" name="habilidades_tecnicas" value="Programación" {% if 'Programación' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="programacion">Programación</label><br>
+                    <input type="checkbox" id="desarrollo_software" name="habilidades_tecnicas" value="Desarrollo de Software" {% if 'Desarrollo de Software' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="desarrollo_software">Desarrollo de Software</label><br>
+                    <input type="checkbox" id="analisis_datos" name="habilidades_tecnicas" value="Análisis de Datos" {% if 'Análisis de Datos' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="analisis_datos">Análisis de Datos</label><br>
+                    <input type="checkbox" id="gestion_base_datos" name="habilidades_tecnicas" value="Gestión en Base de Datos" {% if 'Gestión en Base de Datos' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="gestion_base_datos">Gestión en Base de Datos</label><br>
+                    <input type="checkbox" id="diseno_interfaz" name="habilidades_tecnicas" value="Diseño de Interfaz" {% if 'Diseño de Interfaz' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="diseno_interfaz">Diseño de Interfaz</label><br>
+                    <input type="checkbox" id="redes" name="habilidades_tecnicas" value="Redes" {% if 'Redes' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="redes">Redes</label><br>
+                    <input type="checkbox" id="sistemas_operativos" name="habilidades_tecnicas" value="Sistemas Operativos" {% if 'Sistemas Operativos' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="sistemas_operativos">Sistemas Operativos</label><br>
+                    <input type="checkbox" id="desarrollo_frontend" name="habilidades_tecnicas" value="Desarrollo Front-end" {% if 'Desarrollo Front-end' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="desarrollo_frontend">Desarrollo Front-end</label><br>
+                    <input type="checkbox" id="desarrollo_backend" name="habilidades_tecnicas" value="Desarrollo Back-end" {% if 'Desarrollo Back-end' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="desarrollo_backend">Desarrollo Back-end</label><br>
+                    <input type="checkbox" id="seguridad_informatica" name="habilidades_tecnicas" value="Seguridad Informática" {% if 'Seguridad Informática' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="seguridad_informatica">Seguridad Informática</label><br>
+                    <input type="checkbox" id="gestion_servidores" name="habilidades_tecnicas" value="Gestión de Servidores en la Nube" {% if 'Gestión de Servidores en la Nube' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="gestion_servidores">Gestión de Servidores en la Nube</label><br>
+                    <input type="checkbox" id="animacion_grafica" name="habilidades_tecnicas" value="Animación Gráfica" {% if 'Animación Gráfica' in habilidades_tecnicas %} checked {% endif %} >
+                    <label for="animacion_grafica">Animación Gráfica</label><br>
+                </div>
+        
+                <div class="form-group" style="margin-left: 20px;">
+                    <label for="habilidades_personales"><br><strong>Habilidades Blandas:</strong></label><br>
+                    
+                    <input type="checkbox" id="comunicacion_asertiva" name="habilidades_personales" value="Comunicación asertiva" {% if 'Comunicación asertiva' in habilidades_personales %} checked {% endif %} >
+                    <label for="comunicacion_asertiva">Comunicación asertiva</label><br>
+                    <input type="checkbox" id="trabajo_equipo" name="habilidades_personales" value="Trabajo en equipo" {% if 'Trabajo en equipo' in habilidades_personales %} checked {% endif %} >
+                    <label for="trabajo_equipo">Trabajo en equipo</label><br>
+                    <input type="checkbox" id="resolucion_problemas" name="habilidades_personales" value="Resolución de problemas" {% if 'Resolución de problemas' in habilidades_personales %} checked {% endif %} >
+                    <label for="resolucion_problemas">Resolución de problemas</label><br>
+                    <input type="checkbox" id="adaptabilidad" name="habilidades_personales" value="Adaptabilidad" {% if 'Adaptabilidad' in habilidades_personales %} checked {% endif %} >
+                    <label for="adaptabilidad">Adaptabilidad</label><br>
+                    <input type="checkbox" id="empatia" name="habilidades_personales" value="Empatía" {% if 'Empatía' in habilidades_personales %} checked {% endif %} >
+                    <label for="empatia">Empatía</label><br>
+                    <input type="checkbox" id="tolerancia_estres" name="habilidades_personales" value="Tolerancia al estrés" {% if 'Tolerancia al estrés' in habilidades_personales %} checked {% endif %} >
+                    <label for="tolerancia_estres">Tolerancia al estrés</label><br>
+                    <input type="checkbox" id="creatividad" name="habilidades_personales" value="Creatividad" {% if 'Creatividad' in habilidades_personales %} checked {% endif %} >
+                    <label for="creatividad">Creatividad</label><br>
+                    <input type="checkbox" id="liderazgo" name="habilidades_personales" value="Liderazgo" {% if 'Liderazgo' in habilidades_personales %} checked {% endif %} >
+                    <label for="liderazgo">Liderazgo</label><br>
+                    <input type="checkbox" id="gestion_tiempo" name="habilidades_personales" value="Gestión de tiempo" {% if 'Gestión de tiempo' in habilidades_personales %} checked {% endif %} >
+                    <label for="gestion_tiempo">Gestión de tiempo</label><br>
+                    <input type="checkbox" id="resiliencia" name="habilidades_personales" value="Resiliencia" {% if 'Resiliencia' in habilidades_personales %} checked {% endif %} >
+                    <label for="resiliencia">Resiliencia</label><br>
+                    <input type="checkbox" id="pensamiento_critico" name="habilidades_personales" value="Pensamiento crítico" {% if 'Pensamiento crítico' in habilidades_personales %} checked {% endif %} >
+                    <label for="pensamiento_critico">Pensamiento crítico</label><br>
+                    <input type="checkbox" id="manejo_emocional" name="habilidades_personales" value="Manejo e inteligencia emocional" {% if 'Manejo e inteligencia emocional' in habilidades_personales %} checked {% endif %} >
+                    <label for="manejo_emocional">Manejo e inteligencia emocional</label><br>
+                    <input type="checkbox" id="seleccionar_todo" onclick="seleccionarTodo(this)">
+                    <label for="seleccionar_todo">Seleccionar todo</label><br>
+                </div>
+                <div class="form-group" style="margin-left: 20px;">
+                    <label for="intereses"> <strong>Intereses:</strong></label><br>
+                    <input type="checkbox" id="musica" name="carrera" value="Musica">
+                    <label for="musica">Música</label><br>
+                    <input type="checkbox" id="deporte" name="carrera" value="Deporte">
+                    <label for="deporte">Deportes</label><br>
+                    <input type="checkbox" id="cine" name="carrera" value="Tecnología de Información">
+                    <label for="cine">Cine</label><br>
+                    <input type="checkbox" id="libros" name="carrera" value="Libros">
+                    <label for="libros">Libros</label><br>
+                    <input type="checkbox" id="baile" name="carrera" value="Baile">
+                    <label for="baile">Baile</label><br>
+                    <input type="checkbox" id="ciencia" name="carrera" value="Ciencia">
+                    <label for="ciencia">Ciencia</label><br>
+                    <input type="checkbox" id="otros" name="carrera" value="Otros">
+                    <label for="otros">Otros</label><br><br>
+                    <!--input type="text" id="otros" name="otros"-->
+                </div>
+                <br><button type="submit">Buscar</button><br>
+            </div>
+        </div>
+        
+        <div class="seccion">
+            <div class="titulo-seccion" onclick="toggleSeccion('seccion3')">
+                <h4 style="margin-top: 0px; margin-bottom: 0px;">Búsqueda Inteligente</h4>
+                <i id="icono-seccion3" class="fas fa-chevron-down"></i>
+            </div>
+            <div id="seccion3" class="contenido-seccion">
+                <div style="text-align: center;"><br>
+                    <label for="busqueda_int"><strong>Busqueda Inteligente:</strong></label>
+                    <input type="text" style="width: 600px; /*border: 5px solid #007bff;*/" placeholder="Magíster con concimiento en Diseño Web y Base de Datos. Mínimo 8 años de Experiencia."><br>
+                    <label style="color: red; margin-right: 250px; font-size: 12px;" for="beta">*Busqueda en etapa de prueba*</label></label><br><br>
+                </div>
+                <br><button type="submit">Buscar</button><br>
+            </div>
+        </div>
+        <br>
+    </div>
+</form>
+
+<div class="info-container">
+    <ul id="resultado-busqueda">
+        <h2>Resultado de la Búsqueda<hr class="line"></h2>
+        {% if docentes %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Nombre y Apellido</th>
+                            <th>Cédula</th>
+                            <th>Celular</th>
+                            <th>Email</th>
+                            <th>Género</th>
+                            <th>Nivel de Estudio</th>
+                            <th>Carrera</th>
+                            <th>Disponibilidad</th>
+                            <!-- <th>Resultado Difuso del Docente</th> -->
+                            <th>Desarrollo y Arquitectura de Software</th>
+                            <th>Gestión y Análisis de Datos</th>
+                            <th>Diseño de Interfaz y Multimedia</th>
+                            <th>Seguridad y Cloud Computing</th>
+                            <th>Infraestructura y Comunicaciones</th>
+                            <th>Porcentaje de Similitud</th>
+                            <th>Nivel de Confianza</th>
+                        </tr>
+                        <style>
+                            .table-responsive {
+                                overflow-x: auto; /* Permite desplazamiento horizontal */
+                                max-width: 100%; /* Limita el ancho máximo */
+                                margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
+                            }
+                        </style>
+                    </thead>
+                    <tbody>
+                        {% for i in range(docentes|length) %}
+                        <tr style="background-color: rgba(97, 202, 37, 0.37);">
+                            <td>
+                                <div class="form-group">
+                                    <div class="custom-file">
+                                        {% if docentes[i]['imagen_pb'] %}
+                                            <img src="{{ url_for('static', filename='images/profile_pics/' + docentes[i]['imagen_pb']) }}" style="max-width: 50px; max-height: 50px; border-radius: 5px; border: 1px solid #ddd;" alt="Imagen de Perfil">
+                                        {% else %}
+                                            <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 50px; max-height: 50px;" alt="Imagen Predeterminada">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ docentes[i]['nombre'] }} {{ docentes[i]['apellido'] }}</td>
+                            <td>{{ docentes[i]['cedula'] }}</td>
+                            <td>{{ docentes[i]['celular'] }}</td>
+                            <td>{{ docentes[i]['email'] }}</td>
+                            <td>{{ docentes[i]['genero'] }}</td>
+                            <td>{{ docentes[i]['nvl_estudio'] }}</td>
+                            <td>{{ docentes[i]['carrera'] }}</td>
+                            <td>{{ docentes[i]['disponibilidad_c'] }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_list[i] / 10) }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_g_list[i] / 10) }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_d_list[i] / 10) }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_s_list[i] / 10) }}</td>
+                            <td>{{ "%.2f"|format(resultado_difuso_i_list[i] / 10) }}</td>
+                            <td>{{ similitud_list[i]|round(2) }}%</td>
+                            <td>{{ nivel_confianza_list[i]|round(2) }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        {% else %}
+            <p>No se encontraron resultados.</p>
+        {% endif %}
+    </ul>
+    <form action="{{ url_for('download_excel') }}" method="POST">
+        <button type="submit">Descargar en Excel</button>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/busqueda_inteligente.js') }}"></script>
+<script>
+    function updateIconH(value, parentElement) {
+        const iconText = parentElement.querySelector('.text-placeholder');
+        const triangle = parentElement.querySelector('.triangle');
+
+        if (value < 20) {
+            iconText.textContent = 'Desconoce';
+            iconText.className = 'text-placeholder text-minimo'; // Aplica clase para Mínimo
+            triangle.className = 'triangle triangle-minimo';
+        } else if (value < 40) {
+            iconText.textContent = 'Principiante';
+            iconText.className = 'text-placeholder text-bajo'; // Aplica clase para Bajo
+            triangle.className = 'triangle triangle-bajo';
+        } else if (value < 60) {
+            iconText.textContent = 'Intermedio';
+            iconText.className = 'text-placeholder text-medio'; // Aplica clase para Medio
+            triangle.className = 'triangle triangle-medio';
+        } else if (value < 80) {
+            iconText.textContent = 'Avanzado';
+            iconText.className = 'text-placeholder text-alto'; // Aplica clase para Alto
+            triangle.className = 'triangle triangle-alto';
+        } else {
+            iconText.textContent = 'Experto';
+            iconText.className = 'text-placeholder text-maximo'; // Aplica clase para Máximo
+            triangle.className = 'triangle triangle-maximo';
+        }
+    }
+</script>
+
+{% endblock %}

@@ -6,7 +6,7 @@
 {% with messages = get_flashed_messages()  %}
     {% if messages %}
         {% for message in messages %}
-        <p>{{ message }}</p>
+        <!-- <p>{{ message }}</p> -->
         {% endfor %}
     {% endif %}
 {% endwith %}
@@ -20,206 +20,882 @@
             <i class="fas fa-cog modify-profile-icon"></i>
         </a>
         <div id="edit-message" class="edit-message" style="display: none;">EDICIÓN HABILITADA</div>
-        <h2>Datos Personales <hr class="line"></h2>
+        <h2 style="color: #003e79;">Datos Personales <hr class="line"></h2>
         <!--div id="edit-message" style="display: none; color: green; font-weight: bold; margin-bottom: 10px;">
             EDICIÓN DE DATOS PERSONALES HABILITADA
         </div-->
+        {% if session.logged_in %}
         <div class="personal-info-box">
-            <div class="personal-info-column left-column">
-                <form action="/add_contact" method="POST">
-                    <div class="form-group">
-                        <label for="nombre"> Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" value="Cristopher" disabled>
+            
+            <form id="personal-info-form" action="{{ url_for('guardar_perfil') }}" method="POST" enctype="multipart/form-data" style="display: flex; justify-content: space-between;">
+                <div class="personal-info-column left-column" style="margin-left: 10px; margin-right: 5px;">
+                    <!--form id="personal-info-form" action="{{ url_for('guardar_perfil') }}" method="POST"-->
+                    <!--form action="/add_contact" method="POST"-->
+                    <div class="form-group" style="margin-left: 3px;">
+                        <label for="nombre"> <strong>Nombres:</strong></label>
+                        <input type="text" id="nombre" name="nombre" value="{{ nombre }}" style="width: 225px; cursor: not-allowed; background-color: #e0e0e0;" disabled>
+                        <!--span id="nombre">{{ name }}</span-->
                     </div>
-                    <div class="form-group">
-                        <label for="apellidos">Apellidos:</label>
-                        <input type="text" id="apellidos" name="apellidos" value="Borbor" disabled>
+                    <div class="form-group" >
+                        <label for="apellido"><strong>Apellidos:</strong></label>
+                        <input type="text" id="apellido" name="apellido" value="{{ apellido }}" style="width: 225px; cursor: not-allowed; background-color: #e0e0e0;" disabled>
                     </div>
-                    <div class="form-group">
-                        <label for="cedula">Cédula:</label>
-                        <input type="text" id="cedula" name="cedula" value="0952517282" disabled>
+                    <div class="form-group" style="margin-left: 20px;">
+                        <label for="cedula"><strong>Cédula:</strong></label>
+                        <input type="text" id="cedula" name="cedula" value="{{ cedula }}" style="width: 225px; cursor: not-allowed; background-color: #e0e0e0;" disabled>
                     </div>
-                    <div class="form-group">
-                        <label for="celular">Celular:</label>
-                        <input type="text" id="celular" name="celular" value="0990068113" disabled>
+                    <div class="form-group" style="margin-left: 20px;">
+                        <label for="celular"><strong>Celular:</strong></label>
+                        <input type="tel" id="celular" name="celular" value="{{ celular }}" style="width: 225px;" disabled>
                     </div>
-                    <div class="form-group">
-                        <label for="correo">Correo:</label>
-                        <input type="email" id="correo" name="correo" value="cristopher.borborg@ug.edu.ec" disabled>
+                    <div class="form-group" style="margin-left: 20px;">
+                        <label for="email"><strong>Correo:</strong></label>
+                        <input type="email" id="email" name="email" value="{{ email }}"  style="width: 225px; cursor: not-allowed; background-color: #e0e0e0;" disabled>
                     </div>
-                    <div class="form-group">
-                        <label>Género:</label>
-                        <input type="radio" id="genero-masculino" name="genero" value="masculino" disabled>
+                    <div class="form-group" style="margin-left: 20px;">
+                        <label><br><strong>Género:</strong></label>
+                        <input type="radio" id="genero-masculino" name="genero" value="Masculino" {% if 'Masculino' in genero %} checked {% endif %} disabled>
                         <label for="genero-masculino">Masculino</label>
-                        <input type="radio" id="genero-femenino" name="genero" value="femenino" disabled>
+                        <input type="radio" id="genero-femenino" name="genero" value="Femenino" {% if 'Femenino' in genero %} checked {% endif %} disabled>
                         <label for="genero-femenino">Femenino</label>
-                        <input type="radio" id="genero-otro" name="genero" value="otro" disabled>
+                        <input type="radio" id="genero-otro" name="genero" value="Otro" {% if genero not in ['Masculino', 'Femenino'] %} checked {% endif %} disabled>
+                        <!-- <input type="radio" id="genero-otro" name="genero" value="Otro" {% if 'Otro' in genero %} checked {% endif %} disabled> -->
                         <label for="genero-otro">Otro</label>
                     </div>
-                    <div class="form-group">
-                        <label for="nivel_estudio"> <strong>Nivel de Estudio:</strong></label><br>
-                        <input type="checkbox" id="tecnologo" name="nivel_estudio" value="Tecnologo" disabled>
+                    <div class="form-group" style="margin-left: 20px;">
+                        <label for="nvl_estudio"> <br><strong>Nivel de Estudio:</strong></label><br>
+                        <input style="margin-top: 10px;" type="checkbox" id="tecnologo" name="nvl_estudio" value="Tecnólogo" {% if 'Tecnólogo' in nvl_estudio %} checked {% endif %} disabled>
                         <label for="Tecnologo">Tecnólogo</label><br>
-                        <input type="checkbox" id="licenciatura" name="nivel_estudio" value="Licenciatura" disabled>
+                        <input type="checkbox" id="licenciatura" name="nvl_estudio" value="Licenciatura" {% if 'Licenciatura' in nvl_estudio %} checked {% endif %} disabled>
                         <label for="Licenciatura">Licenciatura</label><br>
-                        <input type="checkbox" id="especializacion" name="nivel_estudio" value="Especializacion" disabled>
+                        <input type="checkbox" id="especializacion" name="nvl_estudio" value="Especialización" {% if 'Especialización' in nvl_estudio %} checked {% endif %} disabled>
                         <label for="Especializacion">Especialización</label><br>
-                        <input type="checkbox" id="maestria" name="nivel_estudio" value="Maestria" disabled>
+                        <input type="checkbox" id="maestria" name="nvl_estudio" value="Maestría" {% if 'Maestría' in nvl_estudio %} checked {% endif %} disabled>
                         <label for="Maestria">Maestría</label><br>
-                        <input type="checkbox" id="doctorado" name="nivel_estudio" value="Doctorado" disabled>
+                        <input type="checkbox" id="doctorado" name="nvl_estudio" value="Doctorado" {% if 'Doctorado' in nvl_estudio %} checked {% endif %} disabled>
                         <label for="Doctorado">Doctorado</label><br>
-                        <input type="checkbox" id="posdoctorado" name="nivel_estudio" value="Posdoctorado" disabled>
+                        <input type="checkbox" id="posdoctorado" name="nvl_estudio" value="Posdoctorado" {% if 'Posdoctorado' in nvl_estudio %} checked {% endif %} disabled>
                         <label for="Posdoctorado">Posdoctorado</label><br>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-left: 20px;">
                         <label for="carrera"> <strong>Carrera:</strong></label><br>
-                        <input type="checkbox" id="Civil" name="carrera" value="Ingeniería Civil" disabled>
+                        <input style="margin-top: 10px;" type="checkbox" id="Civil" name="carrera" value="Ingeniería Civil" {% if 'Ingeniería Civil' in carrera %} checked {% endif %} disabled>
                         <label for="Civil">Ingeniería Civil</label><br>
-                        <input type="checkbox" id="Software" name="carrera" value="Carrera de Software" disabled>
+                        <input type="checkbox" id="Software" name="carrera" value="Carrera de Software" {% if 'Carrera de Software' in carrera %} checked {% endif %} disabled>
                         <label for="Software">Carrera de Software</label><br>
-                        <input type="checkbox" id="TI" name="carrera" value="Tecnología de Información" disabled>
+                        <input type="checkbox" id="TI" name="carrera" value="Tecnología de Información" {% if 'Tecnología de Información' in carrera %} checked {% endif %} disabled>
                         <label for="TI">Tecnología de Información</label><br>
-                        <input type="checkbox" id="Sistemas" name="carrera" value="Ingeniería en Sistemas Computacionales" disabled>
+                        <input type="checkbox" id="Sistemas" name="carrera" value="Ingeniería en Sistemas Computacionales" {% if 'Ingeniería en Sistemas Computacionales' in carrera %} checked {% endif %} disabled>
                         <label for="Sistemas">Ingeniería en Sistemas Computacionales</label><br>
-                        <input type="checkbox" id="Networking" name="carrera" value="Ingeniería en Networking y Telecomunicaciones" disabled>
+                        <input type="checkbox" id="Networking" name="carrera" value="Ingeniería en Networking y Telecomunicaciones" {% if 'Ingeniería en Networking y Telecomunicaciones' in carrera %} checked {% endif %} disabled>
                         <label for="Networking">Ingeniería en Networking y Telecomunicaciones</label><br>
                     </div>
-                </form>
-            </div>
+                </div>
+            
 
-            <div class="personal-info-column right-column">
-                <form action="/add_contact" method="POST">
+                <div class="personal-info-column right-column" style="margin-left: 25px; margin-right: 5px;">
+                    <!--form id="personal-info-form" action="{{ url_for('guardar_perfil') }}" method="POST"-->
+                    <!-- Mostrar la imagen de perfil actual o una imagen predeterminada si no hay imagen -->
+                    
                     <div class="form-group">
                         <label for="imagen_perfil"><strong>Imagen de Perfil:</strong></label><br>
                         <div class="custom-file"><br>
+                            
+                            {% if imagen_p %}
+                            <img src="{{ url_for('static', filename='images/profile_pics/' + imagen_p) }}" style="max-width: 250px; max-height: 250px; border-radius: 5px; border: 5px solid #004484;" alt="Imagen de Perfil">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 250px; max-height: 250px;" alt="Imagen Predeterminada">
+                            {% endif %}
+
                             <input type="file" class="custom-file-input" id="imagen_perfil" name="imagen_perfil" accept="image/*" onchange="previewImage(this)" disabled>
-                            <!--label class="custom-file-label" for="imagen_perfil"></label-->
+                            <!--img src="{{ url_for('guardar_perfil', filename=imagen_perfil) }}" alt="Imagen de Perfil"-->
+                            <!--img src="{{ url_for('static', filename='uploads/profile_pics/' + imagen_p) }}" alt="Imagen de Perfil"-->
+                            <!--label class="custom-file-label" for="imagen_perfil">Seleccionar archivo...</label-->
                         </div>
                         <div id="imagen_perfil_preview_container" style="display: none;">
-                            <img id="imagen_perfil_preview" src="#" alt="Vista previa de la imagen" style="max-width: 200px; max-height: 200px;">
+                            <img id="imagen_perfil_preview" src="#" alt="Vista previa de la imagen" style="max-width: 250px; max-height: 250px;">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="disponibilidad"><strong>Disponibilidad Colaborativa:</strong></label><br>
+                        <label for="disponibilidad_c"><strong>Disponibilidad Colaborativa:</strong></label><br>
                         <div class="range-container">
-                            <input type="range" id="disponibilidad-range" name="disponibilidad" min="0" max="100" value="50" onchange="updateIcon(this.value)" disabled>
+                            <input type="range" id="disponibilidad_c" name="disponibilidad_c" min="0" max="100" value="{{ disponibilidad_c if disponibilidad_c is not none else 0 }}" onchange="updateIcon(this.value)" disabled>
                             <div class="icon-container">
                                 <i id="range-icon" class="fas fa-meh"></i> <!-- Icono inicial -->
                             </div>
                         </div>
-                        <span id="range-value">50</span> <!-- Elemento para mostrar el valor seleccionado -->
+                        <!--span id="range-value">{{ disponibilidad_c }}</span--> <!-- Elemento para mostrar el valor seleccionado -->
                     </div>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label for="anios_exp_informatica"><strong>Años de Experiencia Informática - TICS:</strong></label><br>
+                        <input type="text" id="anios_exp_informatica" name="anios_exp_informatica" value="{{ anios_exp_informatica }}" style="width: 225px; margin-top: 10px;" oninput="validateInput(this)" disabled>
+                    </div>
+                </div>
+                <div style="clear:both;"></div> <!-- Limpiar el float para evitar colapsos de margen -->
+                <button style="display: none" id="updateButton" type="submit">Guardar</button> <!-- Botón para actualizar datos -->
+            </form>
         </div>
+        {% endif %}
     </div>
 
     <!--div id="edit-message" class="edit-message" style="display: none;">EDICIÓN HABILITADA</div-->
     <div id="personal-habilidades-container" style="position: relative" class="personal-habilidades-container" ;>
         <a href="javascript:void(0);" onclick="enableEditHabilidades()">
             <!--i id="icon-modify-habilidadesP" class="fas fa-cog modify-profile-icon"></i-->
-            <i class="fas fa-cog modify-profile-icon"></i>
+            <i class="fas fa-cog modify-profileH-icon"></i>
         </a>
         <div id="edit-messageH" class="edit-messageH" style="display: none;">EDICIÓN HABILITADA</div>
-        <h2>Habilidades e Intereses<hr class="line"></h2>
-        <div class="personal-info-box">
-            <!-- Primera Fila -->
-            <div class="personalH-info-column first-row">
-                <form action="/add_contact" method="POST">
+        <h2 style="color: #003e79;">Niveles de conocimiento <hr class="line"></h2>
+        <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Habilidades Técnicas <!--hr--></h5>
+
+        {% if session.logged_in %}
+        <form id="personalH-info-form" action="{{ url_for('guardar_habilidades_perfil') }}" method="POST" enctype="multipart/form-data" style=" justify-content: space-between;">
+            <div class="personal-info-box">
+
+                <!-- Primera Fila -->
+                <div class="personalH-info-column first-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px;">
+                    
                     <div class="form-groupP">
-                        <label for="programacion"><strong>Programación:</strong></label><br>
-                        <progress id="prog_programacion" max="100" value="50"></progress>
+                        <label for="desarrollo_software">Desarrollo de Software:</label><br>
+                            <div class="range-container">
+                            <input style="width: 125px;" type="range" id="desarrollo_software" name="desarrollo_software" min="0" max="100" value="{{ habilidades_tecnicas.desarrollo_software if habilidades_tecnicas.desarrollo_software is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span id="rangeH-triangle" class="triangle" ></span>
+                        </div>
                     </div>
                     <div class="form-groupP">
-                        <label for="desarrollo_software"><strong>Desarrollo de Software:</strong></label><br>
-                        <progress id="prog_desarrollo_software" max="100" value="50"></progress>
+                        <label for="desarrollo_frontend">Desarrollo Front-end:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="desarrollo_frontend" name="desarrollo_frontend" min="0" max="100" value="{{ habilidades_tecnicas.desarrollo_frontend if habilidades_tecnicas.desarrollo_frontend is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
                     </div>
                     <div class="form-groupP">
-                        <label for="analisis_datos"><strong>Análisis de Datos:</strong></label><br>
-                        <progress id="prog_analisis_datos" max="100" value="50"></progress>
+                        <label for="desarrollo_backend">Desarrollo Back-end:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="desarrollo_backend" name="desarrollo_backend" min="0" max="100" value="{{ habilidades_tecnicas.desarrollo_backend if habilidades_tecnicas.desarrollo_backend is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
                     </div>
                     <div class="form-groupP">
-                        <label for="base_datos"><strong>Gestión en Base de Datos:</strong></label><br>
-                        <progress id="prog_base_datos" max="100" value="50"></progress>
+                        <label for="redes">Redes:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="redes" name="redes" min="0" max="100" value="{{ habilidades_tecnicas.redes if habilidades_tecnicas.redes is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>    
+                        </div>
                     </div>
-                    <div class="form-groupP">
-                        <label for="diseño_grafico"><strong>Diseño de Interfaz:</strong></label><br>
-                        <progress id="prog_diseño_grafico" max="100" value="50"></progress>
-                    </div>
-                    <div class="form-groupP">
-                        <label for="redes"><strong>Redes:</strong></label><br>
-                        <progress id="prog_redes" max="100" value="50"></progress>
-                    </div>
-                </form>
-            </div>
+                    <!--/form-->
+                </div>
     
-            <!-- Segunda Fila -->
-            <div class="personalH-info-column second-row">
-                <form action="/add_contact" method="POST">
+                <!-- Segunda Fila -->
+                <div class="personalH-info-column second-row" style="margin-left: 5px; margin-right: 5px; margin-top: 5px;">
                     <div class="form-groupP">
-                        <label for="sistemas_operativos"><strong>Sistemas Operativos:</strong></label><br>
-                        <progress id="prog_sistemas_operativos" max="100" value="50"></progress>
+                        <label for="analisis_datos">Análisis de Datos:</label><br>
+                            <div class="range-container">
+                            <input style="width: 125px;" type="range" id="analisis_datos" name="analisis_datos" min="0" max="100" value="{{ habilidades_tecnicas.analisis_datos if habilidades_tecnicas.analisis_datos is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span id="rangeH-triangle" class="triangle" ></span>
+                        </div>
                     </div>
                     <div class="form-groupP">
-                        <label for="front_end"><strong>Desarrollo Front-end:</strong></label><br>
-                        <progress id="prog_front_end" max="100" value="50"></progress>
+                        <label for="gestion_base_datos">Gestión en Base de Datos:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="gestion_base_datos" name="gestion_base_datos" min="0" max="100" value="{{ habilidades_tecnicas.gestion_base_datos if habilidades_tecnicas.gestion_base_datos is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
                     </div>
                     <div class="form-groupP">
-                        <label for="back_end"><strong>Desarrollo Back-end:</strong></label><br>
-                        <progress id="prog_back_end" max="100" value="50"></progress>
+                        <label for="business_intelligence_bi">Business Intelligence (BI):</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" class="range-style" id="business_intelligence_bi" name="business_intelligence_bi" min="0" max="100" value="{{ habilidades_tecnicas.business_intelligence_bi if habilidades_tecnicas.business_intelligence_bi is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                                <!--i id="rangeH-icon" class="fas fa-meh"></i> <!- Icono inicial -->
+                            </div>
+                            <span id="rangeH-triangle" class="triangle" ></span>
+                            <!--span class="triangle" style="border-bottom: 12px solid #d1d1d1;"></span-->
+                            <!--progress id="prog_programacion" max="100" value="50"></progress-->
+                        </div>
                     </div>
                     <div class="form-groupP">
-                        <label for="seguridad_informatica"><strong>Seguridad Informática:</strong></label><br>
-                        <progress id="prog_seguridad_informatica" max="100" value="50"></progress>
+                        <label for="sistemas_operativos">Sistemas Operativos:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="sistemas_operativos" name="sistemas_operativos" min="0" max="100" value="{{ habilidades_tecnicas.sistemas_operativos if habilidades_tecnicas.sistemas_operativos is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
                     </div>
-                    <div class="form-groupP">
-                        <label for="servidores_nube"><strong>Gestión de Servidores en la Nube:</strong></label><br>
-                        <progress id="prog_servidores_nube" max="100" value="50"></progress>
-                    </div>
-                    <div class="form-groupP">
-                        <label for="resolucion_problemas"><strong>Resolución de Problemas:</strong></label><br>
-                        <progress id="prog_resolucion_problemas" max="100" value="50"></progress>
-                    </div>
-                </form>
-            </div>
+                </div>
     
-            <!-- Tercera Fila -->
-            <div class="personalH-info-column third-row">
-                <form action="/add_contact" method="POST">
+                <!-- Tercera Fila -->
+                <div class="personalH-info-column third-row" style="margin-left: 5px; margin-right: 5px; margin-top: 5px;">
+                    <div class="form-groupP">
+                        <label for="disenio_interfaz">Diseño de Interfaz:</label><br>
+                            <div class="range-container">
+                            <input style="width: 125px;" type="range" id="disenio_interfaz" name="disenio_interfaz" min="0" max="100" value="{{ habilidades_tecnicas.disenio_interfaz if habilidades_tecnicas.disenio_interfaz is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="animacion_grafica">Animacion Gráfica:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="animacion_grafica" name="animacion_grafica" min="0" max="100" value="{{ habilidades_tecnicas.animacion_grafica if habilidades_tecnicas.animacion_grafica is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="prototipado">Prototipado:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="prototipado" name="prototipado" min="0" max="100" value="{{ habilidades_tecnicas.prototipado if habilidades_tecnicas.prototipado is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="administracion_servidores" style="font-size: 15px;">Administración de Servidores:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="administracion_servidores" name="administracion_servidores" min="0" max="100" value="{{ habilidades_tecnicas.administracion_servidores if habilidades_tecnicas.administracion_servidores is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>    
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuarta Fila -->
+                <div class="personalH-info-column quarter-row" style="margin-left: 5px; margin-right: 20px; margin-top: 5px;">
+                    <div class="form-groupP">
+                        <label for="seguridad_informatica">Seguridad Informática:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="seguridad_informatica" name="seguridad_informatica" min="0" max="100" value="{{ habilidades_tecnicas.seguridad_informatica if habilidades_tecnicas.seguridad_informatica is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="gestion_servidores_nube" style="font-size: 15px;">Gestión de Servidores en la Nube:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="gestion_servidores_nube" name="gestion_servidores_nube" min="0" max="100" value="{{ habilidades_tecnicas.gestion_servidores_nube if habilidades_tecnicas.gestion_servidores_nube is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="criptografia">Criptografía:</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="criptografia" name="criptografia" min="0" max="100" value="{{ habilidades_tecnicas.criptografia if habilidades_tecnicas.criptografia is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="aprendizaje_automatico_machine_learning"  style="font-size: 12px;">Aprendizaje Automático (Machine Learning):</label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="aprendizaje_automatico_machine_learning" name="aprendizaje_automatico_machine_learning" min="0" max="100" value="{{ habilidades_tecnicas.aprendizaje_automatico_machine_learning if habilidades_tecnicas.aprendizaje_automatico_machine_learning is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Habilidades Blandas <!--hr--></h5>
+            <!--h2>Habilidades Blandas <hr class="line"></h2-->
+            <div class="personal-info-box" style="justify-content: space-between;">
+
+                <!-- Primera Fila -->
+                <div class="personalH-info-column first-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px;">
+                    <!--div class="personalH-info-column left-column"-->
+                    <div class="form-groupP">
+                        <label for="comunicacion_asertiva"><strong>Comunicación asertiva:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="comunicacion_asertiva" name="comunicacion_asertiva" min="0" max="100" value="{{ habilidades_blandas.comunicacion_asertiva if habilidades_blandas.comunicacion_asertiva is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle"></span>
+                            <!--progress id="prog_desarrollo_software" max="100" value="50"></progress-->
+                        </div>
+                    </div>
                     <div class="form-groupP">
                         <label for="trabajo_equipo"><strong>Trabajo en equipo:</strong></label><br>
-                        <progress id="prog_trabajo_equipo" max="100" value="50"></progress>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="trabajo_equipo" name="trabajo_equipo" min="0" max="100" value="{{ habilidades_blandas.trabajo_equipo if habilidades_blandas.trabajo_equipo is not none else 0 }}" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="intereses"> <strong>Intereses:</strong></label><br>
-                        <input type="checkbox" id="musica" name="carrera" value="Musica" disabled>
-                        <label for="musica">Música</label><br>
-                        <input type="checkbox" id="deporte" name="carrera" value="Deporte" disabled>
-                        <label for="deporte">Deportes</label><br>
-                        <input type="checkbox" id="cine" name="carrera" value="Tecnología de Información" disabled>
-                        <label for="cine">Cine</label><br>
-                        <input type="checkbox" id="libros" name="carrera" value="Libros" disabled>
-                        <label for="libros">Libros</label><br>
-                        <input type="checkbox" id="baile" name="carrera" value="Baile" disabled>
-                        <label for="baile">Baile</label><br>
-                        <input type="checkbox" id="ciencia" name="carrera" value="Ciencia" disabled>
-                        <label for="ciencia">Ciencia</label><br>
-                        <input type="checkbox" id="otros" name="carrera" value="Otros" disabled>
-                        <label for="Otros">Otros:</label><br><br>
-                        <input type="text" id="Otros" name="Otros" disabled>
+                    <div class="form-groupP">
+                        <label for="resolucion_problemas"><strong>Resolucion de problemas:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="resolucion_problemas" name="resolucion_problemas" min="0" max="100" value="{{ habilidades_blandas.resolucion_problemas if habilidades_blandas.resolucion_problemas is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
+                </div>
 
+                <!-- Segunda Fila -->
+                <div class="personalH-info-column second-row" style="margin-left: 5px; margin-right: 5px; margin-top: 5px;">
+                    <!--div class="personalH-info-column right-column"-->
+                    <div class="form-groupP">
+                        <label for="adaptabilidad"><strong>Adaptabilidad:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="adaptabilidad" name="adaptabilidad" min="0" max="100" value="{{ habilidades_blandas.adaptabilidad if habilidades_blandas.adaptabilidad is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="empatia"><strong>Empatía:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="empatia" name="empatia" min="0" max="100" value="{{ habilidades_blandas.empatia if habilidades_blandas.empatia is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="tolerancia_estres"><strong>Tolerancia al estrés:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="tolerancia_estres" name="tolerancia_estres" min="0" max="100" value="{{ habilidades_blandas.tolerancia_estres if habilidades_blandas.tolerancia_estres is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tercera Fila -->
+                <div class="personalH-info-column third-row" style="margin-left: 5px; margin-right: 20px; margin-top: 5px;">
+                    <div class="form-groupP">
+                        <label for="creatividad"><strong>Creatividad:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="creatividad" name="creatividad" min="0" max="100" value="{{ habilidades_blandas.creatividad if habilidades_blandas.creatividad is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="liderazgo"><strong>Liderazgo:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="liderazgo" name="liderazgo" min="0" max="100" value="{{ habilidades_blandas.liderazgo if habilidades_blandas.liderazgo is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="gestion_tiempo"><strong>Gestión de tiempo:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="gestion_tiempo" name="gestion_tiempo" min="0" max="100" value="{{ habilidades_blandas.gestion_tiempo if habilidades_blandas.gestion_tiempo is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cuarta Fila -->
+                <div class="personalH-info-column quarter-row" style="margin-left: 5px; margin-right: 20px; margin-top: 5px;">
+                    <div class="form-groupP">
+                        <label for="resiliencia"><strong>Resiliencia:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="resiliencia" name="resiliencia" min="0" max="100" value="{{ habilidades_blandas.resiliencia if habilidades_blandas.resiliencia is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="pensamiento_critico"><strong>Pensamiento crítico:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="pensamiento_critico" name="pensamiento_critico" min="0" max="100" value="{{ habilidades_blandas.pensamiento_critico if habilidades_blandas.pensamiento_critico is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="manejo_inteligencia_emocional"><strong>Manejo e inteligencia emocional:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="manejo_inteligencia_emocional" name="manejo_inteligencia_emocional" min="0" max="100" value="{{ habilidades_blandas.manejo_inteligencia_emocional if habilidades_blandas.manejo_inteligencia_emocional is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <button onclick="hideLoading()" style="display: none" id="updateButtonH" type="submit">Guardar</button> --><!-- Botón para actualizar datos -->
+            <!-- </form> -->
+
+            <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Habilidades Extracurriculares<!--hr--></h5>
+            <div class="personal-info-box" style="justify-content: space-between;">
+
+                <!-- Primera Fila -->
+                <div class="personalH-info-column first-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px;">
+                    <!--div class="personalH-info-column left-column"-->
+                    <div class="form-groupP">
+                        <label for="manejo_redes_sociales"><strong>Manejo de redes sociales:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="manejo_redes_sociales" name="manejo_redes_sociales" min="0" max="100" value="{{ habilidades_extracurriculares.manejo_redes_sociales if habilidades_extracurriculares.manejo_redes_sociales is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle"></span>
+                            <!--progress id="prog_desarrollo_software" max="100" value="50"></progress-->
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="marketing_digital"><strong>Marketing digital:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="marketing_digital" name="marketing_digital" min="0" max="100" value="{{ habilidades_extracurriculares.marketing_digital if habilidades_extracurriculares.marketing_digital is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="edicion_video"><strong>Edición de video:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="edicion_video" name="edicion_video" min="0" max="100" value="{{ habilidades_extracurriculares.edicion_video if habilidades_extracurriculares.edicion_video is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Segunda Fila -->
+                <div class="personalH-info-column second-row" style="margin-left: 5px; margin-right: 5px; margin-top: 5px;">
+                    <!--div class="personalH-info-column right-column"-->
+                    <div class="form-groupP">
+                        <label for="idiomas_extranjeros"><strong>Idiomas extranjeros:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="idiomas_extranjeros" name="idiomas_extranjeros" min="0" max="100" value="{{ habilidades_extracurriculares.idiomas_extranjeros if habilidades_extracurriculares.idiomas_extranjeros is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="tecnicas_presentacion"><strong>Técnicas de presentación:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="tecnicas_presentacion" name="tecnicas_presentacion" min="0" max="100" value="{{ habilidades_extracurriculares.tecnicas_presentacion if habilidades_extracurriculares.tecnicas_presentacion is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="redaccion_creativa"><strong>Redacción creativa:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="redaccion_creativa" name="redaccion_creativa" min="0" max="100" value="{{ habilidades_extracurriculares.redaccion_creativa if habilidades_extracurriculares.redaccion_creativa is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tercera Fila -->
+                <div class="personalH-info-column third-row" style="margin-left: 5px; margin-right: 20px; margin-top: 5px;">
+                    <div class="form-groupP">
+                        <label for="diseno_grafico"><strong>Diseño gráfico:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="diseno_grafico" name="diseno_grafico" min="0" max="100" value="{{ habilidades_extracurriculares.diseno_grafico if habilidades_extracurriculares.diseno_grafico is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="fotografia"><strong>Fotografía:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="fotografia" name="fotografia" min="0" max="100" value="{{ habilidades_extracurriculares.fotografia if habilidades_extracurriculares.fotografia is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="animacion_3d"><strong>Animación 3D:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="animacion_3d" name="animacion_3d" min="0" max="100" value="{{ habilidades_extracurriculares.animacion_3d if habilidades_extracurriculares.animacion_3d is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cuarta Fila -->
+                <div class="personalH-info-column quarter-row" style="margin-left: 5px; margin-right: 20px; margin-top: 5px;">
+                    <div class="form-groupP">
+                        <label for="negociacion"><strong>Negociación:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="negociacion" name="negociacion" min="0" max="100" value="{{ habilidades_extracurriculares.negociacion if habilidades_extracurriculares.negociacion is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="habilidades_ventas"><strong>Habilidades de ventas:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="habilidades_ventas" name="habilidades_ventas" min="0" max="100" value="{{ habilidades_extracurriculares.habilidades_ventas if habilidades_extracurriculares.habilidades_ventas is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                    <div class="form-groupP">
+                        <label for="mindfulness_meditacion"><strong>Mindfulness y meditación:</strong></label><br>
+                        <div class="range-container">
+                            <input style="width: 125px;" type="range" id="mindfulness_meditacion" name="mindfulness_meditacion" min="0" max="100" value="{{ habilidades_extracurriculares.mindfulness_meditacion if habilidades_extracurriculares.mindfulness_meditacion is not none else 0 }}" onchange="updateIconH(this.value)"  disabled>
+                            <div class="icon-container">
+                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                            </div>
+                            <span class="triangle" ></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><label style="margin-left: 20px; opacity: 0;" for="manejo_inteligencia_emocional"><strong>Otros (opcional): </strong></label>
+            <input style="width: 450px; opacity: 0;" type="text" id="Otros" name="Otros" disabled>
+
+            <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Intereses<!--hr--></h5>
+
+            <!--h2>Habilidades Blandas <hr class="line"></h2-->
+            <div class="personal-info-box" style="justify-content: space-between;">
+                <div class="personal-info-box">
+                    <div class="personalH-info-column left-column">
+                        <div class="form-group" style="margin-left: 40px; margin-right: 50px;">
+                            <!-- <label for="intereses"> <strong>Intereses:</strong></label><br> -->
+                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
+                            <label for="musica">Música</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
+                            <label for="musica">Baile</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
+                            <label for="musica">Cine</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
+                            <label for="musica">Libros</label><br>
+                        </div>
+                    </div>
+                    <div class="personalH-info-column left-column">
+                        <div class="form-group" style="margin-left: 20px; margin-right: 50px;">
+                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
+                            <label for="musica">Fútbol (soccer)</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="deporte" name="intereses" value="Deporte" disabled>
+                            <label for="deporte">Baloncesto (basketball)</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="cine" name="intereses" value="Tecnología de Información" disabled>
+                            <label for="cine">Tenis</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="libros" name="intereses" value="Libros" disabled>
+                            <label for="libros">Natación</label><br>
+                        </div>
+                    </div>
+                    <div class="personalH-info-column right-column">
+                        <div class="form-group" style="margin-left: 20px; margin-right: 50px;">
+                            <input style="margin-top: 10px;" type="checkbox" id="baile" name="intereses" value="Baile" disabled>
+                            <label for="baile">Ciclismo</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
+                            <label for="ciencia">Atletismo</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
+                            <label for="ciencia">Voleibol</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
+                            <label for="ciencia">Gimnasia</label><br>
+                        </div>
+                    </div>                            
+                    <div class="personalH-info-column right-column">
+                        <div class="form-group" style="margin-left: 20px; margin-right: 50px;">
+                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
+                            <label for="ciencia">Deportes de combate</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
+                            <label for="ciencia">Pesca Deportiva</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
+                            <label for="ciencia">Ajedrez</label><br>
+                            <!-- <input style="margin-top: 10px;" type="checkbox" id="otros" name="intereses" value="Otros" disabled> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <label style="margin-left: 20px;" for="Otros"><strong>Otros (opcional):</strong></label>
+            <input style="margin-top: 10px; width: 450px;" type="text" id="OtrosI" name="OtrosI" disabled><br>
+
+            <br><button onclick="hideLoading()" style="display: none" id="updateButtonH" type="submit">Guardar</button> <!-- Botón para actualizar datos -->
+            <!-- </form> -->
+
+            <br><h2 style="color: #003e79;">Resultados Difusos<hr class="line"></h2>
+            <div id="content" class="blur">
+            <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Habilidades Técnicas <!--hr--></h5>
+            <!-- <div id="content" class="blur"> -->
+                <div class="personal-info-box">
+                    <div class="personalD-info-column first-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px;">
+                            <div class="form-group">
+                                <label for="desarrollo_arquitectura"><strong>Desarrollo y Arquitectura de Software:</strong></label><br>
+                                <label style="font-size: 11px;">Desarrollo de Software, Desarrollo Front-end y Desarrollo Back-end.</label>
+                                <div class="range-container">
+                                    <progress id="desarrollo_arquitectura" name="desarrollo_arquitectura" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                    <!-- <h3>Resultado Difuso: {{ resultado }}</h3>
+                                    <h3>Resultado Difuso: <span id="software_score">{{ resultado }}</span></h3> -->
+                                </div>
+                                <!--span style="font-size: 15px; margin-left: 8px;" id="range-value"> 3.68 </span><br--> <!-- Elemento para mostrar el valor seleccionado -->
+                                <!--span id="range-value">{{ disponibilidad_c }}</span><br--> <!-- Elemento para mostrar el valor seleccionado -->
+                                <!--input type="range" id="programacion" name="programacion" min="0" max="100" value="50"><br-->
+                                <!-- <button type="button" onclick="calcularResultadoDifuso()" class="btn btn-primary">Calcular</button> -->
+                            </div>
+                            <div class="form-group">
+                                <label for="gestion_analisis_datos"><strong>Gestión y Análisis de Datos:</strong></label><br>
+                                <label style="font-size: 11px;">Análisis de Datos, Gestión en Base de Datos y Business Intelligence (BI).</label>
+                                <div class="range-container">
+                                    <progress id="gestion_analisis_datos" name="gestion_analisis_datos" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_g / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="disenio_interfaz_multimedia"><strong>Diseño de Interfaz y Multimedia:</strong></label><br>
+                                <label style="font-size: 11px;">Diseño de Interfaz, Animación Gráfica y Prototipado.</label>
+                                <div class="range-container">
+                                    <progress id="disenio_interfaz_multimedia" name="disenio_interfaz_multimedia" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_d / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                    </div>        
+                    <div class="personalD-info-column second-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px; position: relative; left: -80px;">
+                            <div class="form-group">
+                                <label for="seguridad_cloud_computing"><strong>Seguridad y Cloud Computing:</strong></label><br>
+                                <label style="font-size: 11px;">Seguridad Informática, Gestión de Servidores en la Nube y Criptografía.</label>
+                                <div class="range-container">
+                                    <progress id="seguridad_cloud_computing" name="seguridad_cloud_computing" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_s / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="infraestructura_comunicaciones"><strong>Infraestructura y Comunicaciones:</strong></label><br>
+                                <label style="font-size: 11px;">Redes, Sistemas Operativos y Administración de Servidores.</label>
+                                <div class="range-container">
+                                    <progress id="infraestructura_comunicaciones" name="infraestructura_comunicaciones" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_i / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+                <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Habilidades Blandas<!--hr--></h5>
+                <div class="personal-info-box">
+                    <div class="personalD-info-column first-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px;">
+                            <div class="form-group">
+                                <label for="habilidad_liderazgo_efectivo"><strong>Habilidad de Liderazgo Efectivo:</strong></label><br>
+                                <label style="font-size: 11px;">Liderazgo, Gestión de tiempo y Resolución de problemas.</label>
+                                <div class="range-container">
+                                    <progress id="habilidad_liderazgo_efectivo" name="habilidad_liderazgo_efectivo" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_bhl / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                    <!-- <h3>Resultado Difuso: {{ resultado }}</h3>
+                                    <h3>Resultado Difuso: <span id="software_score">{{ resultado }}</span></h3> -->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="habilidad_comunicacion_relaciones_i"><strong>Habilidad de Comunicación y Relaciones Interpersonales:</strong></label><br>
+                                <label style="font-size: 11px;">Comunicación asertiva, Trabajo en equipo y Empatía.</label>
+                                <div class="range-container">
+                                    <progress id="habilidad_comunicacion_relaciones_i" name="habilidad_comunicacion_relaciones_i" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_bhc / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                    </div>        
+                    <div class="personalD-info-column second-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px; position: relative; left: -80px;">
+                            <div class="form-group">
+                                <label for="habilidad_innovacion_creatividad"><strong>Habilidad de Innovación y Creatividad:</strong></label><br>
+                                <label style="font-size: 11px;">Creatividad, Pensamiento crítico y Adaptabilidad.</label>
+                                <div class="range-container">
+                                    <progress id="habilidad_innovacion_creatividad" name="habilidad_innovacion_creatividad" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_bhi / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="habilidad_manejo_bienestar_personal"><strong>Habilidad de Manejo y Bienestar Personal:</strong></label><br>
+                                <label style="font-size: 11px;">Tolerancia al estrés, Resiliencia y Manejo e inteligencia emocional.</label>
+                                <div class="range-container">
+                                    <progress id="habilidad_manejo_bienestar_personal" name="habilidad_manejo_bienestar_personal" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_bhm / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+                <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Habilidades Extracurriculares<!--hr--></h5>
+                <div class="personal-info-box">
+                    <div class="personalD-info-column first-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px;">
+                            <div class="form-group">
+                                <label for="creacion_contenidos_visuales"><strong>Creación y Diseño de Contenidos Visuales:</strong></label><br>
+                                <label style="font-size: 11px;">Diseño gráfico, Edición de video y Fotografía.</label>
+                                <div class="range-container">
+                                    <progress id="creacion_contenidos_visuales" name="creacion_contenidos_visuales" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_ecd / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                    <!-- <h3>Resultado Difuso: {{ resultado }}</h3>
+                                    <h3>Resultado Difuso: <span id="software_score">{{ resultado }}</span></h3> -->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="estrategia_medios_digitales"><strong>Estrategia y Comunicación en Medios Digitales:</strong></label><br>
+                                <label style="font-size: 11px;">Manejo de redes sociales, Marketing digital y Redacción creativa.</label>
+                                <div class="range-container">
+                                    <progress id="estrategia_medios_digitales" name="estrategia_medios_digitales" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_eec / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                    </div>        
+                    <div class="personalD-info-column second-row" style="margin-left: 20px; margin-right: 5px; margin-top: 5px; position: relative; left: -80px;">
+                            <div class="form-group">
+                                <label for="desarrollo_profesional"><strong>Desarrollo Personal y Profesional:</strong></label><br>
+                                <label style="font-size: 11px;">Técnicas de presentación, Negociación, Habilidades de ventas.</label>
+                                <div class="range-container">
+                                    <progress id="desarrollo_profesional" name="desarrollo_profesional" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_edp / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="idiomas_tecnicas_relajacion"><strong>Idiomas y Técnicas de Relajación:</strong></label><br>
+                                <label style="font-size: 11px;">Idiomas extranjeros, Animación 3D y Mindfulness y meditación.</label>
+                                <div class="range-container">
+                                    <progress id="idiomas_tecnicas_relajacion" name="idiomas_tecnicas_relajacion" max="100" value="0" style="width: 350px; margin-top: 2px;"></progress>
+                                    <div class="icon-container">
+                                        <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >{{ "%.2f"|format(resultado_difuso_eit / 10) }}</div> <!-- Texto inicial -->
+                                    </div>
+                                    <span class="triangle" style="border-bottom-color: blue;"></span>
+                                </div>
+                            </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <div id="loadingOverlay" class="loading">
+            <div class="spinner"></div>Calculando Resultados..
+        </div>
+        
+        <button id="toggleButton" type="submit" style="position: relative; z-index: 2; margin-bottom: 800px; margin-top: -800px;" onclick="showLoading()">CALCULAR DATOS DIFUSOS</button>
+        <!-- <button onclick="hideLoading()">Ocultar carga</button> -->
+
+        <!-- <div id="loadingOverlay" class="loading">
+            <div class="loader JS_on">
+                <span class="binary"></span>
+                <span class="binary"></span>
+                <span class="getting-there">TRATANDO DATOS DIFUSOS...</span>
+            </div>
+        </div> -->
+
+        
+    </div>
+                <!--button style="display: none" id="updateButton" type="submit">Guardar</button--> <!-- Botón para actualizar datos -->
+            
+        {% endif %}
 </div>
 <!--div class="scroll-to-bottom" onclick="scrollToBottom()">Guardar <i class="fas fa-arrow-down"></i></div-->
 <!--div class="scroll-to-bottom" id="scrollToBottomButton" onclick="scrollToBottom()">¡Actualizalo! <i class="fas fa-arrow-down"></i></div-->
 
 <!--button type="submit">Actualizar datos</button-->
 
-<button style="display: none" id="updateButton" type="submit">Actualizar datos</button> <!-- Botón para actualizar datos -->
+<!--button style="display: none" id="updateButton" type="submit">Guardar</button--> <!-- Botón para actualizar datos -->
 
 <script>
 
@@ -266,6 +942,9 @@
         personalInfoContainer.classList.add('green-border');
     }*/
 
+
+/* Boton para ir abajo*/
+/*
     window.addEventListener('scroll', function() {
         var scrollToBottomButton = document.getElementById('scrollToBottomButton');
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -274,7 +953,86 @@
             scrollToBottomButton.style.display = 'block';
         }
     });
+*/
 
+ // Función para validar el formulario
+//  function validateForm() {
+//         const form = document.getElementById('personal-info-form');
+//         const requiredFields = ['nombre', 'apellido', 'cedula', 'celular', 'email'];
+
+//         let valid = true;
+//         requiredFields.forEach(function (fieldId) {
+//             const field = document.getElementById(fieldId);
+//             if (!field.value.trim()) {
+//                 field.classList.add('error');
+//                 valid = false;
+//             } else {
+//                 field.classList.remove('error');
+//             }
+//         });
+
+//         if (!valid) {
+//             alert('Por favor, complete todos los campos requeridos.');
+//         }
+
+//         return valid; // Evita el envío del formulario si hay errores
+//     }
+
+
+function showLoading() {
+    var toggleButton = document.getElementById('toggleButton');
+        document.getElementById('loadingOverlay').classList.add('active');
+
+        // Establecer el valor de los progress a 0 antes de mostrar la carga
+        // document.getElementById('desarrollo_arquitectura').value = 0;
+        // document.getElementById('gestion_analisis_datos').value = 0;
+        // document.getElementById('disenio_interfaz_multimedia').value = 0;
+        // document.getElementById('seguridad_cloud_computing').value = 0;
+        // document.getElementById('infraestructura_comunicaciones').value = 0;
+
+        setTimeout(function() {
+            toggleButton.style.display = 'none'; // Ocultar el botón al mostrar la carga
+            document.getElementById('loadingOverlay').classList.remove('active');
+            document.getElementById('content').classList.remove('blur');
+            document.getElementById('desarrollo_arquitectura').value = "{{ resultado_difuso }}";
+            document.getElementById('gestion_analisis_datos').value = "{{ resultado_difuso_g }}";
+            document.getElementById('disenio_interfaz_multimedia').value = "{{ resultado_difuso_d }}";
+            document.getElementById('seguridad_cloud_computing').value = "{{ resultado_difuso_s }}";
+            document.getElementById('infraestructura_comunicaciones').value = "{{ resultado_difuso_i }}";
+            document.getElementById('habilidad_liderazgo_efectivo').value = "{{ resultado_difuso_bhl }}";
+            document.getElementById('habilidad_comunicacion_relaciones_i').value = "{{ resultado_difuso_bhc }}";
+            document.getElementById('habilidad_innovacion_creatividad').value = "{{ resultado_difuso_bhi }}";
+            document.getElementById('habilidad_manejo_bienestar_personal').value = "{{ resultado_difuso_bhm }}";
+            document.getElementById('creacion_contenidos_visuales').value = "{{ resultado_difuso_ecd }}";
+            document.getElementById('estrategia_medios_digitales').value = "{{ resultado_difuso_eec }}";
+            document.getElementById('desarrollo_profesional').value = "{{ resultado_difuso_edp }}";
+            document.getElementById('idiomas_tecnicas_relajacion').value = "{{ resultado_difuso_eit }}";
+        }, 2000); // Ajusta el tiempo de la animación de carga (en milisegundos)
+    }
+
+    function hideLoading() {
+        var toggleButton = document.getElementById('toggleButton');
+        document.getElementById('loadingOverlay').classList.remove('active');
+        document.getElementById('content').classList.add('blur');
+        toggleButton.style.display = 'block'; // Mostrar el botón al ocultar la carga
+    }
+
+
+    // function showLoading() {
+    //     document.getElementById('loadingOverlay').classList.add('active');
+    //     document.getElementById('content').classList.add('blur'); // Aplicar desenfoque
+    //     setTimeout(function() {
+    //         document.getElementById('loadingOverlay').classList.remove('active');
+    //         document.getElementById('content').classList.remove('blur'); // Quitar desenfoque
+    //     }, 2000); // Ajusta el tiempo de la animación de carga (en milisegundos)
+    // }
+
+    // function hideLoading() {
+    //     document.getElementById('loadingOverlay').classList.remove('active');
+    //     document.getElementById('content').classList.remove('blur'); // Quitar desenfoque
+    // }
+
+/*
     function scrollToBottom() {
         var scrollStep = window.scrollY / (100 / 15),
             scrollInterval = setInterval(function(){
@@ -284,9 +1042,14 @@
             else clearInterval(scrollInterval);
         },15);
     }
+        */
+    //updateButton.style.display = 'block'; // Visibilidad del botón de actualización
+
 
     function enableEdit() {
-        const inputs = document.querySelectorAll('.personal-info-column input');
+        //const inputs = document.querySelectorAll('.personal-info-column input');
+        //const inputs = document.querySelectorAll('.personal-info-column input:not(#cedula):not(#email)');
+        const inputs = document.querySelectorAll('.personal-info-column input:not(#nombre):not(#apellido):not(#cedula):not(#email)');
         //inputs.forEach(input => input.disabled = false);
         inputs.forEach(input => input.disabled = !input.disabled); // Alterna el estado de habilitado/deshabilitado
         
@@ -300,9 +1063,12 @@
         // Muestra el botón "¡Actualízalo!"
         //showUpdateButton();
 
+        // Alterna la clase de rotación en el ícono
+        const icon = document.querySelector('.modify-profile-icon');
+        icon.classList.toggle('rotate');
+
         ///const updateButton = document.getElementById('updateButton');
-        //updateButton.style.display = 'block'; // Muestra el botón "Actualizar datos"
-        updateButton.style.display = updateButton.style.display === 'none' ? 'block' : 'none'; // Alterna la visibilidad del botón de actualización
+        updateButton.style.display = updateButton.style.display === 'none' ? 'block' : 'none'; // Mostrar/ocultar botón de actualización
     }
 
     function enableEditHabilidades() {
@@ -310,8 +1076,14 @@
         // Habilitar/deshabilitar los checkboxes
         checkboxes.forEach(checkbox => checkbox.disabled = !checkbox.disabled);
 
+        const rangeInputs  = document.querySelectorAll('.personalH-info-column input[type="range"]');
+        rangeInputs.forEach(input => input.disabled = !input.disabled); // Alterna el estado de habilitado/deshabilitado
+
         const otrosInput = document.getElementById('Otros');
-        otrosInput.disabled = !otrosInput.disabled;
+        otrosInput.disabled = !otrosInput.disabled; // Alternar el estado del campo de texto "Otros"
+        
+        const otrosInput2 = document.getElementById('OtrosI');
+        otrosInput2.disabled = !otrosInput2.disabled;
 
         //const anyCheckboxEnabled = Array.from(checkboxes).some(checkbox => !checkbox.disabled);
         
@@ -325,12 +1097,25 @@
         habilidadesContainer.classList.toggle('green-border'); // Cambiar estilo para indicar edición
 
 
+        // Alterna la clase de rotación en el ícono
+        const icon = document.querySelector('.modify-profileH-icon');
+        icon.classList.toggle('rotate');
+
         //const personalInfoContainer = document.getElementById('personal-info-container');
         //personalInfoContainer.classList.toggle('green-border');
 
+        /////const triangle = document.querySelector('.triangle');
+        /////triangle.classList.toggle('gris-border'); // Cambiar estilo para indicar edición
+
+        //triangle.style.border-bottom == triangle.style.border-bottom === '12px solid #007bff' ? '12px solid #d1d1d1;' : '12px solid #007bff'; // Mostrar/ocultar botón de actualización
+
+        /////////programacion.style.display = programacion.style.display === 'none' ? 'block' : 'none'; // Mostrar/ocultar botón de actualización
+
+        ///range-icon.style.display = range-icon.style.display === '12px solid #007bff' ? '12px solid #d1d1d1' : '12px solid #007bff';
 
         ///const updateButton = document.getElementById('updateButton');
-        updateButton.style.display = updateButton.style.display === 'none' ? 'block' : 'none'; // Mostrar/ocultar botón de actualización
+        //updateButton.style.display = updateButton.style.display === 'none' ? 'block' : 'none'; // Mostrar/ocultar botón de actualización
+        updateButtonH.style.display = updateButtonH.style.display === 'none' ? 'block' : 'none'; // Mostrar/ocultar botón de actualización
     }
 
     function checkEditStatus() {
@@ -344,26 +1129,338 @@
     //enableEdit();
     //enableEditHabilidades();
     checkEditStatus();
+    
 
     function updateIcon(value) {
-    const icon = document.getElementById('range-icon');
-    const valueSpan = document.getElementById('range-value');
-    valueSpan.textContent = value; // Actualiza el valor mostrado en el span
-    if (value < 25) {
+        const icon = document.getElementById('range-icon');
+        //const valueSpan = document.getElementById('range-value');
+        //valueSpan.textContent = value; // Actualiza el valor mostrado en el span
+        if (value < 25) {
+            icon.className = 'fas fa-frown icon-sad'; // Icono de cara triste
+        } else if (value < 60) {
+            icon.className = 'fas fa-meh icon-neutral'; // Icono de cara normal
+        } else if (value < 80) {
+            icon.className = 'fas fa-smile icon-happy'; // Icono de cara feliz
+        } else {
+            icon.className = 'fas fa-grin-stars icon-very-happy'; // Icono de cara super feliz
+        }
+    }
+
+    /*
+    function updateIconH(value) {
+    const icon = document.getElementById('rangeH-icon');
+    //const valueSpan = document.getElementById('range-value');
+    //valueSpan.textContent = value; // Actualiza el valor mostrado en el span
+    if (value == 0) {
         icon.className = 'fas fa-frown icon-sad'; // Icono de cara triste
-    } else if (value < 60) {
+    } else if (value == 1) {
         icon.className = 'fas fa-meh icon-neutral'; // Icono de cara normal
-    } else if (value < 80) {
+    } else if (value >= 2 && value <= 3) {
         icon.className = 'fas fa-smile icon-happy'; // Icono de cara feliz
     } else {
         icon.className = 'fas fa-grin-stars icon-very-happy'; // Icono de cara super feliz
     }
     }
+    */
+   /*
+    function updateIconH(value) {
+    const iconText = document.getElementById('rangeH-text');
+
+    if (value == 0) {
+        iconText.textContent = 'Mínimo';
+        iconText.className = 'text-minimo'; // Aplica clase para Mínimo
+        //iconText.style.color = 'red'; // Color para Mínimo
+    } else if (value == 1) {
+        iconText.textContent = 'Bajo';
+        iconText.className = 'text-bajo'; // Aplica clase para Bajo
+        //iconText.style.color = 'orange'; // Color para Bajo
+    } else if (value == 2) {
+        iconText.textContent = 'Medio';
+        iconText.className = 'text-medio'; // Aplica clase para Medio
+        //iconText.style.color = 'yellow'; // Color para Medio
+    } else if (value == 3) {
+        iconText.textContent = 'Alto';
+        iconText.className = 'text-alto'; // Aplica clase para Alto
+        //iconText.style.color = 'green'; // Color para Alto
+    } else {
+        iconText.textContent = 'Máximo';
+        iconText.className = 'text-maximo'; // Aplica clase para Máximo
+        //iconText.style.color = 'blue'; // Color para Máximo
+    }
+}*/
+
+/*
+    // Función para actualizar el texto a la derecha del rango
+    function updateIconH(value, targetElement) {
+        const iconText = targetElement.querySelector('.text-placeholder');
+
+        if (value == 0) {
+            iconText.textContent = 'Mínimo';
+            iconText.className = 'text-placeholder text-minimo'; // Aplica clase para Mínimo
+        } else if (value == 1) {
+            iconText.textContent = 'Bajo';
+            iconText.className = 'text-placeholder text-bajo'; // Aplica clase para Bajo
+        } else if (value == 2) {
+            iconText.textContent = 'Medio';
+            iconText.className = 'text-placeholder text-medio'; // Aplica clase para Medio
+        } else if (value == 3) {
+            iconText.textContent = 'Alto';
+            iconText.className = 'text-placeholder text-alto'; // Aplica clase para Alto
+        } else {
+            iconText.textContent = 'Máximo';
+            iconText.className = 'text-placeholder text-maximo'; // Aplica clase para Máximo
+        }
+    }*/
+
+
+
+    function updateIconH(value, parentElement) {
+    const iconText = parentElement.querySelector('.text-placeholder');
+    const triangle = parentElement.querySelector('.triangle');
+
+    //if (value < 20) {
+    if (value < 10) {
+        //iconText.textContent = 'Mínimo';
+        iconText.textContent = 'Desconozco';
+        iconText.className = 'text-placeholder text-minimo'; // Aplica clase para Mínimo
+        triangle.className = 'triangle triangle-minimo';
+
+        //iconText.classList.add('text-minimo'); // Aplicar clase para Mínimo si es necesario
+    } else if (value < 50) {
+        iconText.textContent = 'Principiante';
+        iconText.className = 'text-placeholder text-bajo'; // Aplica clase para Bajo
+        triangle.className = 'triangle triangle-bajo';
+        //iconText.classList.add('text-bajo'); // Aplicar clase para Bajo si es necesario
+    } else if (value < 75) {
+        iconText.textContent = 'Intermedio';
+        iconText.className = 'text-placeholder text-medio'; // Aplica clase para Medio
+        triangle.className = 'triangle triangle-medio';
+        //iconText.classList.add('text-medio'); // Aplicar clase para Medio si es necesario
+    //} else if (value < 80) {
+    } else if (value < 90) {
+        iconText.textContent = 'Avanzado';
+        iconText.className = 'text-placeholder text-alto'; // Aplica clase para Alto
+        triangle.className = 'triangle triangle-alto';
+        //iconText.classList.add('text-alto'); // Aplicar clase para Alto si es necesario
+    } else {
+        //iconText.textContent = 'Máximo';
+        iconText.textContent = 'Experto';
+        iconText.className = 'text-placeholder text-maximo'; // Aplica clase para Máximo
+        triangle.className = 'triangle triangle-maximo';
+        //iconText.classList.add('text-maximo'); // Aplicar clase para Máximo si es necesario
+    }
+    }
+
+
+
     // Inicializa el icono con el valor inicial del rango
     document.addEventListener('DOMContentLoaded', function() {
-        updateIcon(document.getElementById('disponibilidad-range').value);
-        updateIconAndValue(initialValue);
+        var input = document.getElementById('anios_exp_informatica');
+        var value = input.value;
+        
+        // Si el valor es 'None', cámbialo a una cadena vacía
+        if (value === 'None') {
+            input.value = '';
+        }
+
+        updateIcon(document.getElementById('disponibilidad_c').value);
+
+        //updateIconAndValue(initialValue);
+        // var resultadoDifuso = '{{ resultado_difuso }}'; // Ejemplo de interpolación en un entorno de plantillas
+        // console.log(resultadoDifuso); // Asegúrate de que el valor se muestra correctamente en la consola para verificar su disponibilidad
     });
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var resultadoDifuso = '{{ resultado_difuso }}';
+    //     console.log(`Resultado difuso en JS: ${resultadoDifuso}`);
+    // });
+
+
+    // function calcularResultadoDifuso() {
+    //     // Aquí puedes agregar lógica adicional si es necesario antes de enviar los datos al servidor
+    //     // var formData = {
+    //     //     dev_software_score: obtenerValor("desarrollo_arquitectura"),
+    //     //     // Agrega aquí otros campos si es necesario
+    //     // };
+
+    //     // Realiza la petición POST al servidor usando fetch o una librería como axios
+    //     fetch('/api/evaluacion_fuzzy', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(formData)
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         // Actualiza el valor de resultado difuso en la interfaz con la respuesta del servidor
+    //         document.getElementById('resultado_difuso').innerText = data.Resultado_difuso;
+    //     })
+    //     .catch(error => {
+    //         console.error('Error al calcular resultado difuso:', error);
+    //     });
+    // }
+
+    // // Función para obtener el valor de un elemento HTML, como el progress
+    // function obtenerValor(elementId) {
+    //     var elemento = document.getElementById(elementId);
+    //     return elemento.value;
+    // }
+
+    /*
+    // Inicializa el icono con el valor inicial del rango
+    document.addEventListener('DOMContentLoaded', function() {
+        //updateIconH(document.getElementById('habilidades_tecnicas').value);
+        updateIconH(document.getElementById('programacion').value);
+        //updateIconH(document.getElementById('desarrollo_software').value);
+        /*updateIconH(document.getElementById('analisis_datos').value);
+        updateIconH(document.getElementById('gestion_base_datos').value);
+        updateIconH(document.getElementById('disenio_interfaz').value);
+        updateIconH(document.getElementById('redes').value);
+        updateIconH(document.getElementById('sistemas_operativos').value);
+        updateIconH(document.getElementById('desarrollo_frontend').value);
+        updateIconH(document.getElementById('desarrollo_backend').value);
+        updateIconH(document.getElementById('seguridad_informatica').value);
+        updateIconH(document.getElementById('gestion_servidores_nube').value);
+        updateIconH(document.getElementById('animacion_grafica').value);
+        updateIconH(document.getElementById('comunicacion_asertiva').value);
+        updateIconH(document.getElementById('trabajo_equipo').value);
+        updateIconH(document.getElementById('resolucion_problemas').value);
+        updateIconH(document.getElementById('adaptabilidad').value);
+        updateIconH(document.getElementById('empatia').value);
+        updateIconH(document.getElementById('tolerancia_estres').value);
+        updateIconH(document.getElementById('creatividad').value);
+        updateIconH(document.getElementById('liderazgo').value);
+        updateIconH(document.getElementById('gestion_tiempo').value);
+        updateIconH(document.getElementById('resiliencia').value);
+        updateIconH(document.getElementById('pensamiento_critico').value);
+        updateIconH(document.getElementById('manejo_inteligencia_emocional').value);*
+        //updateIconAndValue(initialValue);
+    });*/
+
+
+
+/*
+
+    // Event listener para actualizar el texto al cambiar el valor del rango
+    document.addEventListener('DOMContentLoaded', function() {
+        const programacionRange = document.getElementById('programacion');
+        const desarrolloSoftwareRange = document.getElementById('desarrollo_software');
+
+        programacionRange.addEventListener('input', function() {
+            updateIconH(this.value, this.parentNode);
+        });
+
+        desarrolloSoftwareRange.addEventListener('input', function() {
+            updateIconH(this.value, this.parentNode);
+        });
+
+        // Inicializa el texto con el valor inicial
+        updateIconH(programacionRange.value, programacionRange.parentNode);
+        updateIconH(desarrolloSoftwareRange.value, desarrolloSoftwareRange.parentNode);
+    });
+*/
+
+
+// Definir los IDs de los input ranges
+    const rangeIds = [
+        'business_intelligence_bi',
+        'desarrollo_software',
+        'analisis_datos',
+        'gestion_base_datos',
+        'disenio_interfaz',
+        'redes',
+        'sistemas_operativos',
+        'desarrollo_frontend',
+        'desarrollo_backend',
+        'seguridad_informatica',
+        'gestion_servidores_nube',
+        'animacion_grafica',
+        'prototipado',
+        'criptografia',
+        'administracion_servidores',
+        'aprendizaje_automatico_machine_learning',
+        'comunicacion_asertiva',
+        'trabajo_equipo',
+        'resolucion_problemas',
+        'adaptabilidad',
+        'empatia',
+        'tolerancia_estres',
+        'creatividad',
+        'liderazgo',
+        'gestion_tiempo',
+        'resiliencia',
+        'pensamiento_critico',
+        'manejo_inteligencia_emocional',
+        'manejo_redes_sociales',
+        'marketing_digital',
+        'edicion_video',
+        'idiomas_extranjeros',
+        'tecnicas_presentacion',
+        'redaccion_creativa',
+        'diseno_grafico',
+        'fotografia',
+        'animacion_3d',
+        'negociacion',
+        'habilidades_ventas',
+        'mindfulness_meditacion'
+    ];
+
+    // Iterar sobre todos los IDs de los input ranges
+    rangeIds.forEach(function(id) {
+        const range = document.getElementById(id);
+        if (range) {
+            range.addEventListener('input', function() {
+                updateIconH(this.value, this.parentNode);
+            });
+            updateIconH(range.value, range.parentNode); // Inicializar el texto con el valor inicial
+        }
+    });
+
+/*
+    $(document).ready(function() {
+        // Función para hacer la solicitud POST a la API y actualizar la UI
+        function actualizarResultados() {
+            // Obtener valores de habilidades técnicas desde el formulario
+            var desarrolloSoftware = parseInt($('#desarrollo_software').val());
+            var desarrolloFrontend = parseInt($('#desarrollo_frontend').val());
+            var desarrolloBackend = parseInt($('#desarrollo_backend').val());
+
+            // Enviar solicitud POST a la API para obtener resultados difusos
+            $.ajax({
+                type: 'POST',
+                url: '/api/evaluacion_fuzzy',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    software_score: desarrolloSoftware,
+                    front_end_score: desarrolloFrontend,
+                    back_end_score: desarrolloBackend
+                }),
+                success: function(response) {
+                    // Actualizar la barra de progreso
+                    $('#progress_desarrollo').attr('value', response.Resultado_difuso);
+
+                    // Actualizar el número dentro del div
+                    $('#valor_desarrollo').text(response.Resultado_difuso.toFixed(2));
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error al obtener los resultados difusos:', error);
+                    // Manejar el error adecuadamente, como mostrar un mensaje de error al usuario
+                }
+            });
+        }
+
+        // Manejar el envío del formulario
+        $('#skillsForm').submit(function(event) {
+            event.preventDefault(); // Evitar el envío del formulario por defecto
+            actualizarResultados(); // Llamar a la función para actualizar los resultados
+        });
+
+        // Llamar a la función para actualizar los resultados cuando se cargue la página o cuando sea necesario
+        actualizarResultados();
+    });
+*/
+
 
     function previewImage(input) {
         const previewContainer = document.getElementById('imagen_perfil_preview_container');
@@ -383,14 +1480,53 @@
             previewContainer.style.display = 'none';
         }
     }
-    document.addEventListener('DOMContentLoaded', (event) => {
-            const ranges = document.querySelectorAll('input[type="range"]');
-            ranges.forEach(range => {
-                const progress = document.getElementById('prog_' + range.id);
-                range.addEventListener('input', function() {
-                    progress.value = range.value;
-                });
-            });
-        });
+    // document.addEventListener('DOMContentLoaded', (event) => {
+    //         const ranges = document.querySelectorAll('input[type="range"]');
+    //         ranges.forEach(range => {
+    //             const progress = document.getElementById('prog_' + range.id);
+    //             range.addEventListener('input', function() {
+    //                 progress.value = range.value;
+    //             });
+    //         });
+    //     });
+
+    function validateInput(input) {
+        const value = input.value;
+        if (!/^[0-9]+(\.[0-9]+)?$/.test(value) && value !== '') {
+            input.value = '';
+            alert('Por favor, ingrese un número positivo y válido.');
+        }
+    }
 </script>
+
+<script>
+    document.getElementById('updateButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Evita el envío del formulario por defecto
+        document.getElementById('personal-info-form').submit(); // Envía el formulario manualmente
+    });
+    document.getElementById('updateButtonH').addEventListener('click', function(event) {
+        event.preventDefault(); // Evita el envío del formulario por defecto
+        document.getElementById('personalH-info-form').submit(); // Envía el formulario manualmente
+    });
+
+
+    // JavaScript para validar el campo de celular
+    document.getElementById('celular').addEventListener('input', function(event) {
+        //const inputValue = event.target.value;
+        let inputValue = event.target.value;
+
+        // Validación de longitud máxima de 15 caracteres
+        if (inputValue.length > 15) {
+            event.target.value = inputValue.slice(0, 15); // Limitar la longitud a 15 caracteres
+            return; // Detener la ejecución si se supera la longitud máxima
+        }
+
+        const isValid = /^\+?[0-9]*$/.test(inputValue); // Expresión regular para validar números y signo '+'
+        
+        if (!isValid) {
+            event.target.value = inputValue.slice(0, -1); // Eliminar el último carácter no válido
+        }
+    });
+</script>
+
 {% endblock %}

@@ -1,3 +1,5 @@
+//script.js
+
 //Ejecutando funciones
 document.getElementById("btn__iniciar-sesion").addEventListener("click", iniciarSesion);
 document.getElementById("btn__registrarse").addEventListener("click", register);
@@ -33,7 +35,7 @@ anchoPage();
     function iniciarSesion(){
         if (window.innerWidth > 850){
             formulario_login.style.display = "block";
-            contenedor_login_register.style.left = "10px";
+            contenedor_login_register.style.left = "250px";
             formulario_register.style.display = "none";
             caja_trasera_register.style.opacity = "1";
             caja_trasera_login.style.opacity = "0";
@@ -49,7 +51,7 @@ anchoPage();
     function register(){
         if (window.innerWidth > 850){
             formulario_register.style.display = "block";
-            contenedor_login_register.style.left = "410px";
+            contenedor_login_register.style.left = "650px";
             formulario_login.style.display = "none";
             caja_trasera_register.style.opacity = "0";
             caja_trasera_login.style.opacity = "1";

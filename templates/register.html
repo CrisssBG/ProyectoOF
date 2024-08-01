@@ -12,7 +12,8 @@
 {% endwith %}
 
 <div class="container">
-    <h1>Registro</h1>
+    <h1>Habilidades</h1>
+    <!--h1>Registro</h1-->
     <div class="personal-info-container">
         <h2>Datos Personales <hr class="line"></h2>
         <div class="personal-info-box">
@@ -80,17 +81,16 @@
                         <input type="checkbox" id="Networking" name="carrera" value="Ingeniería en Networking y Telecomunicaciones">
                         <label for="Networking">Ingeniería en Networking y Telecomunicaciones</label><br>
                     </div>
-                    <div class="form-group">
+                    <!--div class="form-group">
                         <label for="disponibilidad"><strong>Disponibilidad Colaborativa:</strong></label><br>
                         <div class="range-container">
                             <input type="range" id="disponibilidad-range" name="disponibilidad" min="0" max="100" value="50" onchange="updateIcon(this.value)">
                             <div class="icon-container">
-                                <i id="range-icon" class="fas fa-meh"></i> <!-- Icono inicial -->
+                                <i id="range-icon" class="fas fa-meh"></i> 
                             </div>
                         </div>
-                        <span id="range-value">50</span> <!-- Elemento para mostrar el valor seleccionado -->
-                    </div>
-                    </div>
+                        <span id="range-value">50</span> 
+                    </div-->
                 </form>
             </div>
         </div>
@@ -215,6 +215,7 @@
             </div>
         </div>
     </div>
+</div>
 
 <button type="submit">Guardar</button>
 
@@ -236,7 +237,7 @@
     // Inicializa el icono con el valor inicial del rango
     document.addEventListener('DOMContentLoaded', function() {
         updateIcon(document.getElementById('disponibilidad-range').value);
-        updateIconAndValue(initialValue);
+        //updateIconAndValue(initialValue);
     });
 </script>
 

@@ -1,41 +1,177 @@
+<!--layout.html-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--meta http-equiv="X-UA-Compatible" content="ie=edge"-->
     <title>Docentes</title>
+    <!--link rel="stylesheet" href=""-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...TuSHAHashAquí..." crossorigin="anonymous" />
 </head>
 <body>
-    <div id="mySidenav" class="sidenav">
-        <b href="javascript:void(0)" class="togglebtn" onclick="toggleNav()">
-            <i style="margin-left: 12px; font-size: 28px; margin-bottom: 50px; color: white;" id="menuIcon" class="fas fa-bars"></i>
-        </b>
-        
-        <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">
-            <i class="fas fa-home"></i>Inicio
-        </a>
-        <a href="{{ url_for('perfil') }}" class="{% if request.endpoint == 'perfil' %}active{% endif %}">
-            <i class="fas fa-user"></i>Perfil
-        </a>
-        <a href="{{ url_for('register') }}" class="{% if request.endpoint == 'register' %}active{% endif %}">
-            <i class="fas fa-user-plus"></i>Registro
-        </a>
-        <a href="{{ url_for('busqueda_inteligente') }}" class="{% if request.endpoint == 'busqueda_inteligente' %}active{% endif %}">
-            <i class="fas fa-search"></i>Busqueda
-        </a>
-        <a href="#" class="{% if request.endpoint == 'contactos' %}active{% endif %}">
-            <i class="fas fa-address-book"></i>Contactos
-        </a>
-        <a href="{{ url_for('logout') }}" style="text-decoration: none; color: white;">
-            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-        </a>
-
-        <footer>
-            <span>&copy; 2024 SIATH. Todos los derechos reservados.</span>
-        </footer>
+    <!--
+    {% if session.logged_in %}
+    <div id="welcomeMessage" class="welcome-message">
+        <span style="font-size: 25px;">Bienvenido, {{ session.username }}!</span>
     </div>
+    {% endif %}-->
+    <!--Flash Messages-->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+            <li class="{{ category }}"></li>
+            <li class="flash flash-{{ category }}">
+                <!-- -->
+                {{ message }}
+                <!--button type="button" class="close" onclick="this.parentElement.style.display='none';" aria-label="Close"-->
+                <!--span aria-hidden="true">&times;</span>
+                </button-->
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    <div id="mySidenav" class="sidenav">
+        <!--a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a-->
+        <!--b style="display: block; text-align: center; color: white; margin-bottom: 50px;"><i class="fas fa-user fa-3x"></i></b-->
+        <b href="javascript:void(0)" class="togglebtn" onclick="toggleNav()">
+            <i style="margin-left: 16px; font-size: 20px; margin-top: 10px; margin-bottom: 50px; color: white;" id="menuIcon" class="fas fa-chevron-left"></i>
+        </b>
+
+        <!-- Mensaje de bienvenida ->
+        {% if session.logged_in %}
+            <div class="welcome-message">
+                <i class="fas fa-user"></i>
+                <span>Bienvenido, {{ session.username }}!</span>
+            </div>
+        {% endif %}-->
+        
+        <!--a href="{{ url_for('home') }}"> <i class="fas fa-home"></i>Inicio</a>
+        <a href="{{ url_for('perfil') }}"> <i class="fas fa-user"></i>Perfil</a>
+        <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i>Registro</a>
+        <a href="{{ url_for('busqueda_inteligente') }}"><i class="fas fa-search"></i>Busqueda</a>
+        <a href="#"><i class="fas fa-address-book"></i>Contactos</a-->
+
+            {% if session.logged_in %}
+            <div class="user-info" style="margin-top: -29px;">
+                <img src="{{ url_for('static', filename='images/profile_pics/' + imagen_p if imagen_p else 'images/profile_pics/default.png') }}" alt="User Icon">
+                <!-- <img src="{% if imagen_p %}{{ url_for('static', filename='images/profile_pics/' + imagen_p) }}{% else %}{{ url_for('static', filename='images/profile_pics/default.png') }}{% endif %}" alt="User Icon"> -->
+                <div>
+                    <!--span style="font-size: 16px; margin-bottom: -12px; font-weight: bold;">{{ session.username }}</span><br-->
+                    <span style="font-size: 14px; margin-bottom: -12px; font-weight: bold; text-align: left;">{{ nombre }}</span><br>
+                    <span style="font-size: 14px; margin-bottom: -12px; font-weight: bold; text-align: left;">{{ apellido }}</span><br>
+                    <!--span style="font-size: 14px; margin-bottom: -12px; font-weight: bold; text-align: left;">{{ nombre_completo }}</span><br-->
+                    <!--div style="border-top: 0.1px solid #ccc; margin-bottom: 5px;"></div-->
+                    <span style="font-size: 10px; color: #ccc;">{{ email }}</span>
+                    <!--span style="font-size: 10px; color: #ccc;">{{ session.email }}</span-->
+                </div>
+            </div>
+            {% endif %}
+        
+        <!--a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}" >
+            <i class="fas fa-home" onclick="toggleNav()"></i>Inicio
+        </a>
+        <a href="{{ url_for('perfil') }}" class="{% if request.endpoint == 'perfil' %}active{% endif %}" >
+            <i class="fas fa-user" onclick="toggleNav()"></i>Perfil
+        </a>
+        <a href="{{ url_for('register') }}" class="{% if request.endpoint == 'register' %}active{% endif %}" >
+            <i class="fas fa-user-plus" onclick="toggleNav()"></i>Registro
+        </a>
+        <a href="{{ url_for('busqueda_inteligente') }}" class="{% if request.endpoint == 'busqueda_inteligente' %}active{% endif %}" >
+            <i class="fas fa-search" onclick="toggleNav()"></i>Busqueda
+        </a>
+        <a href="#" class="{% if request.endpoint == 'contactos' %}active{% endif %}" >
+            <i class="fas fa-address-book" onclick="toggleNav()"></i>Contactos
+        </a-->
+
+        <ul class="nav flex-column">
+            <li>
+                <a class="nav-link {% if 'index' in request.path %}active{% endif %}" href="{{ url_for('index') }}">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+            </li>
+            <li>
+                <a class="nav-link {% if 'perfil' in request.path %}active{% endif %}" href="{{ url_for('perfil') }}">
+                    <i class="fas fa-user" onclick="toggleNav()"></i> Perfil
+                </a>
+            </li>
+            <!--li>
+                <a class="nav-link {% if 'register' in request.path %}active{% endif %}" href="{{ url_for('register') }}">
+                    <i class="fas fa-user-plus" onclick="toggleNav()"></i> Registro
+                </a>
+            </li-->
+            <!-- <li class="has-submenu">
+                <a class="nav-link {% if 'busqueda_inteligente' in request.path %}active{% endif %}" href="#">
+                    <i class="fas fa-search"></i> Búsqueda
+                </a>
+                <ul class="submenu">
+                    <li><a href="{{ url_for('busqueda_inteligente') }}">Búsqueda con Datos Difusos</a></li>
+                    <li><a href="{{ url_for('busqueda_inteligente') }}">Búsqueda Avanzada</a></li>
+                    <li><a href="{{ url_for('busqueda_inteligente') }}">Búsqueda Inteligente</a></li>
+                </ul>
+            </li> -->
+            <li>
+                <a class="nav-link {% if 'busqueda_inteligente' in request.path %}active{% endif %}" href="{{ url_for('busqueda_inteligente') }}">
+                    <i class="fas fa-search" onclick="toggleNav()"></i> Búsqueda
+                </a>
+            </li>
+            <!--Agrega más opciones de la barra lateral aquí según sea necesario -->
+            
+        </ul>
+
+        <!--ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {% if 'index' in request.path %}active{% endif %}" href="{{ url_for('index') }}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if 'perfil' in request.path %}active{% endif %}" href="{{ url_for('perfil') }}">Perfil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if 'busqueda_inteligente' in request.path %}active{% endif %}" href="{{ url_for('busqueda_inteligente') }}">Búsqueda Inteligente</a>
+            </li>
+            <!- Agrega más opciones de la barra lateral aquí según sea necesario ->
+            <li class="nav-item">
+                <a class="nav-link {% if 'logout' in request.path %}active{% endif %}" href="{{ url_for('logout') }}">Cerrar Sesión</a>
+            </li>
+        </ul-->
+        
+
+        <!-- Botón de cerrar sesión -->
+        {% if session.logged_in %}
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
+            <!-- Línea divisoria -->
+            <div style="border-top: 1px solid #ccc; margin-bottom: 10px; "></div>
+            <!-- Contenedor del botón de cierre de sesión -->
+            <!--a style="margin-top: 140px; height: 30px; border-top: 3px solid #ccc; border-bottom: 3px solid #ccc; background-color: #740000; border-radius: 0px;"-->
+                <form action="{{ url_for('logout') }}" method="post">
+                    <!--i type="submit" class="fas fa-sign-out-alt">Cerrar Sesión</i font-size: ;-->
+                    <button type="submit" style=" background-color: rgb(255, 31, 31); border-radius: 12px; width: 185px; margin-left: 5px; margin-bottom: 20px; text-align: justify; padding-left: 15px; color: #fff; height: 45px;">
+                        <i class="fas fa-sign-out-alt" style="margin-right: 20px;"></i>Cerrar Sesión
+                    </button>
+                </form>    
+            <!--/a-->
+        </div>
+        {% endif %}
+        
+       
+        
+            <!--form action="{{ url_for('logout') }}" method="post">
+                <button type="submit">Cerrar sesión</button>
+            </form-->
+        
+
+        <!--footer>
+            <span>&copy; 2024 SIATH. Todos los derechos reservados.</span>
+        </footer-->
+    </div>
+
+    <!--span style="font-size:30px; cursor:pointer;" onclick="openNav()">&#9776; open</span-->
+
+    <!--span id="openBtn" style="font-size:30px; cursor:pointer;" onclick="openNav()">&#9776;</span-->
 
     <div id="main">
         <div class="banner">
@@ -48,5 +184,62 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
+    
+    <!--footer>
+        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+      </footer-->
+    <script>
+        // Función para ocultar automáticamente los mensajes flash después de un tiempo determinado
+        window.onload = function() {
+            var flashes = document.querySelectorAll('.flashes li');
+            flashes.forEach(function(flash) {
+                setTimeout(function() {
+                    flash.style.display = 'none';
+                }, 3000); // Ocultar el mensaje después de 3 segundos (3000 milisegundos)
+            });
+        };
+    
+        // Función para cerrar el mensaje flash manualmente
+        //function closeFlash(element) {
+        //    element.parentElement.style.display = 'none';
+        //}
+    </script>
+    <!--script>
+        window.onload = function() {
+            var welcomeMessage = document.getElementById('welcomeMessage');
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'block'; // Show the message
+                setTimeout(function() {
+                    welcomeMessage.style.display = 'none'; // Hide the message after 1 second
+                }, 2000);
+            }
+    
+            var flashes = document.querySelectorAll('.flashes li');
+            flashes.forEach(function(flash) {
+                setTimeout(function() {
+                    flash.style.display = 'none';
+                }, 3000); // Ocultar el mensaje después de 3 segundos (3000 milisegundos)
+            });
+        };
+    </script-->
+    <script>
+        document.querySelectorAll('.has-submenu').forEach(item => {
+            item.addEventListener('click', event => {
+                event.currentTarget.querySelector('.submenu').classList.toggle('active');
+            });
+        });
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     document.querySelectorAll('.has-submenu').forEach(item => {
+        //         item.addEventListener('click', event => {
+        //             if (event.target.closest('.nav-link')) {
+        //                 event.preventDefault(); // Evitar la acción predeterminada del enlace
+        //                 item.querySelector('.submenu').classList.toggle('active');
+        //             }
+        //         });
+        //     });
+        // });
+    </script>
+
 </body>
 </html>

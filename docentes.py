@@ -1,8 +1,9 @@
 #docentes.py
-from flask import Flask, Blueprint, current_app, render_template, request, jsonify, redirect, url_for, flash
+from flask import Flask, Blueprint, current_app, render_template, request, jsonify, redirect, url_for, flash, session
 #from db import init_connection, mysql
 from db import mysql
 from ontologia_fuzzy import OntologiaFuzzy
+#from main import login_required  # Importa login_required desde main.py
 # En la parte superior del archivo docentes.py
 #from flask_sqlalchemy import SQLAlchemy
 
@@ -22,6 +23,7 @@ ontologia_fuzzy = OntologiaFuzzy()
     
 #@app.get('/')
 @docentes_bp.route('/register')
+#def register():
 def register():
     cur = mysql.connection.cursor()
     #cur.execute('SELECT * FROM docentes')
@@ -33,16 +35,38 @@ def register():
         GROUP BY d.id
     ''')
     data = cur.fetchall()
+    #cur.close()
+
+    # Consulta para obtener la imagen_p del docente actualmente logueado---------------------#
+    cur.execute("SELECT imagen_p FROM docente WHERE id_usuario = %s", [session['user_id']])
+    imagen_p_data = cur.fetchone()
     cur.close()
-    return render_template('register.html', contacts=data)
+    # Si 'imagen_p_data' es None, significa que el usuario no tiene imagen de perfil guardada
+    imagen_p = imagen_p_data[0] if imagen_p_data else None
+    #----------------------------------------------------------------------------------------#
+
+    return render_template('register.html', contacts=data, imagen_p=imagen_p)
 
 # Ruta para la página de búsqueda inteligente
 @docentes_bp.route('/busqueda_inteligente', methods=['GET'])
+#@login_required
 def busqueda_inteligente():
-    return render_template('busqueda_inteligente.html')
+    cur = mysql.connection.cursor()
+    # Puedes ajustar esta consulta según tus necesidades específicas para la vista de búsqueda inteligente
+    #cur.execute('SELECT * FROM alguna_tabla')
+    # Ejemplo de consulta de imagen_p para la vista de búsqueda inteligente
+    cur.execute("SELECT imagen_p FROM docente WHERE id_usuario = %s", [session['user_id']])
+    imagen_p_data = cur.fetchone()
+    cur.close()
+
+    # Si 'imagen_p_data' es None, significa que el usuario no tiene imagen de perfil guardada
+    imagen_p = imagen_p_data[0] if imagen_p_data else None
+
+    return render_template('busqueda_inteligente.html', imagen_p=imagen_p)
 
 # Ruta para manejar la solicitud de búsqueda inteligente
 @docentes_bp.route('/api/busqueda_inteligente', methods=['POST'])
+#@login_required
 def api_busqueda_inteligente():
     # Aquí maneja la lógica de búsqueda inteligente como se mostró antes
     habilidad = request.json.get('habilidad')

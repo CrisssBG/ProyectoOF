@@ -1,9 +1,15 @@
-/* static/css/styles.css */
+/* style.css*/
 
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    /*background-image: radial-gradient(circle, #c8cacc, #f5f8fa, #fff);*/
+    background-color: #dfe6ed;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 /*
@@ -20,13 +26,22 @@ body {
 }
 */
 
-
+.nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
 
 .sidenav a.active {
     /*background-color: #4CAF50; /* Color de fondo para la sección activa */
-    background-color: #16b8dd; /* Color de fondo para la sección activa */
-    color: white;             /* Color del texto para la sección activa */
-    border-radius: 25px;
+    background-color: #dfe6ed; /* Color de fondo para la sección activa */
+    color: black;             /* Color del texto para la sección activa */
+    /*border-radius: 25px;*/
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    margin-right: -20px;
+    padding-right: -20px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Sombra suave */
 }
 
 
@@ -37,7 +52,10 @@ body {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #004484;
+    /*background-color: #004484;*/
+    /*background: linear-gradient(to right, #007bff, #0077b6, #003c74); /* Ajusta los colores según tus necesidades */
+    background: linear-gradient(to bottom, #003c74 60%, #007bff 100%); /* Ajusta los colores según tus necesidades */
+    /*background-color: #003c74;*/
     /*overflow-x: hidden;*/
     overflow: hidden;
     padding-top: 10px;
@@ -50,19 +68,31 @@ body {
     font-size: 18px;
     color: #fff;
     display: block;
-    transition: 0.3s;
+    /*transition: 0.3s;*/
+    /*transition: background-color 0.3s, color 0.3s; /* Transición para color de fondo y texto */
     white-space: nowrap;
+    border-bottom: 0.1px solid #cccccc1c;
+    font-weight: bold;
+    height: 28px;
+    transition: background-color 400ms ease-in-out, color 400ms ease-in-out;
 }
 
 .sidenav a:hover {
     /*color: #16b8dd;*/
-    background-color: #16b8dd; /* Color de fondo para la sección activa */
-    border-radius: 25px;
+    /*background-color: #16b8dd; /* Color de fondo para la sección activa */
+    background-color: #dfe6ed00; /* Color de fondo para la sección activa */
+    color: black;
+    ; /* Color de fondo para la sección activa */
+    margin-right: -20px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    /*transition: background-color 850ms ease-in-out, color 850ms ease-in-out;*/
+    
 }
 
 .sidenav a i {
     margin-right: 10px; /* Agrega padding a los elementos <i> */
-    margin-left: -15px;
+    margin-left: -14px;
     font-size: 17px;
     min-width: 35px;
 }
@@ -72,9 +102,112 @@ body {
     top: 0;
     right: 4%;
     font-size: 36px;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
 }
 
+.sidenav li {
+    /*padding: 12px 12px 0px 0px;*/
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+    white-space: nowrap;
+    border-bottom: 0.1px solid #cccccc1c;
+    margin-left: -41px;
+    height: 50px;
+    transition: background-color 400ms ease-in-out, color 400ms ease-in-out;
+    position: relative;
+    list-style-type: none;
+}
+
+/*------------------------------------*/
+
+/*
+button {
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1;
+    background: #e8e8e8;
+    position: relative;
+    font-weight: 1000;
+    font-size: 17px;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms;
+    overflow: hidden;
+   }
+   */
+
+.sidenav li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    /*left: 0;*/
+    right: 0;
+    height: 100%;
+    width: 0;
+    /*border-radius: 15px;*/
+    /*border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;*/
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    /*background-color: #212121;*/
+    /*background-color: #f5f8fa;*/
+    background-color: #dfe6ed;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms
+   }
+   
+   .sidenav li:hover {
+    color: #dfe6ed;
+   }
+   
+   .sidenav li:hover::before {
+    width: 100%;
+   }*/
+
+
+/*--------------------------------------------------*/
+
+.sidenav li:hover {
+    /*color: #16b8dd;*/
+    /*background-color: #16b8dd; /* Color de fondo para la sección activa */
+    background-color: #dfe6ed; /* Color de fondo para la sección activa */
+    color: black;
+    ; /* Color de fondo para la sección activa */
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Sombra suave */
+    /*transition: background-color 250ms ease-in-out, color 250ms ease-in-out;*/
+    
+}
+
+.sidenav li a {
+    display: flex;
+    align-items: center;
+    /*margin-right: 10px; /* Espacio entre el icono y el texto */
+    font-size: 14px;
+    min-width: 35px;
+}
+
+.sidenav li a i {
+    margin-right: 10px; /* Espacio a la derecha del icono */
+}
+
+/* Estilos específicos para los iconos de Font Awesome */
+.sidenav li a .fas {
+    width: 20px; /* Ajusta el ancho del icono según sea necesario */
+}
+
+/* Estilo para el texto dentro del enlace */
+.sidenav li a span {
+    flex: 1; /* El texto ocupa todo el espacio restante */
+}
 
 
 /*
@@ -91,18 +224,25 @@ body {
     transition: margin-left .5s;
     margin-left: 200px;  /* Ajuste necesario para que el contenido no sea cubierto por la barra lateral */
     padding: 20px;
+    /*background-color: #f5f8fa;*/
 }
 
 .banner {
     width: 100%;
     overflow: hidden;
     text-align: center;
+    margin-top: -15px;
+    margin-left: -15px;
 }
 
-.banner img {
+.banner img {/*
     width: 60%;
     height: auto;
-    display: inline-block;
+    display: inline-block;*/
+    width: 600px;/* Ancho fijo */
+    height: 74px; /* Alto fijo */
+    /*display: block; /* Cambiado a block para ocupar todo el ancho disponible */
+
 }
 /*
 footer {
@@ -124,20 +264,123 @@ footer {
     color: #fff;
 }
 
+/* Mensaje de Bienvenida */
+
+.welcome-message {/*
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;*/
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    /*font-size: 36px; /* Incrementa el tamaño de la fuente */
+    text-align: center;
+    z-index: 1000;
+    display: none; /* Estado inicial es oculto */
+}
+.welcome-message i {
+    margin-right: 10px;
+}
+
+/*-----------------------*/
+
+/* User en barra lateral */
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 25px;
+    border-bottom: 5px solid #ccc;
+    /*border-right: 0.1px solid #ccc;*/
+    margin-top: -12px;
+}
+
+.user-info img {
+    width: 40px; /* Ajusta el tamaño de la imagen */
+    height: 40px; /* Ajusta el tamaño de la imagen */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    margin-right: 10px;
+    margin-left: -5px;
+    margin-bottom: -5px;
+    /*border-color: 1px solid #00cc00;*/
+}
+
+.user-info div {
+    color: white; /* Color del texto */
+    
+}
+
+.user-info span {
+    display: block;
+    font-size: 14px;
+
+}
+
+
+
+/*----------------------*/
+
+/* Definir la animación */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-10%);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromTop {
+    0% {
+      transform: translateY(-10%);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes transparentIni {
+    0% {
+      /*transform: translateY(-10%);*/
+      opacity: 0;
+    }
+    100% {
+      /*transform: translateY(0);*/
+      opacity: 1;
+    }
+  }
+
 h1 {
     /*background-color: #f4f4f4; /* Fondo gris claro */
-    background-color: #007bff; /* Fondo gris claro */
+    /*background-color: #007bff; /* Fondo gris claro */
+    background: linear-gradient(to right, #003c74, #007bff); /* Ajusta los colores según tus necesidades */
     /*color: #f4f4f4; /* Color del texto */
     color: #fff; /* Color del texto */
     padding: 12px; /* Espaciado interno para que el texto no esté pegado al borde */
     text-align: center;
-    border-radius: 10px;
+    /*border-radius: 25px;*/
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
     font-size: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
     margin: 0 auto; /* Centrar horizontalmente */
     margin-bottom: 22px;
     margin-top: 0px;
-    border-top: 5px solid #004484; /* Establece el color del borde superior */
+    margin-left: -40px;
+    /*border-top: 5px solid #004484; /* Establece el color del borde superior */
+     /* Agregar animación */
+    animation: slideInFromLeft 0.7s ease-out; /* Puedes ajustar la duración y el tipo de animación según tus necesidades */
 }
 
 h2 {
@@ -156,13 +399,64 @@ span{
     font-size: 9px;
 }
 
+/*
 label {
-    /*font-weight: bold;*/
+    /*font-weight: bold;*//*
 }
+*/
 
 input {
     border-radius: 10px; /* Redondear esquinas de los inputs */
     padding: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el ancho total */
+}
+
+
+input[type="range"] {
+    /*-webkit-appearance: none; /* Elimina el estilo predeterminado de los navegadores Webkit (Chrome, Safari) */
+    /* width: 125px; /* Ajusta el ancho del slider */
+    /*background: transparent; /* Elimina el fondo predeterminado */
+    /*border-color: #0030cc;*/
+    /*display: flex;
+    align-items: center;
+    justify-content: center;
+    /*gap: 1rem;*/
+    padding: 0px;
+    /*initial-value: 0;*/
+    /*padding: 1rem;*/
+    /*border-radius: 6px; */
+    /*border: 1px solid #C6CACE;*/
+    /*box-shadow: 0px 1px 2px 0px #1F1E241F;*/
+}*/
+
+/* Estilo para el track del slider */
+/*input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 15px; /* Ajusta la altura del track */
+/*    background: #dddddd; /* Color del track */
+    /*background: #acc5dd; /* Color del track */
+/*    border-radius: 20px; /* Esquinas redondeadas del track */
+    /*initial-value: 1;
+    /*position:static;*/
+    /*margin-top: 10px;*/
+/*}
+
+/* Estilo para el thumb del slider */
+/* input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Elimina el estilo predeterminado del thumb */
+/*    width: 20px; /* Ajusta el tamaño del thumb */
+/*    height: 20px; /* Ajusta el tamaño del thumb */
+/*    background: #003c74; /* Color del thumb */
+/*    cursor: pointer; /* Cambia el cursor al pasar sobre el thumb */
+/*    border-radius: 50%; /* Redondea el thumb */
+    /*margin-top: -6px; /* Ajusta la posición vertical del thumb */
+/*} */
+
+
+select{
+    border-radius: 10px; /* Redondear esquinas de los inputs */
+    padding: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el ancho total */
 }
@@ -179,33 +473,104 @@ input {
     padding: 22px;
 }*/
 
+/*Columna Izq y Dere*/
+
+/*.personal-info-column {
+    display: flex;
+    justify-content: space-between; /* Distribuye las columnas a lo largo del contenedor /
+}*/
+/*
+.left-column {
+    width: 48%; /* Ancho aproximado de la columna izquierda /
+}
+
+.right-column {
+    width: 48%; /* Ancho aproximado de la columna derecha /
+    margin-left: 4%; / Espacio entre las columnas /
+}
+*/
+
+/*--------------TUERCA ROTACION-----------------------*/
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Clase para el ícono en estado giratorio */
+.rotate {
+    animation: rotate 0.5s linear;
+}
+
+/*--------------SUBMENU-----------------------*/
+
+.submenu {
+    /*display: none;*/
+    list-style: none;
+    padding-left: 3em; /* Indenta los elementos del submenú */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease; /* Transición de altura máxima durante 0.3 segundos */
+
+}
+
+.submenu.active {
+    display: block; /* Mostrar el submenú cuando tiene la clase 'active' */
+    max-height: 200px; /* Altura máxima cuando el submenú se muestra */
+}
+
+/* .has-submenu:hover .submenu {
+    display: block;
+    max-height: 200px; /* Altura máxima cuando el submenú se muestra completamente *
+} */
+
+.submenu li {
+    /*border-bottom: 1px solid #ccc; /* Opcional: Agrega bordes entre los elementos del submenú */
+    /*background-color: #00284ede;*/
+    font-size: 5px;
+}
+
+/*-------------------------------------*/
+
 .personal-info-container {
     border: 2px solid #ccc; /* Borde sólido de 2 píxeles de ancho y color gris */
     padding: 20px; /* Espacio interno de 20 píxeles alrededor del contenido */
     margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
-    background-color: #f9f9f9; /* Fondo gris claro */
+    /*background-color: #f5f8fa; /* Fondo gris claro */
+    background-color: #f5f8fa; /* Fondo gris claro azulado */
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    animation: transparentIni 0.7s ease-out; /* Puedes ajustar la duración y el tipo de animación según tus necesidades */
 }
 
 .busqueda-container {
     border: 2px solid #ccc; /* Borde sólido de 2 píxeles de ancho y color gris */
     padding: 20px; /* Espacio interno de 20 píxeles alrededor del contenido */
     margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
-    background-color: #f9f9f9; /* Fondo gris claro */
+    background-color: #f5f8fa; /* Fondo gris claro */
+    /*background-color: #dfe6ed; /* Fondo gris claro */
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    animation: transparentIni 0.7s ease-out; /* Puedes ajustar la duración y el tipo de animación según tus necesidades */
 }
 
 .personal-info-box {
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
+
 }
 
 .personal-info-box form {
     margin-bottom: 20px; /* Espacio entre el formulario y el botón */
+    
 }
+
+
 
 .form-group {
     width: 100%;
@@ -216,14 +581,15 @@ input {
 
 button[type="submit"] {
     display: block;
-    width: 50%;
+    width: 25%;
     padding: 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 8px; /* Botón más redondeado */
+    border-radius: 20px; /* Botón más redondeado */
     cursor: pointer;
     margin: 0 auto;
+    font-weight: 800;
 }
 
 button[type="submit"]:hover {
@@ -234,16 +600,39 @@ button[type="submit"]:hover {
     border: 2px solid #ccc; /* Borde sólido de 2 píxeles de ancho y color gris */
     padding: 20px; /* Espacio interno de 20 píxeles alrededor del contenido */
     margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
-    background-color: #f9f9f9; /* Fondo gris claro */
+    /*background-color: #f5f8fa; /* Fondo gris claro */
+    background-color: #f5f8fa; /* Fondo gris claro */
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    animation: transparentIni 0.7s ease-out; /* Puedes ajustar la duración y el tipo de animación según tus necesidades */
+   
 }
 
+/*
+.info-container::before{
+    width: 150px;
+    height: 150px;
+    content: "";
+    background: linear-gradient(to right,rgb(142, 110, 255),rgb(28, 17, 68));
+    position: absolute;
+    z-index: 100;
+    border-radius: 50%;
+    right: 80%;
+    top: 25%;
+}*/
+
+/**/
 .personal-info-box button {
     position: absolute;
     bottom: 10px; /* Distancia desde la parte inferior del cuadro */
     right: 10px; /* Distancia desde el borde derecho del cuadro */
 }
+
+/*
+.personal-info-column {
+    display: flex;
+    justify-content: space-between; /* Distribuye las columnas a lo largo del contenedor *
+}*/
 
 .left-column {
     flex: 1;
@@ -258,9 +647,11 @@ button[type="submit"]:hover {
     border: 2px solid #ccc; /* Borde sólido de 2 píxeles de ancho y color gris */
     padding: 20px; /* Espacio interno de 20 píxeles alrededor del contenido */
     margin-bottom: 20px; /* Margen inferior de 20 píxeles para separarlo del contenido siguiente */
-    background-color: #f9f9f9; /* Fondo gris claro */
+    /*background-color: #f9f9f9; /* Fondo gris claro */
+    background-color: #f5f8fa; /* Fondo gris claro */
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    animation: transparentIni 0.7s ease-out; /* Puedes ajustar la duración y el tipo de animación según tus necesidades */
 }
 
 .table-container {
@@ -269,6 +660,7 @@ button[type="submit"]:hover {
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: transparentIni 0.7s ease-out; /* Puedes ajustar la duración y el tipo de animación según tus necesidades */
 }
 
 .table {
@@ -326,12 +718,528 @@ footer small {
 }
 
 .icon-happy {
-    color: #0030cc; /* Verde para feliz */
+    /*color: #0030cc; /* Verde para feliz */
+    color: #00cc00; /* Verde para feliz */
 }
 
 .icon-very-happy {
-    color: #00cc00; /* Verde para feliz */
+    /*color: #00cc00; /* Verde para feliz */
+    color: #0030cc; /* Verde para feliz */
 }
+
+
+/*--------------------Mensaje de niveles----------------------*/
+#rangeH-text {
+    padding: 6px 8px; /* Padding para el texto */
+    /*margin: -100px; /* Margen exterior */
+    /*display: inline-block; /* Para que el margen funcione */
+    /*border-radius: 15px; /* Bordes redondeados */
+    /*border-radius: 5px; /* Bordes redondeados */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    /*border-top-left-radius: 15rem;
+    border-bottom-left-radius: 15rem;*/
+    /*border-bottom-right-radius: 15rem;*/
+    font-size: 9px;
+    /*display: inline-block; /* Para que el margen funcione */
+    text-align: center; /* Alineación del texto al centro */
+    width: 62px; /* Ancho automático para adaptarse al contenido */
+    min-width: 40px; /* Ancho mínimo para asegurar espacio */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+    margin-right: -40px;
+    /*margin-left: -5px;*/
+    margin-left: 3px;
+}
+
+
+
+
+/*
+
+input[type="range"] {
+	-webkit-appearance: none;
+	width: 80%;
+	height: 100%;
+	background: transparent;
+
+	&:focus {
+		outline: none;
+	}
+
+	///WEBKIT/
+	&::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		height: 16px;
+		width: 16px;
+		border-radius: 50%;
+		background: #ffffff;
+		margin-top: -5px;
+		box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+		cursor: pointer;
+		
+	}
+
+	&::-webkit-slider-runnable-track {
+		width: 60%;
+		height: 9px;
+		background: #bdbdbd;
+		border-radius: 3rem;
+
+		transition: all 0.5s;
+		cursor: pointer;
+	}
+
+	&:hover::-webkit-slider-runnable-track {
+		background: #ff6e40;
+	}
+
+	// IE/
+
+	&::-ms-track {
+		width: 60%;
+		cursor: pointer;
+		height: 9px;
+
+		transition: all 0.5s;
+		background: transparent;
+		border-color: transparent;
+		color: transparent;
+	}
+
+	&::-ms-thumb {
+		height: 16px;
+		width: 16px;
+		border-radius: 50%;
+		background: #ffffff;
+		margin-top: -5px;
+		box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+		cursor: pointer;
+	}
+
+	&::-ms-fill-lower {
+		background: #bdbdbd;
+		border-radius: 3rem;
+	}
+	&:focus::-ms-fill-lower {
+		background: #ff6e40;
+	}
+	&::-ms-fill-upper {
+		background: #bdbdbd;
+		border-radius: 3rem;
+	}
+	&:focus::-ms-fill-upper {
+		background: #ff6e40;
+	}
+
+	//FIREFOX*
+	&::-moz-range-thumb {
+		height: 16px;
+		width: 16px;
+		border-radius: 50%;
+		background: #ffffff;
+		margin-top: -5px;
+		box-shadow: 1px 1px 2px rgba(#000, 0.5);
+
+		cursor: pointer;
+	}
+
+	&::-moz-range-track {
+		width: 60%;
+		height: 9px;
+		background: #bdbdbd;
+		border-radius: 3rem;
+
+		transition: all 0.5s;
+		cursor: pointer;
+	}
+	&:hover::-moz-range-track {
+		background: #ff6e40;
+	}
+}
+
+*/
+
+
+/*
+.form-groupP{
+    border: 1px solid #ddd;
+}
+*/
+
+.triangle {
+    content: '';
+    border-right: 9px solid transparent;
+    border-left: 9px solid transparent;
+    /*border-bottom: 12px solid #d1d1d1;*/
+    border-bottom: 12px solid #d1d1d1;
+    left: -10px;
+    top: 50%;
+    margin-left: -30px;
+    margin-bottom: -12px;
+    transform: translateY(-50%) rotate(270deg);
+    /*border-radius: 10px;*/
+}
+
+.triangle-minimo {
+    border-bottom-color: red; /* Color para nivel Muy Bajo */
+}
+
+.triangle-bajo {
+    border-bottom-color: orange; /* Color para nivel Bajo */
+}
+
+.triangle-medio {
+    border-bottom-color: yellow; /* Color para nivel Medio */
+}
+
+.triangle-alto {
+    border-bottom-color: green; /* Color para nivel Alto */
+}
+
+.triangle-maximo {
+    border-bottom-color: blue; /* Color para nivel Muy Alto */
+}
+
+.triangle.gris-border {
+    content: '';
+    border-right: 9px solid transparent;
+    border-left: 9px solid transparent;
+    border-bottom: 12px solid #007bff;
+    left: -10px;
+    top: 50%;
+    margin-left: -35px;
+    margin-bottom: -12px;
+    transform: translateY(-50%) rotate(90deg);
+}
+
+/*----------------secciones desplegables------------------*/
+.seccion {
+    margin-bottom: 10px;
+}
+.titulo-seccion {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    /*background-color: #f0f0f0;*/
+    background-color: #003f7938;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+.contenido-seccion {
+    display: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    width: 95%;
+    margin-left: 15px;
+}
+
+/*--------------------------------------------------------*/
+
+/*
+#rangeH-text:before {
+    content: '';
+    /*position: static;*
+    border-right: 9px solid transparent;
+    border-left: 9px solid transparent;
+    border-bottom: 12px solid #222;
+    left: -10px;
+    top: 50%;
+    margin-left: -15px;
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+
+/*
+.range-container span:before {
+    content: '';
+    position: absolute;
+    border-right: 9px solid transparent;
+    border-left: 9px solid transparent;
+    border-bottom: 12px solid #222;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+}
+*/
+
+
+.text-minimo {
+    background-color: red; /* Fondo rojo para Mínimo */
+    color: white; /* Texto blanco */
+}
+
+.text-bajo {
+    background-color: orange; /* Fondo naranja para Bajo */
+    color: black; /* Texto negro */
+}
+
+.text-medio {
+    background-color: yellow; /* Fondo amarillo para Medio */
+    color: black; /* Texto negro */
+}
+
+.text-alto {
+    background-color: green; /* Fondo verde para Alto */
+    color: white; /* Texto blanco */
+}
+
+.text-maximo {
+    background-color: blue; /* Fondo azul para Máximo */
+    color: white; /* Texto blanco */
+}
+
+
+
+
+
+/*.range-container input[type="range"] {
+    -webkit-appearance: none; /* Para WebKit */
+/*    width: 200px; /* Ancho del rango */
+/*    height: 4px; /* Altura del rango */
+/*    background-color: #ba3950; /* Color de fondo del rango */
+/*    outline: none;
+    border-radius: 5px; /* Borde redondeado */
+/*    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+/*}
+
+.range-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; /* Ancho del control deslizante */
+/*    height: 20px; /* Altura del control deslizante */
+/*    background-color: #a83348; /* Color del pulgar */
+/*    border-radius: 50%; /* Borde redondeado */
+/*    cursor: pointer; /* Cursor apuntador al pasar por encima */
+/*    transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+/*}
+
+.range-container input[type="range"]:hover::-webkit-slider-thumb {
+    transform: scale(1.2); /* Escala aumentada al pasar el mouse */
+/*}
+
+/*FIREFOX*/
+/*.range-container input[type="range"]::-moz-range-thumb {
+    width: 20px; /* Ancho del control deslizante para Firefox */
+/*    height: 20px; /* Altura del control deslizante para Firefox */
+/*    background-color: #a83348; /* Color del pulgar para Firefox */
+/*    border-radius: 50%; /* Borde redondeado */
+/*    cursor: pointer; /* Cursor apuntador al pasar por encima */
+/*    transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+/*}
+
+.range-container input[type="range"]:hover::-moz-range-thumb {
+    transform: scale(1.2); /* Escala aumentada al pasar el mouse para Firefox */
+/*}
+
+/*------------------------------------------*/
+.blur {
+    filter: blur(10px); /* Ajusta el valor de blur según tus preferencias */
+    transition: filter 0.5s ease-out; /* Agrega una transición suave */
+}
+
+/* .loader {
+    width: 130px;
+    height: 170px;
+    position: relative;
+    font-family: inherit;
+    display: none; /* Inicialmente oculto *
+}
+
+.loader.active {
+    display: block; /* Mostrar cuando tiene la clase active *
+}
+
+.loader::before,
+.loader::after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 30px;
+    left: 15px;
+    z-index: 1;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 20px solid #1b2a33;
+    transform: scale(0);
+    transition: all 0.2s ease;
+}
+
+.loader::after {
+    border-right: 15px solid transparent;
+    border-bottom: 20px solid #162229;
+}
+
+.loader .getting-there {
+    width: 120%;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: -7%;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: white;
+}
+
+.loader .binary {
+    width: 100%;
+    height: 140px;
+    display: block;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 15px;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.loader .binary::before,
+.loader .binary::after {
+    font-family: "Lato";
+    font-size: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.loader .binary:nth-child(1)::before {
+    content: "0";
+    animation: a 1.1s linear infinite;
+}
+
+.loader .binary:nth-child(1)::after {
+    content: "0";
+    animation: b 1.3s linear infinite;
+}
+
+.loader .binary:nth-child(2)::before {
+    content: "1";
+    animation: c 0.9s linear infinite;
+}
+
+.loader .binary:nth-child(2)::after {
+    content: "1";
+    animation: d 0.7s linear infinite;
+}
+
+.loader.JS_on::before,
+.loader.JS_on::after {
+    transform: scale(1);
+}
+
+@keyframes a {
+    0% {
+        transform: translate(30px, 0) rotate(30deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(30px, 150px) rotate(-50deg);
+        opacity: 1;
+    }
+}
+
+@keyframes b {
+    0% {
+        transform: translate(50px, 0) rotate(-40deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(40px, 150px) rotate(80deg);
+        opacity: 1;
+    }
+}
+
+@keyframes c {
+    0% {
+        transform: translate(70px, 0) rotate(10deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(60px, 150px) rotate(70deg);
+        opacity: 1;
+    }
+}
+
+@keyframes d {
+    0% {
+        transform: translate(30px, 0) rotate(-50deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(45px, 150px) rotate(30deg);
+        opacity: 1;
+    }
+}
+
+.loading {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente *
+    display: none; /* Inicialmente oculto *
+    justify-content: center;
+    align-items: center;
+}
+
+.loading.active {
+    display: flex; /* Mostrar cuando tiene la clase active *
+} */
+
+ .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para el overlay */
+    z-index: 9999; 
+    opacity: 0; /* Inicialmente invisible */
+    pointer-events: none; /* No permite interacciones mientras está activo */
+    transition: opacity 0.3s ease;
+}
+
+.loading.active {
+    opacity: 1; /* Hace visible el overlay de carga */
+    pointer-events: all; /* Permite interacciones cuando está activo */
+    /*display: flex; /* Mostrar cuando tiene la clase active */
+}
+
+.spinner {
+    /* Estilos para tu spinner de carga, puedes ajustarlo según el diseño que prefieras */
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} 
+
+/*------------------------------------------*/
+
+
 /*
 .text-sad {
     color: #ff0000; 
@@ -363,7 +1271,8 @@ footer small {
 
 #imagen_perfil_preview {
     border: 2px solid #ccc;
-    border-radius: 50%;
+    /*border-radius: 50%;*/
+    border-radius: 2px;
     display: block;
     max-width: 200px;
     max-height: 200px;
@@ -377,6 +1286,15 @@ footer small {
     font-size: 28px; /* Tamaño del icono */
     color: #0056b3;
 }
+
+.modify-profileH-icon {
+    position: absolute; /* Establece la posición absoluta para el icono */
+    top: 15px; /* Ajusta la distancia desde la parte superior */
+    right: 20px; /* Ajusta la distancia desde el borde derecho */
+    font-size: 28px; /* Tamaño del icono */
+    color: #0056b3;
+}
+
 /*
 .personalP-habilidades-container {
     margin: 20px;
@@ -481,198 +1399,27 @@ progress {
     opacity: 0.8;
 }
 
+.logout-button {
+    /*font-weight: 1000;
+    margin-top: 20px; /* Agrega espacio en la parte superior del botón */
+    padding: 10px 20px; /* Ajusta el padding del botón */
+    background-color: #007bff; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: none; /* Quita el borde */
+    /*border-radius: 5px; /* Agrega bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Agrega una transición suave al color de fondo */
+}
+
+.logout-button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
     }
     .sidenav a {
         font-size: 18px;
-    }
-}
-
-/*codigo de ini.html*/
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-}
-
-  /* Estilos para la imagen */
-.logo {
-    display: block;
-    margin: -60px auto 60px;
-    max-width: 50%; /* Ancho del contenedor */
-    height: auto; /* Proporción de la imagen */
-}
-
-body{
-    background-image: url(../images/TrazoUG.svg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-main{
-    width: 100%;
-    padding: 20px;
-    margin: auto;
-    margin-top: 100px;
-}
-
-.contenedor__todo{
-    width: 100%;
-    max-width: 800px;
-    margin: auto;
-    position: relative;
-}
-
-.caja__trasera{
-    width: 100%;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: center;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    background-color: rgba(0, 128, 255, 0.5);
-
-}
-
-.caja__trasera div{
-    margin: 100px 40px;
-    color: white;
-    transition: all 500ms;
-}
-
-
-.caja__trasera div p,
-.caja__trasera button{
-    margin-top: 30px;
-}
-
-.caja__trasera div h3{
-    font-weight: 400;
-    font-size: 26px;
-}
-
-.caja__trasera div p{
-    font-size: 16px;
-    font-weight: 300;
-}
-
-.caja__trasera button{
-    padding: 10px 40px;
-    border: 2px solid #fff;
-    font-size: 14px;
-    background: transparent;
-    font-weight: 600;
-    cursor: pointer;
-    color: white;
-    outline: none;
-    transition: all 300ms;
-}
-
-.caja__trasera button:hover{
-    background: #fff;
-    color: #46A2FD;
-}
-
-/*Formularios*/
-
-.contenedor__login-register{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 380px;
-    position: relative;
-    top: -185px;
-    left: 10px;
-
-    /*La transicion va despues del codigo JS*/
-    transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
-}
-
-.contenedor__login-register form{
-    width: 100%;
-    padding: 80px 20px;
-    background: white;
-    position: absolute;
-    border-radius: 20px;
-}
-
-.contenedor__login-register form h2{
-    font-size: 30px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #46A2FD;
-}
-
-.contenedor__login-register form input{
-    width: 100%;
-    margin-top: 20px;
-    padding: 10px;
-    border: none;
-    background: #F2F2F2;
-    font-size: 16px;
-    outline: none;
-}
-
-.contenedor__login-register form button{
-    padding: 10px 40px;
-    margin-top: 40px;
-    border: none;
-    font-size: 14px;
-    background: #46A2FD;
-    font-weight: 600;
-    cursor: pointer;
-    color: white;
-    outline: none;
-}
-
-
-
-
-.formulario__login{
-    opacity: 1;
-    display: block;
-}
-.formulario__register{
-    display: none;
-}
-
-
-
-@media screen and (max-width: 850px){
-
-    main{
-        margin-top: 50px;
-    }
-
-    .caja__trasera{
-        max-width: 350px;
-        height: 300px;
-        flex-direction: column;
-        margin: auto;
-    }
-
-    .caja__trasera div{
-        margin: 0px;
-        position: absolute;
-    }
-
-
-    /*Formularios*/
-
-    .contenedor__login-register{
-        top: -10px;
-        left: -5px;
-        margin: auto;
-    }
-
-    .contenedor__login-register form{
-        position: relative;
     }
 }

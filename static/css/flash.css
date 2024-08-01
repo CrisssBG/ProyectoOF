@@ -1,0 +1,82 @@
+  /* Estilos para las alertas */
+
+/* Mensaje de éxito */
+.flash-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+  
+  /* Mensaje de información */
+  .flash-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+  }
+  
+  /* Mensaje de advertencia */
+  .flash-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+  }
+  
+  /* Mensaje de error */
+  .flash-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+  
+  /* Estilos generales para todas las alertas */
+  .flashes {
+    /*list-style: none;
+    margin: 0;
+    padding: 0;*/
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 90%;
+    max-width: 500px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .flashes li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 15px;
+    color: white;
+  }
+  
+  .flash-success {
+    background-color: #28a745;
+  }
+  
+  .flash-danger {
+    background-color: #dc3545;
+  }
+  
+  .flash-info {
+    background-color: #17a2b8;
+  }
+  
+  .flash {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+  
+  /* Cerrar el botón de la alerta */
+  .flash button.close {
+    padding: 0.75rem 1.25rem;
+    margin: -0.75rem -1.25rem -0.75rem auto;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }

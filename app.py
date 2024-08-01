@@ -6,3 +6,4 @@ app = Flask (__name__)
 
 #Settings
 app.secret_key = 'mysecretkey'
+

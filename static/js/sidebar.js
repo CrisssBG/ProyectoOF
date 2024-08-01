@@ -12,7 +12,9 @@ function openNav() {
     main.style.marginLeft = "200px";
     
     // Cambia el icono a la X
-    menuIcon.className = "fas fa-times";
+    menuIcon.className = "fas fa-chevron-left";
+
+    localStorage.setItem('sidebarOpen', 'true');
 }
 
 function closeNav() {
@@ -25,6 +27,8 @@ function closeNav() {
     for (var i = 0; i < links.length; i++) {
         links[i].classList.add("hide-text");
     }
+
+    localStorage.setItem('sidebarOpen', 'false');
 }
 
 function toggleNav() {
@@ -32,20 +36,32 @@ function toggleNav() {
     var main = document.getElementById("main");
     var menuIcon = document.getElementById("menuIcon");
     
-    if (sidenav.style.width === "200px") {
+    if (sidenav.style.width === "50px") {
+        // Si la barra lateral está minimizada, ábrela y cambia el icono a la X
+        sidenav.style.width = "200px";
+        main.style.marginLeft = "200px";
+        menuIcon.className = "fas fa-chevron-left";
+        localStorage.setItem('sidebarOpen', 'true');
+    } else {
         // Si la barra lateral está abierta, ciérrala y cambia el icono a las tres rayas
         sidenav.style.width = "50px";
         main.style.marginLeft = "50px";
-        menuIcon.className = "fas fa-bars";
-    } else {
-        // Si la barra lateral está cerrada, ábrela y cambia el icono a la X
-        sidenav.style.width = "200px";
-        main.style.marginLeft = "200px";
-        menuIcon.className = "fas fa-times";
+        menuIcon.className = "fas fa-chevron-right";
+        localStorage.setItem('sidebarOpen', 'false');
     }
+    console.log("toggleNav() called"); // Agrega este console.log para depuración
 }
-
+/*
 window.onload = function() {
     // Abre la barra lateral por defecto
-    openNav();
+    closeNav();
+};*/
+
+window.onload = function() {
+    var sidebarOpen = localStorage.getItem('sidebarOpen');
+    if (sidebarOpen === 'true') {
+        openNav();
+    } else {
+        closeNav();
+    }
 };

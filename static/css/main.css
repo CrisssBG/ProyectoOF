@@ -1,0 +1,540 @@
+/*main.css*/
+*
+ {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  /* Establece el alto y el ancho del contenido al 100% */
+  /*html, body, .container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Asegura que no haya barras de desplazamiento *
+  }
+
+  /* Establece el tamaño de la sección de contenido al 100% *
+  .content {
+    height: 100%;
+    width: 100%;
+  }*/
+
+  @keyframes animarLogo {
+    0% {
+      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
+      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 5;
+    }
+    25% {
+      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
+      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 5;
+    }
+    50% {
+      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
+      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
+      transform: translate(-120%, -50%) scale(1.5);
+      /* transform: translate(-50%, -50%) scale(2); */
+      opacity: 5;
+    }
+    70% {
+      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
+      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
+      transform: translate(-110%, -50%) scale(1.5);
+      /* transform: translate(-50%, -50%) scale(2); */
+      opacity: 5;
+    }
+    75% {
+      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
+      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
+      transform: translate(-110%, -50%) scale(1.5);
+      /* transform: translate(-50%, -50%) scale(2); */
+      opacity: 5;
+    }
+    80% {
+      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
+      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
+      transform: translate(-110%, -50%) scale(1.5);
+      /* transform: translate(-50%, -50%) scale(2); */
+      opacity: 5;
+    }
+    85% {
+      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
+      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
+      transform: translate(-110%, -50%) scale(1.5);
+      /* transform: translate(-50%, -50%) scale(2); */
+      opacity: 5;
+    }
+    100% {
+      /*transform: scale(1) translateX(0); /* Reduce el tamaño y se desplaza a la izquierda */
+      transform: translate(-110%, -450%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Define la animación de deslizamiento */
+@keyframes deslizarH1 {
+  0% {
+    transform: translate(-50%, 335%) ;/* Empieza desde fuera del contenedor hacia la izquierda */
+    opacity: 0; /* Empieza invisible */
+  }
+  25% {
+    transform: translate(-50%, 335%) ;/* Empieza desde fuera del contenedor hacia la izquierda */
+    opacity: 0; /* Empieza invisible */
+  }
+  50% {
+    transform:  translate(calc(-50% + 185px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
+    opacity: 1; /* Empieza invisible */
+  }
+  70% {
+    transform:  translate(calc(-50% + 175px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
+    opacity: 1; /* Empieza invisible */
+  }
+  75% {
+    transform:  translate(calc(-50% + 175px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
+    opacity: 1; /* Empieza invisible */
+  }
+  80% {
+    transform:  translate(calc(-50% + 175px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
+    opacity: 1; /* Empieza invisible */
+  }
+  85% {
+    transform:  translate(calc(-50% + 175px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
+    opacity: 1; /* Empieza invisible */
+  }
+  100% {
+    transform: translateX(0); /* Termina en su posición original */
+    opacity: 1; /* Termina visible */
+  }
+}
+
+@keyframes deslizarCajaTrasera {
+  from {
+    transform: translateY(-5%); /* Empieza desde fuera del contenedor hacia la izquierda */
+    opacity: 0; /* Empieza invisible */
+  }
+  to {
+    transform: translateY(0); /* Termina en su posición original */
+    opacity: 1; /* Termina visible */
+  }
+}
+
+/* Estilo para la capa de fondo blanco */
+.overlay {
+  position: fixed; /* Fijo para cubrir toda la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white; /* Color de fondo blanco */
+  opacity: 1; /* Inicialmente visible */
+  z-index: 1; /* Asegura que esté encima de todo el contenido */
+  animation: desaparecer 1s ease-out forwards 1s; /* Aplica la animación para desaparecer */
+}
+
+/* Define la animación para desaparecer la capa de fondo */
+@keyframes desaparecer {
+  0% {
+    opacity: 1; /* Comienza visible */
+  }
+  25% {
+    opacity: 0; /* Termina invisible */
+  }
+  80% {
+    transform: translate(25%, 25%) scale(2) translateX(50%);
+    opacity: 0; /* Termina invisible */
+  }
+  100% {
+    transform: translate(25%, 25%) scale(2) translateX(50%);
+    opacity: 0; /* Termina invisible */
+  }
+}
+
+  /* Estilos para la imagen */
+  .logo {
+    position: absolute;
+    /* display: block; */
+    top: 45%; /* Centra verticalmente en la pantalla */
+    left: 52%; /* Centra horizontalmente en la pantalla */
+    transform: translate(-50%, -50%) scale(1);
+    /*margin: auto;*/
+    max-width: 20%; /* Ancho del contenedor */
+    height: auto; /* Proporción de la imagen */
+    margin-top: 50px;
+    margin-bottom: 2px;
+    /*margin-left:26%;*/
+    /* margin-left:2%; */
+    margin-right: 20px;
+    z-index: 1;
+    animation: animarLogo 1s ease-out forwards;
+  }
+
+  .contenedor__logo-titulo {
+    display: flex;
+    align-items: center; /* Para alinear verticalmente los elementos */
+  }
+
+  h1{
+    /*color: #003c74;*/
+    color: #003c74;
+    font-size: 65px;
+    text-align: center;
+    margin: 0; /* Eliminar el margen predeterminado del h1 */
+    margin-top: 20px;
+    z-index: 1;
+    animation: deslizarH1 1s ease-out forwards;
+    margin-left: 51%;
+    top: 45%;
+  }
+
+  html, body {
+    height: 100%; /* Asegura que el <html> y <body> cubran toda la altura de la ventana */
+    margin: 0; /* Elimina el margen por defecto */
+    padding: 0; /* Elimina el relleno por defecto */
+  }
+
+  body {
+    /*background-image: radial-gradient(circle, #0077b6, #0096c7, #00b4d8, #48cae4, #90e0ef);*/
+    /*background-image: radial-gradient(circle, #c8cacc, #f5f8fa, #fff);*/
+    background-image:  url('/static/images/fondo_facultad.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(3px);
+  }
+
+  main {
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    /*margin-top: 100px;*/
+  }
+
+  .contendor__todo {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    position: relative;
+  }
+
+  .caja__trasera {
+    width: 80%;
+    padding: 15px 20px;
+    max-width: 1250px; /* Reducir el ancho máximo */
+    display: flex;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    background-color: #003c74;
+    /*border-radius: 0.5rem;*/
+    border-radius: 25rem;
+    /*border-radius: 100px;*/
+    margin: auto; /* Centrar horizontalmente */
+    margin-top: 50px; /* Espaciado superior */
+    /* opacity: 0; Inicialmente invisible */
+    /* animation: deslizarCajaTrasera 1s ease-out 1.5s forwards; */
+  }
+
+ .caja__trasera div {
+    margin: 100px 50px;
+    color: white;
+    transition: all 500ms;
+    text-align: center;
+  }
+
+  .caja__trasera div p,
+  .caja__trasera div button {
+    margin-top: 30px;
+  }
+
+  .caja__trasera div h3 {
+    font-weight: 400;
+    font-size: 26px;
+  }
+
+  .caja__trasera button {
+    padding: 10px 40px;
+    border: 2px solid #fff;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    border-radius: 50rem;
+    outline: none;
+    transition: all 300ms;
+  }
+
+  .caja__trasera button:hover {
+    background: #fff;
+    color: #0077b6;
+    border-color: #0077b6;
+  }
+
+
+  /*Estilos para la animacion de los imputs en el login y register*/
+
+  .inputGroup {
+    /*font-family: 'Segoe UI', sans-serif;*/
+    /*margin: 1em 0 1em 0;*/
+    /*max-width: 190px;*/
+    position: relative;
+  }
+
+  .inputGroup input {
+    font-size: 100%;
+    padding: 0.8em;
+    outline: none;
+    border: 1px solid rgba(187, 187, 187, 0);
+    background-color: transparent;
+    border-radius: 20px;
+    width: 100%;
+  }
+
+  .inputGroup label {
+    font-size: 100%;
+    position: absolute;
+    left: 0;
+    padding: 0.8em;
+    /*margin-left: 0.5em;*/
+    margin-top: 20px;
+    margin-left: -1px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: rgb(100, 100, 100);
+  }
+
+  .inputGroup :is(input:focus, input:valid)~label {
+    transform: translateY(25%);
+    margin: 0px;
+    /*margin-left: 0em;*/
+    margin-left: 8px;
+    padding: 0.4em;
+    padding-left: 15px;
+    padding-right: 15px;
+    /*background-color: #e8e8e8;*/
+    background-color: #0076b6d8;
+    /*background-color: #ffffff;*/
+    color: #ffffffe3;
+    font-size: 75%;
+    border-radius: 15px;
+  }
+
+  .inputGroup :is(input:focus, input:valid) {
+    border-color: rgb(150, 150, 200);
+  }
+
+  /*-------------------------------------*/
+
+  /* Formularios */
+  .contenedor__login-register {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    top: -190px;
+    left: 250px;
+    transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+  }
+
+  .contenedor__login-register form {
+    width: 100%;
+    padding: 40px 18px;
+    background-image: radial-gradient(circle, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff);
+    position: absolute;
+    border-radius: 30px;
+    text-align: center;
+  }
+
+  .contenedor__login-register form h2 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0077b6;
+  }
+
+  .contenedor__login-register form input {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    /*border: none;*/
+    background: rgba(173, 173, 173, .27);
+    font-size: 16px;
+    outline: none;
+    border-radius: 0.6rem;
+  }
+
+  .contenedor__login-register form button{
+    padding: 11px 48px;
+    margin-top: 30px;
+    border: none;
+    font-size: 16px;
+    background-color: #0077b6;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    border-radius: 1.3rem;
+  }
+
+  .contenedor__login-register form button:hover {
+    background: #005f8b;
+    color: white;
+    border-color: #005f8b;
+  }
+
+  .formulario__login{
+    opacity: 1;
+    display: block;
+    /* opacity: 0; */
+    /* animation: deslizarCajaTrasera 1s ease-out 1.5s forwards; */
+  }
+
+  .formulario__register{
+    display: none;
+  }
+
+  /*Ojito contraseña*/
+
+  .password-container {
+    position: relative;
+  }
+
+  .toggle-password {
+      position: absolute;
+      top: 68%;
+      right: 20px;
+      transform: translateY(-50%);
+      cursor: pointer;
+  }
+
+  .toggle-password i {
+      font-size: 18px;
+  }
+
+  #password {
+      padding-right: 50px; /* Espacio para el icono */
+
+  }
+
+  /* Estilos para las alertas */
+
+/* Mensaje de éxito */
+.flash-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+/* Mensaje de información */
+.flash-info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+/* Mensaje de advertencia */
+.flash-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+/* Mensaje de error */
+.flash-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+/* Estilos generales para todas las alertas */
+.flashes {
+  /*list-style: none;
+  margin: 0;
+  padding: 0;*/
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 90%;
+  max-width: 500px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.flashes li {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 15px;
+  color: white;
+}
+
+.flash-success {
+  background-color: #28a745;
+}
+
+.flash-danger {
+  background-color: #dc3545;
+}
+
+.flash-info {
+  background-color: #17a2b8;
+}
+
+.flash {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+/* Cerrar el botón de la alerta */
+.flash button.close {
+  padding: 0.75rem 1.25rem;
+  margin: -0.75rem -1.25rem -0.75rem auto;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+  /* Responsive Desing*/
+
+  @media screen and (max-width: 850px){
+
+    main{
+      margin-top: 50px;
+    }
+
+    .caja__trasera{
+      max-width: 350px;
+      height: 300px;
+      flex-direction: column;
+      margin: auto;
+    }
+
+    .caja__trasera div{
+        margin: 0px;
+        position: absolute;
+    }
+
+    /*Formularios*/
+
+    .contenedor__login-register{
+        top: -10px;
+        left: -5px;
+        margin: auto;
+    }
+
+    .contenedor__login-register form{
+        position: relative;
+    }
+}
