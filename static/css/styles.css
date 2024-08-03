@@ -303,8 +303,8 @@ footer {
 }
 
 .user-info img {
-    width: 40px; /* Ajusta el tamaño de la imagen */
-    height: 40px; /* Ajusta el tamaño de la imagen */
+    width: 45px; /* Ajusta el tamaño de la imagen */
+    height: 45px; /* Ajusta el tamaño de la imagen */
     border-radius: 50%; /* Hace que la imagen sea circular */
     margin-right: 10px;
     margin-left: -5px;
