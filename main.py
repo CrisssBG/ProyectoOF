@@ -239,7 +239,7 @@ def login_required(func):
 def home():
     if 'logged_in' in session:
         return redirect(url_for('index'))
-    return render_template('index.html')
+    return render_template('ini.html')
 
 
 @app.route('/login', methods=['POST'])
@@ -370,7 +370,7 @@ def index():
     # # Si 'data' es None, significa que el usuario no tiene imagen de perfil guardada
     imagen_p = data[0] if data else None
     # # Ahora pasas 'imagen_p' como parte del contexto al renderizar el template
-    return render_template('indexH.html', imagen_p=imagen_p if imagen_p else 'default.png')
+    return render_template('index.html', imagen_p=imagen_p if imagen_p else 'default.png')
     # try:
     #     # Obtener imagen de perfil del docente
     #     cur = mysql.connection.cursor()
