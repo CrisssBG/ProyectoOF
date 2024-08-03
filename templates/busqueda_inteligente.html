@@ -7,7 +7,7 @@
     <h1>Búsqueda</h1>
     <div class="info-container">
         <h2>Tipos de Búsquedas<hr class="line"></h2>
-
+        
         <!-- <div id="content" class="blur"> -->
         <div class="seccion">
             <div class="titulo-seccion" onclick="toggleSeccion('seccion1')">
@@ -17,7 +17,7 @@
             <div id="seccion1" class="contenido-seccion" style="background-color: #0016790e;"><br>
                 <!-- <label style="margin-left: 28px;" for="experiencia"><strong>Años mínimos de experiencia:</strong></label>
                 <input type="number" id="experiencia" name="experiencia"><br><br> -->
-                <form action="/busqueda_inteligente" method="POST">
+                <form action="/busqueda_inteligente" method="POST" onsubmit="handleFormSubmit(event, this)">
                     
                     <div style=" display: flex; justify-content: space-between;">
                         <div style="margin-left: 20px;">
@@ -32,6 +32,7 @@
                                             <div id="rangeH-text" class="text-placeholder" style="font-size: 12px; border: 10px 10px 5px 5px; background-color: blue; color: white;" >0</div> <!-- Texto inicial -->
                                         </div>
                                         <span class="triangle" style="border-bottom-color: blue;"></span>
+                                        <!-- <button type="submit" class="btn btn-primary">Limpiar Tabla</button> -->
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -204,7 +205,7 @@
                 <i id="icono-seccion2" class="fas fa-chevron-down"></i>
             </div>
             <div id="seccion2" class="contenido-seccion" style="background-color: #0016790e;"><br>
-                <form action="/busqueda_avanzada" method="POST">
+                <form action="/busqueda_avanzada" method="POST" onsubmit="handleFormSubmit(event, this)">
                     
                     <div style=" display: flex; justify-content: space-between;">
                         <div class="form-group" style="margin-left: 20px;">
@@ -336,7 +337,7 @@
                 <i id="icono-seccion3" class="fas fa-chevron-down"></i>
             </div>
             <div id="seccion3" class="contenido-seccion" style="background-color: #0016790e;">
-                <form action="/busqueda_ia" method="POST">
+                <form action="/busqueda_ia" method="POST" onsubmit="handleFormSubmit(event, this)">
                     <div style="text-align: center;"><br>
                         <label for="mensaje"><strong>Busqueda Inteligente:</strong></label>
                         <input type="text" id="mensaje" name="mensaje" style="width: 600px; /*border: 5px solid #007bff;*/" placeholder="Magíster con concimiento en Diseño Web y Base de Datos. Mínimo 8 años de Experiencia."><br>
@@ -348,8 +349,11 @@
         <!-- </div> -->
         <br>
     </div>
-
-
+    <!-- <form action="{{ url_for('busqueda_inteligente') }}" method="post">
+        <button type="submit" class="btn btn-primary">Limpiar Tabla</button>
+    </form> -->
+    </div>
+</form>
         
         <!--hr-->
 
@@ -472,9 +476,9 @@
       
 
         <!--br><button type="submit">Buscar</button-->
-    </div>
+    <!-- </div> -->
     <!--button type="button" onclick="buscarDocentes()">Buscar</button-->
-</form>
+
 <!-- <button id="toggleButton" type="submit" style="position: relative; z-index: 5;" onclick="hideLoading()">REALIZAR BÚSQUEDA</button> -->
 
 
@@ -592,12 +596,13 @@
     </div> -->
         <!-- Lista de docentes que coinciden con la búsqueda -->
 
-{% if tipo_busqueda == 'inteligente' %}
+<!-- {% if tipo_busqueda == 'inteligente' %} -->
 
     <div class="info-container">
         {% if docentes %}
             <ul id="resultado-busqueda">
-                <h2>Resultado de la Búsqueda<hr class="line"></h2>
+                
+                <h2>Resultado de la Búsqueda con Datos Difusos<hr class="line"></h2>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-bordered table-sm bg-white">
                             <thead>
@@ -703,15 +708,15 @@
             <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
         {% endif %}
     </div>
-{% endif %}
+<!-- {% endif %} -->
 
-{% if tipo_busqueda == 'avanzada' %}
+<!-- {% if tipo_busqueda == 'avanzada' %} -->
 
     <div class="info-container">
         
         {% if docentes %}
             <ul id="resultado-busqueda">
-                <h2>Resultado de la Búsqueda<hr class="line"></h2>
+                <h2>Resultado de la Búsqueda Avanzada<hr class="line"></h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-bordered table-sm bg-white">
                         <thead>
@@ -798,16 +803,17 @@
             <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
         {% endif %}
     </div>
-    {% set tipo_busqueda = 'inteligente' %}
-{% endif %}
+    <!-- {% set tipo_busqueda = 'inteligente' %} -->
+<!-- {% endif %} -->
 
-{% if tipo_busqueda == 'ia' %}
+<!-- {% if tipo_busqueda == 'ia' %} -->
 
     <div class="info-container">
         
         {% if docentes_data  %}
             <ul id="resultado-busqueda">
-                <h2>Resultado de la Búsqueda<hr class="line"></h2>
+                
+                <h2>Resultado de la Búsqueda IA<hr class="line"></h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-bordered table-sm bg-white">
                         <thead>
@@ -894,7 +900,7 @@
             <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
         {% endif %}
     </div>
-{% endif %}
+<!-- {% endif %} -->
         
     
                     
@@ -1230,7 +1236,73 @@
 
     // Agrega un evento para el botón para que al hacer clic se llame a hideLoading
     document.getElementById('toggleButton').addEventListener('click', hideLoading);
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Selecciona el formulario y el mensaje
+        var formulario = document.getElementById('limpiar-form');
+        var mensaje = document.getElementById('mensaje');
 
+        // Verifica si el formulario se ha enviado
+        if (localStorage.getItem('formularioEnviado') === 'true') {
+            mensaje.style.display = 'none';
+        } else {
+            mensaje.style.display = 'block';
+        }
+
+        // Maneja el evento de envío del formulario
+        formulario.addEventListener('submit', function() {
+            // Marca el formulario como enviado en localStorage
+            localStorage.setItem('formularioEnviado', 'true');
+            // Oculta el mensaje
+            mensaje.style.display = 'none';
+        });
+    });
+
+    async function realizarBusqueda(url, formData) {
+        try {
+            // Convierte los datos del formulario en una cadena de consulta
+            const queryString = new URLSearchParams(formData).toString();
+
+            // Envía la solicitud
+            const response = await fetch(url + '?' + queryString, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: queryString
+            });
+
+            // Verifica si la solicitud fue exitosa
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Actualiza el contenido de la página
+            const html = await response.text();
+            document.getElementById('resultado').innerHTML = html;
+
+            // Actualiza la URL en el navegador
+            history.pushState({}, '', url + '?' + queryString);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    function handleFormSubmit(event, form) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const action = form.getAttribute('action');
+        realizarBusqueda(action, Object.fromEntries(formData));
+    }
+
+    window.onpopstate = function(event) {
+        // Cargar el contenido según el estado del historial
+        fetch(window.location.href)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('resultado').innerHTML = html;
+            });
+    };
 
     // function showLoading() {
     // var toggleButton = document.getElementById('toggleButton');

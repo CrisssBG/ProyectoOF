@@ -25,178 +25,152 @@
 
   @keyframes animarLogo {
     0% {
-      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
-      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 5;
-    }
-    25% {
-      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
-      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
-      transform: translate(-50%, -50%) scale(1.5);
-      opacity: 5;
+      transform: translateY(200%) scale(1.5);
+      opacity: 0;
     }
     50% {
-      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
-      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
-      transform: translate(-120%, -50%) scale(1.5);
-      /* transform: translate(-50%, -50%) scale(2); */
-      opacity: 5;
-    }
-    70% {
-      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
-      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
-      transform: translate(-110%, -50%) scale(1.5);
-      /* transform: translate(-50%, -50%) scale(2); */
-      opacity: 5;
-    }
-    75% {
-      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
-      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
-      transform: translate(-110%, -50%) scale(1.5);
-      /* transform: translate(-50%, -50%) scale(2); */
-      opacity: 5;
+      transform: translateY(200%) scale(1.5);
+      opacity: 1;
     }
     80% {
-      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
-      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
-      transform: translate(-110%, -50%) scale(1.5);
-      /* transform: translate(-50%, -50%) scale(2); */
-      opacity: 5;
+      transform: translate(-75%, 200%) scale(1.5);
+      opacity: 1;
     }
-    85% {
-      /*transform: scale(2) translateX(80px); /* Comienza grande y en la posición original */
-      /* transform: translate(-50%, -50%) scale(2) translateX(80px); */
-      transform: translate(-110%, -50%) scale(1.5);
-      /* transform: translate(-50%, -50%) scale(2); */
-      opacity: 5;
+    90% {
+      transform: translate(-75%, 200%) scale(1.5);
+      opacity: 1;
     }
     100% {
       /*transform: scale(1) translateX(0); /* Reduce el tamaño y se desplaza a la izquierda */
-      transform: translate(-110%, -450%) scale(1);
+      /*transform: translate(0, 0) scale(1);*/
       opacity: 1;
     }
   }
 
   /* Define la animación de deslizamiento */
-@keyframes deslizarH1 {
-  0% {
-    transform: translate(-50%, 335%) ;/* Empieza desde fuera del contenedor hacia la izquierda */
-    opacity: 0; /* Empieza invisible */
+  @keyframes deslizarH1 {
+    0% {
+      transform: translateY(210%) scale(1.5);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(210%) scale(1.5);
+      opacity: 0;
+    }
+    80% {
+      transform: translate(35%, 210%) scale(1.5);
+      opacity: 1;
+    }
+    90% {
+      transform: translate(35%, 210%) scale(1.5);
+      opacity: 1;
+    }
+    100% {
+      /*transform: scale(1) translateX(0); /* Reduce el tamaño y se desplaza a la izquierda */
+      /*transform: translate(0, 0) scale(1);*/
+      opacity: 1;
+    }
   }
-  25% {
-    transform: translate(-50%, 335%) ;/* Empieza desde fuera del contenedor hacia la izquierda */
-    opacity: 0; /* Empieza invisible */
-  }
-  50% {
-    transform:  translate(calc(-50% + 185px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
-    opacity: 1; /* Empieza invisible */
-  }
-  70% {
-    transform:  translate(calc(-50% + 175px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
-    opacity: 1; /* Empieza invisible */
-  }
-  75% {
-    transform:  translate(calc(-50% + 175px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
-    opacity: 1; /* Empieza invisible */
-  }
-  80% {
-    transform:  translate(calc(-50% + 175px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
-    opacity: 1; /* Empieza invisible */
-  }
-  85% {
-    transform:  translate(calc(-50% + 175px), 335%); /* Empieza desde fuera del contenedor hacia la izquierda */
-    opacity: 1; /* Empieza invisible */
-  }
-  100% {
-    transform: translateX(0); /* Termina en su posición original */
-    opacity: 1; /* Termina visible */
-  }
-}
 
-@keyframes deslizarCajaTrasera {
-  from {
-    transform: translateY(-5%); /* Empieza desde fuera del contenedor hacia la izquierda */
-    opacity: 0; /* Empieza invisible */
+  @keyframes deslizarCajaTrasera {
+    from {
+      transform: translateY(-5%); /* Empieza desde fuera del contenedor hacia la izquierda */
+      opacity: 0; /* Empieza invisible */
+    }
+    to {
+      transform: translateY(0); /* Termina en su posición original */
+      opacity: 1; /* Termina visible */
+    }
   }
-  to {
-    transform: translateY(0); /* Termina en su posición original */
-    opacity: 1; /* Termina visible */
-  }
-}
 
-/* Estilo para la capa de fondo blanco */
-.overlay {
-  position: fixed; /* Fijo para cubrir toda la pantalla */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white; /* Color de fondo blanco */
-  opacity: 1; /* Inicialmente visible */
-  z-index: 1; /* Asegura que esté encima de todo el contenido */
-  animation: desaparecer 1s ease-out forwards 1s; /* Aplica la animación para desaparecer */
-}
+  /* Estilo para la capa de fondo blanco */
+  .overlay {
+    position: fixed; /* Fijo para cubrir toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white; /* Color de fondo blanco */
+    opacity: 1; /* Inicialmente visible */
+    z-index: 1; /* Asegura que esté encima de todo el contenido */
+    animation: desaparecer 1s ease-out forwards 1s; /* Aplica la animación para desaparecer */
+  }
 
-/* Define la animación para desaparecer la capa de fondo */
-@keyframes desaparecer {
-  0% {
-    opacity: 1; /* Comienza visible */
+  /* Define la animación para desaparecer la capa de fondo */
+  @keyframes desaparecer {
+    0% {
+      opacity: 1; /* Comienza visible */
+    }
+    25% {
+      opacity: 0; /* Termina invisible */
+    }
+    80% {
+      transform: translate(25%, 25%) scale(2) translateX(50%);
+      opacity: 0; /* Termina invisible */
+    }
+    100% {
+      transform: translate(25%, 25%) scale(2) translateX(50%);
+      opacity: 0; /* Termina invisible */
+    }
   }
-  25% {
-    opacity: 0; /* Termina invisible */
-  }
-  80% {
-    transform: translate(25%, 25%) scale(2) translateX(50%);
-    opacity: 0; /* Termina invisible */
-  }
-  100% {
-    transform: translate(25%, 25%) scale(2) translateX(50%);
-    opacity: 0; /* Termina invisible */
-  }
-}
 
   /* Estilos para la imagen */
   .logo {
     position: absolute;
     /* display: block; */
-    top: 45%; /* Centra verticalmente en la pantalla */
-    left: 52%; /* Centra horizontalmente en la pantalla */
+    top: 50%; /* Centra verticalmente en la pantalla */
+    left: 55%; /* Centra horizontalmente en la pantalla */
     transform: translate(-50%, -50%) scale(1);
     /*margin: auto;*/
-    max-width: 20%; /* Ancho del contenedor */
+    /*max-width: 200%; /* Ancho del contenedor */
+    width: 150%;
     height: auto; /* Proporción de la imagen */
-    margin-top: 50px;
+    /*margin-top: 50px;*/
+    /*margin-top: 139%;
     margin-bottom: 2px;
     /*margin-left:26%;*/
     /* margin-left:2%; */
     margin-right: 20px;
     z-index: 1;
+    /* background: linear-gradient(to bottom, #eeeeee1f 60%, #ffffff7a 100); */
     animation: animarLogo 1s ease-out forwards;
   }
 
   .contenedor__logo-titulo {
     display: flex;
     align-items: center; /* Para alinear verticalmente los elementos */
+    position: absolute; /* O fixed si prefieres que se quede fijo en la pantalla */
+    top: 10%;
+    left: 32%;
+    /*transform: translate(-50%, -50%); /* Centra el contenedor en la pantalla */
+    gap: 20px; /* Espacio entre el logo y el título, ajusta según sea necesario */
+    /*animation: animarContenedor 1s ease-out forwards;*/
   }
 
   h1{
     /*color: #003c74;*/
+
+    /*color: #003c74;
+    font-size: 65px;
+    margin: 0; /* Elimina el margen del h1 */
+    
     color: #003c74;
     font-size: 65px;
     text-align: center;
     margin: 0; /* Eliminar el margen predeterminado del h1 */
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     z-index: 1;
     animation: deslizarH1 1s ease-out forwards;
-    margin-left: 51%;
-    top: 45%;
+    margin-left: 135%;
+    /*top: 45%;*/
   }
 
   html, body {
     height: 100%; /* Asegura que el <html> y <body> cubran toda la altura de la ventana */
     margin: 0; /* Elimina el margen por defecto */
     padding: 0; /* Elimina el relleno por defecto */
+    overflow-x: hidden; /* Evitar desplazamiento horizontal no deseado */
+    overflow-y: hidden; /* Evitar desplazamiento horizontal no deseado */
   }
 
   body {
@@ -227,7 +201,7 @@
   .caja__trasera {
     width: 80%;
     padding: 15px 20px;
-    max-width: 1250px; /* Reducir el ancho máximo */
+    max-width: 1100px; /* Reducir el ancho máximo */
     display: flex;
     justify-content: center;
     backdrop-filter: blur(10px);
@@ -236,7 +210,8 @@
     border-radius: 25rem;
     /*border-radius: 100px;*/
     margin: auto; /* Centrar horizontalmente */
-    margin-top: 50px; /* Espaciado superior */
+    /*margin-top: 50px; /* Espaciado superior */
+    margin-top: 170px; /* Espaciado superior */
     /* opacity: 0; Inicialmente invisible */
     /* animation: deslizarCajaTrasera 1s ease-out 1.5s forwards; */
   }
@@ -337,7 +312,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 380px;
+    max-width: 340px;
     position: relative;
     top: -190px;
     left: 250px;
@@ -398,6 +373,7 @@
 
   .formulario__register{
     display: none;
+    height: 450px;
   }
 
   /*Ojito contraseña*/
