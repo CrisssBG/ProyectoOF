@@ -788,6 +788,30 @@ def register():
     #return render_template('index.html')
     return render_template('register.html')
 
+
+# def busqueda():
+#     if request.method == 'POST':
+#         # Establecemos el tipo de búsqueda directamente en cada función de búsqueda
+#         tipo_busqueda = request.form.get('tipo_busqueda')
+
+#         try:
+#             if tipo_busqueda == 'inteligente':
+#                 return busqueda_inteligente()
+#             elif tipo_busqueda == 'avanzada':
+#                 return busqueda_avanzada()
+#             elif tipo_busqueda == 'ia':
+#                 return busqueda_ia()
+#             else:
+#                 raise ValueError("Tipo de búsqueda no reconocido")
+#         except Exception as e:
+#             print(f"Error: {e}")
+#             return render_template('busqueda.html', tipo_busqueda=tipo_busqueda, imagen_p='default.png', error=str(e))
+
+#     # Si la solicitud es GET, simplemente renderizamos el formulario de búsqueda
+#     return render_template('busqueda.html', tipo_busqueda='inteligente', imagen_p='default.png')
+
+
+
 @app.route('/busqueda_inteligente', methods=['GET', 'POST'])
 @login_required
 def busqueda_inteligente():
@@ -1063,7 +1087,17 @@ def busqueda_inteligente():
                     #imagen_pb = None
 
                     # cursor.close()
-                    # print('Imagen de perfil:', imagen_p)
+                    # print('Imagen de perfil:', imagen_p)}
+
+                    # Redirigir a la misma página con parámetros de búsqueda
+                    # search_params = {
+                    #     'desarrollo_arquitectura': desarrollo_arquitectura,
+                    #     'gestion_analisis_datos': gestion_analisis_datos,
+                    #     # (Omitido por brevedad: otros campos)
+                    #     'nivel_estudio': ','.join(nivel_estudio)
+                    # }
+                    # search_query_string = '&'.join([f'{key}={value}' for key, value in search_params.items()])
+                    # return redirect(url_for('busqueda_inteligente') + '?' + search_query_string)
                     
                     #docentes = obtener_docentes(tipo_busqueda)
                     #nivel_confianza_list = obtener_nivel_confianza(tipo_busqueda)
@@ -1097,6 +1131,7 @@ def busqueda_inteligente():
             print(f"Error: {e}")
             return redirect(url_for('busqueda_inteligente', imagen_p=imagen_p))
             # return render_template('error.html', error=str(e))
+        # return render_template('busqueda_inteligente.html')
     else:
         # Si el método es GET, simplemente renderiza el formulario
         return render_template('busqueda_inteligente.html', tipo_busqueda=tipo_busqueda, imagen_p=imagen_p)
@@ -1753,99 +1788,99 @@ app.jinja_env.globals.update(classify_skill=classify_skill)
 #    return render_template('perfil.html', **contexto)
 
 #@app.route('/download_excel/<int:docente_id>', methods=['POST'])
-@app.route('/download_excel', methods=['POST'])
-def download_excel():
-    if request.method == 'POST':
-    # Recuperar datos del formulario
-    #docente_nombre_apellido = request.form.get('docente_nombre_apellido')
-        docente_id = request.form.get('docente_id')
+# @app.route('/download_excel', methods=['POST'])
+# def download_excel():
+#     if request.method == 'POST':
+#     # Recuperar datos del formulario
+#     #docente_nombre_apellido = request.form.get('docente_nombre_apellido')
+#         docente_id = request.form.get('docente_id')
 
-        # Verificar que docente esté definido en el contexto actual
-        #docente = request.form.get('docente')  # Ejemplo: Recuperar docente del formulario
+#         # Verificar que docente esté definido en el contexto actual
+#         #docente = request.form.get('docente')  # Ejemplo: Recuperar docente del formulario
 
-        # Realizar consulta a la base de datos para obtener datos del docente
-        cursor = mysql.connection.cursor()
-        cursor.execute("""
-            SELECT 
-                d.nombre,
-                d.apellido,
-                d.cedula,
-                d.celular,
-                d.email,
-                d.genero,
-                d.nvl_estudio,
-                d.carrera,
-                d.disponibilidad_c,
-                rd.resultado_difuso,
-                rd.resultado_difuso_g,
-                rd.resultado_difuso_d,
-                rd.resultado_difuso_s,
-                rd.resultado_difuso_i
-            FROM 
-                habilidades_t_b h
-            JOIN 
-                docente d ON h.id_docente = d.id
-            JOIN 
-                resultados_difusos_h_t rd ON rd.id_habilidades_t_b = h.id
-            WHERE 
-                d.id = %s;
-        """, (docente_id,))
-        docente_data = cursor.fetchone()
-        cursor.close()
+#         # Realizar consulta a la base de datos para obtener datos del docente
+#         cursor = mysql.connection.cursor()
+#         cursor.execute("""
+#             SELECT 
+#                 d.nombre,
+#                 d.apellido,
+#                 d.cedula,
+#                 d.celular,
+#                 d.email,
+#                 d.genero,
+#                 d.nvl_estudio,
+#                 d.carrera,
+#                 d.disponibilidad_c,
+#                 rd.resultado_difuso,
+#                 rd.resultado_difuso_g,
+#                 rd.resultado_difuso_d,
+#                 rd.resultado_difuso_s,
+#                 rd.resultado_difuso_i
+#             FROM 
+#                 habilidades_t_b h
+#             JOIN 
+#                 docente d ON h.id_docente = d.id
+#             JOIN 
+#                 resultados_difusos_h_t rd ON rd.id_habilidades_t_b = h.id
+#             WHERE 
+#                 d.id = %s;
+#         """, (docente_id,))
+#         docente_data = cursor.fetchone()
+#         cursor.close()
 
-        # Crear un libro de Excel y una hoja
-        # wb = Workbook()
-        # ws = wb.active
-        # ws.title = 'Resultados de Búsqueda'
+#         # Crear un libro de Excel y una hoja
+#         # wb = Workbook()
+#         # ws = wb.active
+#         # ws.title = 'Resultados de Búsqueda'
 
-        # Agregar encabezados a la hoja
-        # headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso del Docente', 'Porcentaje de Similitud', 'Nivel de Confianza']
-        # ws.append(headers)
+#         # Agregar encabezados a la hoja
+#         # headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso del Docente', 'Porcentaje de Similitud', 'Nivel de Confianza']
+#         # ws.append(headers)
 
-        # Obtener datos del docente y añadir a la hoja
-        if docente_data:
-            # Crear libro de Excel y hoja
-            wb = Workbook()
-            ws = wb.active
-            ws.title = 'Resultados de Búsqueda'
+#         # Obtener datos del docente y añadir a la hoja
+#         if docente_data:
+#             # Crear libro de Excel y hoja
+#             wb = Workbook()
+#             ws = wb.active
+#             ws.title = 'Resultados de Búsqueda'
 
-            # Agregar encabezados
-            #headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
-            headers = ['Nombre', 'Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
-            ws.append(headers)
+#             # Agregar encabezados
+#             #headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
+#             headers = ['Nombre', 'Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
+#             ws.append(headers)
 
-            # Preparar datos del docente y resultados difusos
-            row_data = [
-                #'',  # Lógica para la imagen si es necesaria
-                #f"{docente_data[0]} {docente_data[1]}",
-                docente_data[0],
-                docente_data[1],
-                docente_data[2],
-                docente_data[3],
-                docente_data[4],
-                docente_data[5],
-                docente_data[6],
-                docente_data[7],
-                docente_data[8],
-                docente_data[9],    # resultado_difuso
-                docente_data[10],   # resultado_difuso_g
-                docente_data[11],   # resultado_difuso_d
-                docente_data[12],   # resultado_difuso_s
-                docente_data[13]    # resultado_difuso_i
-            ]
-            ws.append(row_data)
+#             # Preparar datos del docente y resultados difusos
+#             row_data = [
+#                 #'',  # Lógica para la imagen si es necesaria
+#                 #f"{docente_data[0]} {docente_data[1]}",
+#                 docente_data[0],
+#                 docente_data[1],
+#                 docente_data[2],
+#                 docente_data[3],
+#                 docente_data[4],
+#                 docente_data[5],
+#                 docente_data[6],
+#                 docente_data[7],
+#                 docente_data[8],
+#                 docente_data[9],    # resultado_difuso
+#                 docente_data[10],   # resultado_difuso_g
+#                 docente_data[11],   # resultado_difuso_d
+#                 docente_data[12],   # resultado_difuso_s
+#                 docente_data[13]    # resultado_difuso_i
+#             ]
+#             ws.append(row_data)
 
-            # Guardar el libro de Excel
-            excel_filename = f'Resultados_Busqueda_{docente_id}.xlsx'
-            wb.save(excel_filename)
+#             # Guardar el libro de Excel
+#             excel_filename = f'Resultados_Busqueda_{docente_id}.xlsx'
+#             wb.save(excel_filename)
 
-            # Ofrecer el archivo Excel para descargar
-            return send_file(excel_filename, as_attachment=True)
+#             # Ofrecer el archivo Excel para descargar
+#             return send_file(excel_filename, as_attachment=True)
 
-        else:
-            # Manejar caso donde docente no está definido
-            return "Error: No se encontró información del docente para generar el archivo Excel."
-    return redirect(url_for('index'))  # Ejemplo de redirección a la página principal
+#         else:
+#             # Manejar caso donde docente no está definido
+#             return "Error: No se encontró información del docente para generar el archivo Excel."
+#     return redirect(url_for('busqueda_inteligente'))  # Ejemplo de redirección a la página principal
 
 @app.context_processor
 def inject_user():
