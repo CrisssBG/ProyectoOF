@@ -355,6 +355,8 @@ def registeruser():
     mysql.connection.commit()
 
     #--------------------------------------------------------#
+    cursor.execute('INSERT INTO intereses (id_docente ) VALUES (%s)', (docente_id,))
+    mysql.connection.commit()
 
     cursor.close()
     flash('Registro exitoso, ahora puedes iniciar sesión', 'success')
@@ -478,6 +480,42 @@ def perfil():
                 # Convertir imagen_p a cadena str si es bytes
                 #if isinstance(imagen_p, bytes):
                 #    imagen_p = imagen_p.decode('utf-8')
+
+                cursor.execute('SELECT tipos_intereses, otros FROM intereses WHERE id_docente = %s', (id_docente,))
+                result  = cursor.fetchone()
+
+                if result:
+                    tipos_intereses = result[0]
+                    otros = result[1]
+                    
+                    # Verificar si tipos_intereses es None o una cadena vacía
+                    if tipos_intereses:
+                        # Dividir la cadena en una lista de intereses
+                        intereses = tipos_intereses.split(',')
+                    else:
+                        intereses = []
+                    
+                    # Verificar si otros es None o una cadena vacía
+                    if otros:
+                        # No es necesario dividir, simplemente asigna el valor
+                        texto_otros = otros
+                    else:
+                        texto_otros = ""
+                else:
+                    intereses = []
+                    texto_otros = ""
+
+                # if result:
+                #     tipos_intereses = result[0]
+                #     otros = result[1]
+                #     # Verificar si tipos_intereses es None
+                #     if tipos_intereses:
+                #         # Dividir la cadena en una lista de intereses
+                #         intereses = tipos_intereses.split(',')
+                #     else:
+                #         intereses = []
+                # else:
+                #     intereses = []
 
                 # Obtener habilidades técnicas y blandas del docente
                 cursor.execute('SELECT * FROM habilidades_t_b WHERE id_docente = %s', (id_docente,))
@@ -765,7 +803,7 @@ def perfil():
 
                 cursor.close()
 
-                return render_template('perfil.html', nombre=nombre, apellido=apellido, email=email, cedula=cedula, celular=celular, genero=genero, nvl_estudio=nvl_estudio, carrera=carrera, imagen_p=imagen_p, disponibilidad_c=disponibilidad_c, anios_exp_informatica=anios_exp_informatica, habilidades_tecnicas=habilidades_tecnicas, habilidades_blandas=habilidades_blandas, habilidades_extracurriculares=habilidades_extracurriculares, resultado_difuso=resultado_difuso, resultado_difuso_g=resultado_difuso_g, resultado_difuso_d=resultado_difuso_d, resultado_difuso_s=resultado_difuso_s, resultado_difuso_i=resultado_difuso_i, resultado_difuso_bhl=resultado_difuso_bhl, resultado_difuso_bhc=resultado_difuso_bhc, resultado_difuso_bhi=resultado_difuso_bhi, resultado_difuso_bhm=resultado_difuso_bhm, resultado_difuso_ecd=resultado_difuso_ecd, resultado_difuso_eec=resultado_difuso_eec, resultado_difuso_edp=resultado_difuso_edp, resultado_difuso_eit=resultado_difuso_eit)
+                return render_template('perfil.html', nombre=nombre, apellido=apellido, email=email, cedula=cedula, celular=celular, genero=genero, nvl_estudio=nvl_estudio, carrera=carrera, imagen_p=imagen_p, disponibilidad_c=disponibilidad_c, anios_exp_informatica=anios_exp_informatica, intereses=intereses, texto_otros=texto_otros, habilidades_tecnicas=habilidades_tecnicas, habilidades_blandas=habilidades_blandas, habilidades_extracurriculares=habilidades_extracurriculares, resultado_difuso=resultado_difuso, resultado_difuso_g=resultado_difuso_g, resultado_difuso_d=resultado_difuso_d, resultado_difuso_s=resultado_difuso_s, resultado_difuso_i=resultado_difuso_i, resultado_difuso_bhl=resultado_difuso_bhl, resultado_difuso_bhc=resultado_difuso_bhc, resultado_difuso_bhi=resultado_difuso_bhi, resultado_difuso_bhm=resultado_difuso_bhm, resultado_difuso_ecd=resultado_difuso_ecd, resultado_difuso_eec=resultado_difuso_eec, resultado_difuso_edp=resultado_difuso_edp, resultado_difuso_eit=resultado_difuso_eit)
             else:
                 flash('No se encontraron datos del docente para este usuario', 'warning')
         else:
@@ -1102,6 +1140,9 @@ def busqueda_inteligente():
                     #docentes = obtener_docentes(tipo_busqueda)
                     #nivel_confianza_list = obtener_nivel_confianza(tipo_busqueda)
                     # Renderizar la plantilla con los resultados
+
+                    flash('¡Búsqueda realizada correctamente!', 'success')
+
                     return render_template('busqueda_inteligente.html',
                                         docentes=docentes, id_habilidades_t_b_list=id_habilidades_t_b_list,
                                         resultado_difuso_list=resultado_difuso_list,
@@ -1123,6 +1164,7 @@ def busqueda_inteligente():
                                         imagen_p=imagen_p, tipo_busqueda=tipo_busqueda)
                 else:
                     # No se encontraron resultados
+                    flash('No se encontraron coincidencias con la búsqueda ', 'danger')
                     return render_template('busqueda_inteligente.html', imagen_p=imagen_p, tipo_busqueda=tipo_busqueda)
             finally:
                 cursor.close()
@@ -1272,6 +1314,10 @@ def busqueda_avanzada():
             # Cerrar el cursor
             cursor.close()
 
+            if not docente:
+                flash('No se encontraron coincidencias con la búsqueda', 'danger')
+                return redirect(url_for('busqueda_inteligente'))
+
             # # Si no se encuentran docentes, establecer la imagen predeterminada
             # if not docentes_data:
             #     imagen_p
@@ -1280,11 +1326,13 @@ def busqueda_avanzada():
             #     return redirect('/busqueda_general')
             # Renderizar la plantilla con los resultados
             #return redirect(url_for('busqueda_inteligente', docentes=docentes_data, habilidades_tecnicas=habilidades_tecnicas_seleccionadas, habilidades_blandas=habilidades_blandas_seleccionadas, tipo_busqueda=tipo_busqueda, imagen_p=imagen_p))
+            flash('¡Búsqueda realizada correctamente!', 'success')
             return render_template('busqueda_inteligente.html', docentes=docentes_data, habilidades_tecnicas=habilidades_tecnicas_seleccionadas, habilidades_blandas=habilidades_blandas_seleccionadas, habilidades_extracurriculares_seleccionadas=habilidades_extracurriculares_seleccionadas, tipo_busqueda=tipo_busqueda, imagen_p=imagen_p)
     
         except Exception as e:
             # Manejo de errores
             print(f"Error: {e}")
+            flash('No se encontraron coincidencias con la búsqueda', 'danger')
             return redirect(url_for('busqueda_inteligente'))
             #return redirect(url_for('busqueda_inteligente', tipo_busqueda=tipo_busqueda, imagen_p=imagen_p, error=str(e)))
             # return render_template('busqueda_inteligente.html', tipo_busqueda=tipo_busqueda, imagen_p=imagen_p, error=str(e))
@@ -1301,6 +1349,11 @@ def busqueda_ia():
     imagen_p = 'default.png'  # Valor predeterminado
 
     try:
+        # Validar que el mensaje no esté vacío
+        if not mensaje:
+            flash('El mensaje de búsqueda no puede estar vacío', 'danger')
+            return redirect(url_for('busqueda_inteligente'))
+        
         # Imprimir datos ingresados
         print(f"Mensaje recibido: {mensaje}")
 
@@ -1310,17 +1363,45 @@ def busqueda_ia():
         anios_exp_minimos = 0
 
         # Procesar el mensaje de búsqueda
+        # Mapeo de términos comunes a niveles de estudio
+        niveles_estudio_map = {
+            'tecnólogo': 'Tecnólogo',
+            'licenciatura': 'Licenciatura',
+            'especialización': 'Especialización',
+            'maestría': 'Maestría',
+            'doctorado': 'Doctorado',
+            'posdoctorado': 'Posdoctorado',
+            'ingeniero': 'Licenciatura',  # Ajustar según contexto
+            'magíster': 'Maestría',
+            'master': 'Maestría',
+            'bachelor': 'Licenciatura',
+            'doctor': 'Doctorado'
+        }
+
         # Buscar nivel de estudio
-        if re.search(r'Magister|Licenciado|Ingeniero', mensaje, re.IGNORECASE):
-            nivel_estudio = 'Maestria'  # Ajusta la lógica para diferentes niveles
+        for termino, nivel in niveles_estudio_map.items():
+            if re.search(termino, mensaje, re.IGNORECASE):
+                nivel_estudio = nivel
+                break
 
         # Buscar habilidades
-        habilidades = re.findall(r'Diseño Interfaz|Base de Datos|Desarrollo Frontend|Desarrollo Backend', mensaje, re.IGNORECASE)
+        habilidades_posibles = [
+            'Desarrollo Software', 'Desarrollo Frontend', 'Desarrollo Backend', 'Redes', 'Análisis de Datos',
+            'Gestión Base de Datos', 'Business Intelligence (BI)', 'Sistemas Operativos', 'Diseño Interfaz',
+            'Animación Gráfica', 'Prototipado', 'Administración Servidores', 'Seguridad Informática',
+            'Gestión Servidores Nube', 'Criptografía', 'Aprendizaje Automático (Machine Learning)'
+        ]
+        habilidades = [h.replace(' ', '_').lower() for h in habilidades_posibles if re.search(h, mensaje, re.IGNORECASE)]
 
         # Buscar años de experiencia
-        match = re.search(r'(\d+)\s*años? de experiencia', mensaje, re.IGNORECASE)
+        match = re.search(r'(\d+)\s*años?\s*de\s*experiencia', mensaje, re.IGNORECASE)
         if match:
             anios_exp_minimos = int(match.group(1))
+
+        # Verificar si al menos uno de los parámetros de búsqueda es significativo
+        if not nivel_estudio and not habilidades and anios_exp_minimos == 0:
+            flash('No se encontraron parámetros válidos en la búsqueda', 'danger')
+            return redirect(url_for('busqueda_inteligente'))
 
         # Construir consulta SQL basada en los parámetros extraídos
         cursor = mysql.connection.cursor()
@@ -1390,6 +1471,11 @@ def busqueda_ia():
         # session['habilidades_tecnicas'] = habilidades_tecnicas
         # session['habilidades_blandas'] = habilidades_blandas
 
+        if not docentes_data:
+            flash('No se encontraron coincidencias con la búsqueda', 'danger')
+            return redirect(url_for('busqueda_inteligente'))
+        
+        flash('¡Búsqueda realizada correctamente!', 'success')
         # Renderizar el template directamente
         return render_template('busqueda_inteligente.html',
                                tipo_busqueda=tipo_busqueda,
@@ -1403,6 +1489,7 @@ def busqueda_ia():
 
     except Exception as e:
         # Manejo de errores
+        flash('No se encontraron coincidencias con la búsqueda', 'danger')
         print(f"Error: {e}")
         # Guardar información en la sesión para manejar el error en la página principal
         session['tipo_busqueda'] = tipo_busqueda
@@ -1411,6 +1498,59 @@ def busqueda_ia():
         return redirect(url_for('busqueda_inteligente'))
     
 
+@app.route('/buscar_intereses', methods=['POST'])
+def buscar_intereses():
+    imagen_p = 'default.png'  # Valor predeterminado
+    tipo_busqueda = 'intereses'
+
+    # Obtener el valor seleccionado del formulario
+    tipos_intereses = request.form.get('tipos_intereses')
+
+    # Validar que tipos_intereses no sea vacío
+    if not tipos_intereses:
+        # return jsonify({"error": "No se proporcionó ningún interés"}), 400  # Devuelve un error si el interés está vacío
+        return redirect(url_for('busqueda_inteligente'))
+    try:
+        # Realizar la consulta a la base de datos con LIKE
+        cursor = mysql.connection.cursor()
+        query = """
+            SELECT d.nombre, d.apellido, d.cedula, d.celular, d.email, d.genero, d.nvl_estudio, d.carrera, d.imagen_p, d.disponibilidad_c, i.tipos_intereses, i.otros
+            FROM docente d
+            JOIN intereses i ON d.id = i.id_docente
+            WHERE i.tipos_intereses LIKE %s
+        """
+        cursor.execute(query, ('%' + tipos_intereses + '%',))
+        resultados = cursor.fetchall()
+
+        # Extraer imagen de perfil
+        cursor.execute('SELECT imagen_p FROM docente WHERE id_usuario = %s', (session['user_id'],))
+        imagen_p_result = cursor.fetchone()
+        if imagen_p_result:
+            imagen_p = imagen_p_result[0]
+        else:
+            imagen_p = 'default.png'
+
+        cursor.close()
+
+        print(f"Resultados de la búsqueda: {resultados}")
+        
+        if not resultados:
+            flash('No se encontraron coincidencias con la búsqueda', 'danger')
+            return redirect(url_for('busqueda_inteligente'))
+            # return jsonify({"message": "No se encontraron resultados"}), 404  # Mensaje si no se encuentran resultados
+        
+        flash('¡Búsqueda realizada correctamente!', 'success')
+        # Pasar los resultados al template
+        return render_template('busqueda_inteligente.html', resultados=resultados, imagen_p=imagen_p, tipo_busqueda=tipo_busqueda)
+    
+    except Exception as e:
+        # Manejo de errores
+        # return jsonify({"error": str(e)}), 500  # Devuelve un error si ocurre una excepción
+        # Manejo de errores
+        flash('No se encontraron coincidencias con la búsqueda', 'danger')
+        print(f"Error: {e}")
+        session['imagen_p'] = imagen_p
+        return redirect(url_for('busqueda_inteligente'))
 
 
 # Ruta para guardar el perfil editado
@@ -1577,6 +1717,11 @@ def guardar_habilidades_perfil():
             'mindfulness_meditacion': request.form.get('mindfulness_meditacion', type=int),
         }
 
+        # Obtener intereses seleccionados
+        # intereses = request.form.getlist('intereses')
+        tipos_intereses = ','.join(request.form.getlist('tipos_intereses'))
+        otros = request.form.get('otros', '')  # Obtiene el valor de 'otros', o una cadena vacía si no está presente
+
         # Actualizar la base de datos con las habilidades técnicas
         cur = mysql.connection.cursor()
         cur.execute("""
@@ -1685,6 +1830,23 @@ def guardar_habilidades_perfil():
         ))
         mysql.connection.commit()
         
+        # Actualizar la base de datos
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE intereses
+            SET tipos_intereses = %s,
+                otros = %s
+            WHERE id_docente = %s
+        """, (tipos_intereses, otros, id_docente))
+        mysql.connection.commit()
+        cur.close()
+
+        # if result:
+        #     tipos_intereses = result[0]
+        #     # Dividir la cadena en una lista de intereses
+        #     intereses = tipos_intereses.split(',')
+        # else:
+        #     intereses = []
 
         # # Obtener el ID de habilidades_t_b recién actualizado
         # cur.execute('SELECT id FROM habilidades_t_b WHERE id_docente = %s', (id_docente,))
@@ -1725,7 +1887,7 @@ def guardar_habilidades_perfil():
         #mysql.connection.commit()
 
         #mysql.connection.commit()
-        cur.close()
+        #cur.close()
 
         # Flash de éxito y redirección a la página del perfil
         flash('¡Habilidades actualizadas correctamente!', 'success')

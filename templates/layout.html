@@ -115,7 +115,7 @@
                 </ul>
             </li> -->
             <li>
-                <a class="nav-link {% if 'busqueda_inteligente' in request.path or request.endpoint in ['busqueda_inteligente', 'busqueda_avanzada', 'busqueda_ia'] %}active{% endif %}" href="{{ url_for('busqueda_inteligente') }}">
+                <a class="nav-link {% if 'busqueda_inteligente' in request.path or request.endpoint in ['busqueda_inteligente', 'busqueda_avanzada', 'busqueda_ia', 'buscar_intereses'] %}active{% endif %}" href="{{ url_for('busqueda_inteligente') }}">
                     <i class="fas fa-search" onclick="toggleNav()"></i> Búsqueda
                 </a>
             </li>

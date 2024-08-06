@@ -181,7 +181,19 @@ CREATE TABLE IF NOT EXISTS resultados_difusos_h_t (
 );
 
 
+CREATE TABLE IF NOT EXISTS intereses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_docente INT UNIQUE, -- Clave externa que referencia al docente correspondiente
+    tipos_intereses VARCHAR(255),
+    otros VARCHAR(255),
+    FOREIGN KEY (id_docente) REFERENCES docente(id)
+);
+
+
 
  INSERT INTO historial_busquedas (usuario_id, fecha, desarrollo_arquitectura, gestion_analisis_datos, disenio_interfaz_multimedia, seguridad_cloud_computing, infraestructura_comunicaciones)
                 VALUES (%s, NOW(), %s, %s, %s, %s, %s)
             """
+
+
+        
