@@ -355,6 +355,8 @@ def registeruser():
     mysql.connection.commit()
 
     #--------------------------------------------------------#
+    cursor.execute('INSERT INTO intereses (id_docente ) VALUES (%s)', (docente_id,))
+    mysql.connection.commit()
 
     cursor.close()
     flash('Registro exitoso, ahora puedes iniciar sesión', 'success')
@@ -478,6 +480,42 @@ def perfil():
                 # Convertir imagen_p a cadena str si es bytes
                 #if isinstance(imagen_p, bytes):
                 #    imagen_p = imagen_p.decode('utf-8')
+
+                cursor.execute('SELECT tipos_intereses, otros FROM intereses WHERE id_docente = %s', (id_docente,))
+                result  = cursor.fetchone()
+
+                if result:
+                    tipos_intereses = result[0]
+                    otros = result[1]
+                    
+                    # Verificar si tipos_intereses es None o una cadena vacía
+                    if tipos_intereses:
+                        # Dividir la cadena en una lista de intereses
+                        intereses = tipos_intereses.split(',')
+                    else:
+                        intereses = []
+                    
+                    # Verificar si otros es None o una cadena vacía
+                    if otros:
+                        # No es necesario dividir, simplemente asigna el valor
+                        texto_otros = otros
+                    else:
+                        texto_otros = ""
+                else:
+                    intereses = []
+                    texto_otros = ""
+
+                # if result:
+                #     tipos_intereses = result[0]
+                #     otros = result[1]
+                #     # Verificar si tipos_intereses es None
+                #     if tipos_intereses:
+                #         # Dividir la cadena en una lista de intereses
+                #         intereses = tipos_intereses.split(',')
+                #     else:
+                #         intereses = []
+                # else:
+                #     intereses = []
 
                 # Obtener habilidades técnicas y blandas del docente
                 cursor.execute('SELECT * FROM habilidades_t_b WHERE id_docente = %s', (id_docente,))
@@ -765,7 +803,7 @@ def perfil():
 
                 cursor.close()
 
-                return render_template('perfil.html', nombre=nombre, apellido=apellido, email=email, cedula=cedula, celular=celular, genero=genero, nvl_estudio=nvl_estudio, carrera=carrera, imagen_p=imagen_p, disponibilidad_c=disponibilidad_c, anios_exp_informatica=anios_exp_informatica, habilidades_tecnicas=habilidades_tecnicas, habilidades_blandas=habilidades_blandas, habilidades_extracurriculares=habilidades_extracurriculares, resultado_difuso=resultado_difuso, resultado_difuso_g=resultado_difuso_g, resultado_difuso_d=resultado_difuso_d, resultado_difuso_s=resultado_difuso_s, resultado_difuso_i=resultado_difuso_i, resultado_difuso_bhl=resultado_difuso_bhl, resultado_difuso_bhc=resultado_difuso_bhc, resultado_difuso_bhi=resultado_difuso_bhi, resultado_difuso_bhm=resultado_difuso_bhm, resultado_difuso_ecd=resultado_difuso_ecd, resultado_difuso_eec=resultado_difuso_eec, resultado_difuso_edp=resultado_difuso_edp, resultado_difuso_eit=resultado_difuso_eit)
+                return render_template('perfil.html', nombre=nombre, apellido=apellido, email=email, cedula=cedula, celular=celular, genero=genero, nvl_estudio=nvl_estudio, carrera=carrera, imagen_p=imagen_p, disponibilidad_c=disponibilidad_c, anios_exp_informatica=anios_exp_informatica, intereses=intereses, texto_otros=texto_otros, habilidades_tecnicas=habilidades_tecnicas, habilidades_blandas=habilidades_blandas, habilidades_extracurriculares=habilidades_extracurriculares, resultado_difuso=resultado_difuso, resultado_difuso_g=resultado_difuso_g, resultado_difuso_d=resultado_difuso_d, resultado_difuso_s=resultado_difuso_s, resultado_difuso_i=resultado_difuso_i, resultado_difuso_bhl=resultado_difuso_bhl, resultado_difuso_bhc=resultado_difuso_bhc, resultado_difuso_bhi=resultado_difuso_bhi, resultado_difuso_bhm=resultado_difuso_bhm, resultado_difuso_ecd=resultado_difuso_ecd, resultado_difuso_eec=resultado_difuso_eec, resultado_difuso_edp=resultado_difuso_edp, resultado_difuso_eit=resultado_difuso_eit)
             else:
                 flash('No se encontraron datos del docente para este usuario', 'warning')
         else:
@@ -787,6 +825,30 @@ def register():
     #return redirect(url_for('home'))
     #return render_template('index.html')
     return render_template('register.html')
+
+
+# def busqueda():
+#     if request.method == 'POST':
+#         # Establecemos el tipo de búsqueda directamente en cada función de búsqueda
+#         tipo_busqueda = request.form.get('tipo_busqueda')
+
+#         try:
+#             if tipo_busqueda == 'inteligente':
+#                 return busqueda_inteligente()
+#             elif tipo_busqueda == 'avanzada':
+#                 return busqueda_avanzada()
+#             elif tipo_busqueda == 'ia':
+#                 return busqueda_ia()
+#             else:
+#                 raise ValueError("Tipo de búsqueda no reconocido")
+#         except Exception as e:
+#             print(f"Error: {e}")
+#             return render_template('busqueda.html', tipo_busqueda=tipo_busqueda, imagen_p='default.png', error=str(e))
+
+#     # Si la solicitud es GET, simplemente renderizamos el formulario de búsqueda
+#     return render_template('busqueda.html', tipo_busqueda='inteligente', imagen_p='default.png')
+
+
 
 @app.route('/busqueda_inteligente', methods=['GET', 'POST'])
 @login_required
@@ -1063,11 +1125,24 @@ def busqueda_inteligente():
                     #imagen_pb = None
 
                     # cursor.close()
-                    # print('Imagen de perfil:', imagen_p)
+                    # print('Imagen de perfil:', imagen_p)}
+
+                    # Redirigir a la misma página con parámetros de búsqueda
+                    # search_params = {
+                    #     'desarrollo_arquitectura': desarrollo_arquitectura,
+                    #     'gestion_analisis_datos': gestion_analisis_datos,
+                    #     # (Omitido por brevedad: otros campos)
+                    #     'nivel_estudio': ','.join(nivel_estudio)
+                    # }
+                    # search_query_string = '&'.join([f'{key}={value}' for key, value in search_params.items()])
+                    # return redirect(url_for('busqueda_inteligente') + '?' + search_query_string)
                     
                     #docentes = obtener_docentes(tipo_busqueda)
                     #nivel_confianza_list = obtener_nivel_confianza(tipo_busqueda)
                     # Renderizar la plantilla con los resultados
+
+                    flash('¡Búsqueda realizada correctamente!', 'success')
+
                     return render_template('busqueda_inteligente.html',
                                         docentes=docentes, id_habilidades_t_b_list=id_habilidades_t_b_list,
                                         resultado_difuso_list=resultado_difuso_list,
@@ -1089,6 +1164,7 @@ def busqueda_inteligente():
                                         imagen_p=imagen_p, tipo_busqueda=tipo_busqueda)
                 else:
                     # No se encontraron resultados
+                    flash('No se encontraron coincidencias con la búsqueda ', 'danger')
                     return render_template('busqueda_inteligente.html', imagen_p=imagen_p, tipo_busqueda=tipo_busqueda)
             finally:
                 cursor.close()
@@ -1097,6 +1173,7 @@ def busqueda_inteligente():
             print(f"Error: {e}")
             return redirect(url_for('busqueda_inteligente', imagen_p=imagen_p))
             # return render_template('error.html', error=str(e))
+        # return render_template('busqueda_inteligente.html')
     else:
         # Si el método es GET, simplemente renderiza el formulario
         return render_template('busqueda_inteligente.html', tipo_busqueda=tipo_busqueda, imagen_p=imagen_p)
@@ -1237,6 +1314,10 @@ def busqueda_avanzada():
             # Cerrar el cursor
             cursor.close()
 
+            if not docente:
+                flash('No se encontraron coincidencias con la búsqueda', 'danger')
+                return redirect(url_for('busqueda_inteligente'))
+
             # # Si no se encuentran docentes, establecer la imagen predeterminada
             # if not docentes_data:
             #     imagen_p
@@ -1245,11 +1326,13 @@ def busqueda_avanzada():
             #     return redirect('/busqueda_general')
             # Renderizar la plantilla con los resultados
             #return redirect(url_for('busqueda_inteligente', docentes=docentes_data, habilidades_tecnicas=habilidades_tecnicas_seleccionadas, habilidades_blandas=habilidades_blandas_seleccionadas, tipo_busqueda=tipo_busqueda, imagen_p=imagen_p))
+            flash('¡Búsqueda realizada correctamente!', 'success')
             return render_template('busqueda_inteligente.html', docentes=docentes_data, habilidades_tecnicas=habilidades_tecnicas_seleccionadas, habilidades_blandas=habilidades_blandas_seleccionadas, habilidades_extracurriculares_seleccionadas=habilidades_extracurriculares_seleccionadas, tipo_busqueda=tipo_busqueda, imagen_p=imagen_p)
     
         except Exception as e:
             # Manejo de errores
             print(f"Error: {e}")
+            flash('No se encontraron coincidencias con la búsqueda', 'danger')
             return redirect(url_for('busqueda_inteligente'))
             #return redirect(url_for('busqueda_inteligente', tipo_busqueda=tipo_busqueda, imagen_p=imagen_p, error=str(e)))
             # return render_template('busqueda_inteligente.html', tipo_busqueda=tipo_busqueda, imagen_p=imagen_p, error=str(e))
@@ -1266,6 +1349,11 @@ def busqueda_ia():
     imagen_p = 'default.png'  # Valor predeterminado
 
     try:
+        # Validar que el mensaje no esté vacío
+        if not mensaje:
+            flash('El mensaje de búsqueda no puede estar vacío', 'danger')
+            return redirect(url_for('busqueda_inteligente'))
+        
         # Imprimir datos ingresados
         print(f"Mensaje recibido: {mensaje}")
 
@@ -1275,17 +1363,45 @@ def busqueda_ia():
         anios_exp_minimos = 0
 
         # Procesar el mensaje de búsqueda
+        # Mapeo de términos comunes a niveles de estudio
+        niveles_estudio_map = {
+            'tecnólogo': 'Tecnólogo',
+            'licenciatura': 'Licenciatura',
+            'especialización': 'Especialización',
+            'maestría': 'Maestría',
+            'doctorado': 'Doctorado',
+            'posdoctorado': 'Posdoctorado',
+            'ingeniero': 'Licenciatura',  # Ajustar según contexto
+            'magíster': 'Maestría',
+            'master': 'Maestría',
+            'bachelor': 'Licenciatura',
+            'doctor': 'Doctorado'
+        }
+
         # Buscar nivel de estudio
-        if re.search(r'Magister|Licenciado|Ingeniero', mensaje, re.IGNORECASE):
-            nivel_estudio = 'Maestria'  # Ajusta la lógica para diferentes niveles
+        for termino, nivel in niveles_estudio_map.items():
+            if re.search(termino, mensaje, re.IGNORECASE):
+                nivel_estudio = nivel
+                break
 
         # Buscar habilidades
-        habilidades = re.findall(r'Diseño Interfaz|Base de Datos|Desarrollo Frontend|Desarrollo Backend', mensaje, re.IGNORECASE)
+        habilidades_posibles = [
+            'Desarrollo Software', 'Desarrollo Frontend', 'Desarrollo Backend', 'Redes', 'Análisis de Datos',
+            'Gestión Base de Datos', 'Business Intelligence (BI)', 'Sistemas Operativos', 'Diseño Interfaz',
+            'Animación Gráfica', 'Prototipado', 'Administración Servidores', 'Seguridad Informática',
+            'Gestión Servidores Nube', 'Criptografía', 'Aprendizaje Automático (Machine Learning)'
+        ]
+        habilidades = [h.replace(' ', '_').lower() for h in habilidades_posibles if re.search(h, mensaje, re.IGNORECASE)]
 
         # Buscar años de experiencia
-        match = re.search(r'(\d+)\s*años? de experiencia', mensaje, re.IGNORECASE)
+        match = re.search(r'(\d+)\s*años?\s*de\s*experiencia', mensaje, re.IGNORECASE)
         if match:
             anios_exp_minimos = int(match.group(1))
+
+        # Verificar si al menos uno de los parámetros de búsqueda es significativo
+        if not nivel_estudio and not habilidades and anios_exp_minimos == 0:
+            flash('No se encontraron parámetros válidos en la búsqueda', 'danger')
+            return redirect(url_for('busqueda_inteligente'))
 
         # Construir consulta SQL basada en los parámetros extraídos
         cursor = mysql.connection.cursor()
@@ -1355,6 +1471,11 @@ def busqueda_ia():
         # session['habilidades_tecnicas'] = habilidades_tecnicas
         # session['habilidades_blandas'] = habilidades_blandas
 
+        if not docentes_data:
+            flash('No se encontraron coincidencias con la búsqueda', 'danger')
+            return redirect(url_for('busqueda_inteligente'))
+        
+        flash('¡Búsqueda realizada correctamente!', 'success')
         # Renderizar el template directamente
         return render_template('busqueda_inteligente.html',
                                tipo_busqueda=tipo_busqueda,
@@ -1368,6 +1489,7 @@ def busqueda_ia():
 
     except Exception as e:
         # Manejo de errores
+        flash('No se encontraron coincidencias con la búsqueda', 'danger')
         print(f"Error: {e}")
         # Guardar información en la sesión para manejar el error en la página principal
         session['tipo_busqueda'] = tipo_busqueda
@@ -1376,6 +1498,59 @@ def busqueda_ia():
         return redirect(url_for('busqueda_inteligente'))
     
 
+@app.route('/buscar_intereses', methods=['POST'])
+def buscar_intereses():
+    imagen_p = 'default.png'  # Valor predeterminado
+    tipo_busqueda = 'intereses'
+
+    # Obtener el valor seleccionado del formulario
+    tipos_intereses = request.form.get('tipos_intereses')
+
+    # Validar que tipos_intereses no sea vacío
+    if not tipos_intereses:
+        # return jsonify({"error": "No se proporcionó ningún interés"}), 400  # Devuelve un error si el interés está vacío
+        return redirect(url_for('busqueda_inteligente'))
+    try:
+        # Realizar la consulta a la base de datos con LIKE
+        cursor = mysql.connection.cursor()
+        query = """
+            SELECT d.nombre, d.apellido, d.cedula, d.celular, d.email, d.genero, d.nvl_estudio, d.carrera, d.imagen_p, d.disponibilidad_c, i.tipos_intereses, i.otros
+            FROM docente d
+            JOIN intereses i ON d.id = i.id_docente
+            WHERE i.tipos_intereses LIKE %s
+        """
+        cursor.execute(query, ('%' + tipos_intereses + '%',))
+        resultados = cursor.fetchall()
+
+        # Extraer imagen de perfil
+        cursor.execute('SELECT imagen_p FROM docente WHERE id_usuario = %s', (session['user_id'],))
+        imagen_p_result = cursor.fetchone()
+        if imagen_p_result:
+            imagen_p = imagen_p_result[0]
+        else:
+            imagen_p = 'default.png'
+
+        cursor.close()
+
+        print(f"Resultados de la búsqueda: {resultados}")
+        
+        if not resultados:
+            flash('No se encontraron coincidencias con la búsqueda', 'danger')
+            return redirect(url_for('busqueda_inteligente'))
+            # return jsonify({"message": "No se encontraron resultados"}), 404  # Mensaje si no se encuentran resultados
+        
+        flash('¡Búsqueda realizada correctamente!', 'success')
+        # Pasar los resultados al template
+        return render_template('busqueda_inteligente.html', resultados=resultados, imagen_p=imagen_p, tipo_busqueda=tipo_busqueda)
+    
+    except Exception as e:
+        # Manejo de errores
+        # return jsonify({"error": str(e)}), 500  # Devuelve un error si ocurre una excepción
+        # Manejo de errores
+        flash('No se encontraron coincidencias con la búsqueda', 'danger')
+        print(f"Error: {e}")
+        session['imagen_p'] = imagen_p
+        return redirect(url_for('busqueda_inteligente'))
 
 
 # Ruta para guardar el perfil editado
@@ -1542,6 +1717,11 @@ def guardar_habilidades_perfil():
             'mindfulness_meditacion': request.form.get('mindfulness_meditacion', type=int),
         }
 
+        # Obtener intereses seleccionados
+        # intereses = request.form.getlist('intereses')
+        tipos_intereses = ','.join(request.form.getlist('tipos_intereses'))
+        otros = request.form.get('otros', '')  # Obtiene el valor de 'otros', o una cadena vacía si no está presente
+
         # Actualizar la base de datos con las habilidades técnicas
         cur = mysql.connection.cursor()
         cur.execute("""
@@ -1650,6 +1830,23 @@ def guardar_habilidades_perfil():
         ))
         mysql.connection.commit()
         
+        # Actualizar la base de datos
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE intereses
+            SET tipos_intereses = %s,
+                otros = %s
+            WHERE id_docente = %s
+        """, (tipos_intereses, otros, id_docente))
+        mysql.connection.commit()
+        cur.close()
+
+        # if result:
+        #     tipos_intereses = result[0]
+        #     # Dividir la cadena en una lista de intereses
+        #     intereses = tipos_intereses.split(',')
+        # else:
+        #     intereses = []
 
         # # Obtener el ID de habilidades_t_b recién actualizado
         # cur.execute('SELECT id FROM habilidades_t_b WHERE id_docente = %s', (id_docente,))
@@ -1690,7 +1887,7 @@ def guardar_habilidades_perfil():
         #mysql.connection.commit()
 
         #mysql.connection.commit()
-        cur.close()
+        #cur.close()
 
         # Flash de éxito y redirección a la página del perfil
         flash('¡Habilidades actualizadas correctamente!', 'success')
@@ -1753,99 +1950,99 @@ app.jinja_env.globals.update(classify_skill=classify_skill)
 #    return render_template('perfil.html', **contexto)
 
 #@app.route('/download_excel/<int:docente_id>', methods=['POST'])
-@app.route('/download_excel', methods=['POST'])
-def download_excel():
-    if request.method == 'POST':
-    # Recuperar datos del formulario
-    #docente_nombre_apellido = request.form.get('docente_nombre_apellido')
-        docente_id = request.form.get('docente_id')
+# @app.route('/download_excel', methods=['POST'])
+# def download_excel():
+#     if request.method == 'POST':
+#     # Recuperar datos del formulario
+#     #docente_nombre_apellido = request.form.get('docente_nombre_apellido')
+#         docente_id = request.form.get('docente_id')
 
-        # Verificar que docente esté definido en el contexto actual
-        #docente = request.form.get('docente')  # Ejemplo: Recuperar docente del formulario
+#         # Verificar que docente esté definido en el contexto actual
+#         #docente = request.form.get('docente')  # Ejemplo: Recuperar docente del formulario
 
-        # Realizar consulta a la base de datos para obtener datos del docente
-        cursor = mysql.connection.cursor()
-        cursor.execute("""
-            SELECT 
-                d.nombre,
-                d.apellido,
-                d.cedula,
-                d.celular,
-                d.email,
-                d.genero,
-                d.nvl_estudio,
-                d.carrera,
-                d.disponibilidad_c,
-                rd.resultado_difuso,
-                rd.resultado_difuso_g,
-                rd.resultado_difuso_d,
-                rd.resultado_difuso_s,
-                rd.resultado_difuso_i
-            FROM 
-                habilidades_t_b h
-            JOIN 
-                docente d ON h.id_docente = d.id
-            JOIN 
-                resultados_difusos_h_t rd ON rd.id_habilidades_t_b = h.id
-            WHERE 
-                d.id = %s;
-        """, (docente_id,))
-        docente_data = cursor.fetchone()
-        cursor.close()
+#         # Realizar consulta a la base de datos para obtener datos del docente
+#         cursor = mysql.connection.cursor()
+#         cursor.execute("""
+#             SELECT 
+#                 d.nombre,
+#                 d.apellido,
+#                 d.cedula,
+#                 d.celular,
+#                 d.email,
+#                 d.genero,
+#                 d.nvl_estudio,
+#                 d.carrera,
+#                 d.disponibilidad_c,
+#                 rd.resultado_difuso,
+#                 rd.resultado_difuso_g,
+#                 rd.resultado_difuso_d,
+#                 rd.resultado_difuso_s,
+#                 rd.resultado_difuso_i
+#             FROM 
+#                 habilidades_t_b h
+#             JOIN 
+#                 docente d ON h.id_docente = d.id
+#             JOIN 
+#                 resultados_difusos_h_t rd ON rd.id_habilidades_t_b = h.id
+#             WHERE 
+#                 d.id = %s;
+#         """, (docente_id,))
+#         docente_data = cursor.fetchone()
+#         cursor.close()
 
-        # Crear un libro de Excel y una hoja
-        # wb = Workbook()
-        # ws = wb.active
-        # ws.title = 'Resultados de Búsqueda'
+#         # Crear un libro de Excel y una hoja
+#         # wb = Workbook()
+#         # ws = wb.active
+#         # ws.title = 'Resultados de Búsqueda'
 
-        # Agregar encabezados a la hoja
-        # headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso del Docente', 'Porcentaje de Similitud', 'Nivel de Confianza']
-        # ws.append(headers)
+#         # Agregar encabezados a la hoja
+#         # headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso del Docente', 'Porcentaje de Similitud', 'Nivel de Confianza']
+#         # ws.append(headers)
 
-        # Obtener datos del docente y añadir a la hoja
-        if docente_data:
-            # Crear libro de Excel y hoja
-            wb = Workbook()
-            ws = wb.active
-            ws.title = 'Resultados de Búsqueda'
+#         # Obtener datos del docente y añadir a la hoja
+#         if docente_data:
+#             # Crear libro de Excel y hoja
+#             wb = Workbook()
+#             ws = wb.active
+#             ws.title = 'Resultados de Búsqueda'
 
-            # Agregar encabezados
-            #headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
-            headers = ['Nombre', 'Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
-            ws.append(headers)
+#             # Agregar encabezados
+#             #headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
+#             headers = ['Nombre', 'Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
+#             ws.append(headers)
 
-            # Preparar datos del docente y resultados difusos
-            row_data = [
-                #'',  # Lógica para la imagen si es necesaria
-                #f"{docente_data[0]} {docente_data[1]}",
-                docente_data[0],
-                docente_data[1],
-                docente_data[2],
-                docente_data[3],
-                docente_data[4],
-                docente_data[5],
-                docente_data[6],
-                docente_data[7],
-                docente_data[8],
-                docente_data[9],    # resultado_difuso
-                docente_data[10],   # resultado_difuso_g
-                docente_data[11],   # resultado_difuso_d
-                docente_data[12],   # resultado_difuso_s
-                docente_data[13]    # resultado_difuso_i
-            ]
-            ws.append(row_data)
+#             # Preparar datos del docente y resultados difusos
+#             row_data = [
+#                 #'',  # Lógica para la imagen si es necesaria
+#                 #f"{docente_data[0]} {docente_data[1]}",
+#                 docente_data[0],
+#                 docente_data[1],
+#                 docente_data[2],
+#                 docente_data[3],
+#                 docente_data[4],
+#                 docente_data[5],
+#                 docente_data[6],
+#                 docente_data[7],
+#                 docente_data[8],
+#                 docente_data[9],    # resultado_difuso
+#                 docente_data[10],   # resultado_difuso_g
+#                 docente_data[11],   # resultado_difuso_d
+#                 docente_data[12],   # resultado_difuso_s
+#                 docente_data[13]    # resultado_difuso_i
+#             ]
+#             ws.append(row_data)
 
-            # Guardar el libro de Excel
-            excel_filename = f'Resultados_Busqueda_{docente_id}.xlsx'
-            wb.save(excel_filename)
+#             # Guardar el libro de Excel
+#             excel_filename = f'Resultados_Busqueda_{docente_id}.xlsx'
+#             wb.save(excel_filename)
 
-            # Ofrecer el archivo Excel para descargar
-            return send_file(excel_filename, as_attachment=True)
+#             # Ofrecer el archivo Excel para descargar
+#             return send_file(excel_filename, as_attachment=True)
 
-        else:
-            # Manejar caso donde docente no está definido
-            return "Error: No se encontró información del docente para generar el archivo Excel."
-    return redirect(url_for('index'))  # Ejemplo de redirección a la página principal
+#         else:
+#             # Manejar caso donde docente no está definido
+#             return "Error: No se encontró información del docente para generar el archivo Excel."
+#     return redirect(url_for('busqueda_inteligente'))  # Ejemplo de redirección a la página principal
 
 @app.context_processor
 def inject_user():

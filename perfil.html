@@ -16,9 +16,9 @@
     <!--div id="edit-message" style="display: none; color: green; font-weight: bold;"></div> <!- Elemento para el mensaje -->
     <div id="personal-info-container" style="position: relative" class="personal-info-container" ;>
         <a href="javascript:void(0);" onclick="enableEdit()">
-            <!--i id="icon-modify-datosP" class="fas fa-cog modify-profile-icon"></i-->
-            <i class="fas fa-cog modify-profile-icon"></i>
-        </a>
+            <i title="Habilitar edición" class="fas fa-cog modify-profile-icon"></i>
+            <!-- <label>Habilitar Edición</label> -->
+            <!--i id="icon-modify-datosP" class="fas fa-cog modify-profile-icon"></i-->        </a>
         <div id="edit-message" class="edit-message" style="display: none;">EDICIÓN HABILITADA</div>
         <h2 style="color: #003e79;">Datos Personales <hr class="line"></h2>
         <!--div id="edit-message" style="display: none; color: green; font-weight: bold; margin-bottom: 10px;">
@@ -142,7 +142,7 @@
     <div id="personal-habilidades-container" style="position: relative" class="personal-habilidades-container" ;>
         <a href="javascript:void(0);" onclick="enableEditHabilidades()">
             <!--i id="icon-modify-habilidadesP" class="fas fa-cog modify-profile-icon"></i-->
-            <i class="fas fa-cog modify-profileH-icon"></i>
+            <i title="Habilitar edición" class="fas fa-cog modify-profileH-icon"></i>
         </a>
         <div id="edit-messageH" class="edit-messageH" style="display: none;">EDICIÓN HABILITADA</div>
         <h2 style="color: #003e79;">Niveles de conocimiento <hr class="line"></h2>
@@ -158,12 +158,12 @@
                     <div class="form-groupP">
                         <label for="desarrollo_software">Desarrollo de Software:</label><br>
                             <div class="range-container">
-                            <input style="width: 125px;" type="range" id="desarrollo_software" name="desarrollo_software" min="0" max="100" value="{{ habilidades_tecnicas.desarrollo_software if habilidades_tecnicas.desarrollo_software is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
-                            <div class="icon-container">
-                                <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                                <input style="width: 125px;" type="range" id="desarrollo_software" name="desarrollo_software" min="0" max="100" value="{{ habilidades_tecnicas.desarrollo_software if habilidades_tecnicas.desarrollo_software is not none else 0 }}" onchange="updateIconH(this.value)" disabled>
+                                <div class="icon-container">
+                                    <div id="rangeH-text" class="text-placeholder" >Nivel</div> <!-- Texto inicial -->
+                                </div>
+                                <span id="rangeH-triangle" class="triangle" ></span>
                             </div>
-                            <span id="rangeH-triangle" class="triangle" ></span>
-                        </div>
                     </div>
                     <div class="form-groupP">
                         <label for="desarrollo_frontend">Desarrollo Front-end:</label><br>
@@ -619,70 +619,68 @@
                     </div>
                 </div>
             </div>
-            <br><label style="margin-left: 20px; opacity: 0;" for="manejo_inteligencia_emocional"><strong>Otros (opcional): </strong></label>
-            <input style="width: 450px; opacity: 0;" type="text" id="Otros" name="Otros" disabled>
-
-            <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Intereses<!--hr--></h5>
+            
+            <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Intereses</h5>
 
             <!--h2>Habilidades Blandas <hr class="line"></h2-->
             <div class="personal-info-box" style="justify-content: space-between;">
                 <div class="personal-info-box">
                     <div class="personalH-info-column left-column">
                         <div class="form-group" style="margin-left: 40px; margin-right: 50px;">
-                            <!-- <label for="intereses"> <strong>Intereses:</strong></label><br> -->
-                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
+                            <!-- <label for="tipos_intereses"> <strong>Intereses:</strong></label><br> -->
+                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="tipos_intereses" value="Música" {% if 'Música' in intereses %} checked {% endif %} disabled>
                             <label for="musica">Música</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
-                            <label for="musica">Baile</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
-                            <label for="musica">Cine</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
-                            <label for="musica">Libros</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="baile" name="tipos_intereses" value="Baile" {% if 'Baile' in intereses %} checked {% endif %} disabled>
+                            <label for="baile">Baile</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="cine" name="tipos_intereses" value="Cine" {% if 'Cine' in intereses %} checked {% endif %} disabled>
+                            <label for="cine">Cine</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="libros" name="tipos_intereses" value="Libros" {% if 'Libros' in intereses %} checked {% endif %} disabled>
+                            <label for="libros">Libros</label><br>
                         </div>
                     </div>
                     <div class="personalH-info-column left-column">
                         <div class="form-group" style="margin-left: 20px; margin-right: 50px;">
-                            <input style="margin-top: 10px;" type="checkbox" id="musica" name="intereses" value="Musica" disabled>
-                            <label for="musica">Fútbol (soccer)</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="deporte" name="intereses" value="Deporte" disabled>
-                            <label for="deporte">Baloncesto (basketball)</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="cine" name="intereses" value="Tecnología de Información" disabled>
-                            <label for="cine">Tenis</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="libros" name="intereses" value="Libros" disabled>
-                            <label for="libros">Natación</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="futbol" name="tipos_intereses" value="Fútbol (soccer)" {% if 'Fútbol (soccer)' in intereses %} checked {% endif %} disabled>
+                            <label for="futbol">Fútbol (soccer)</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="baloncesto" name="tipos_intereses" value="Baloncesto (basketball)" {% if 'Baloncesto (basketball)' in intereses %} checked {% endif %} disabled>
+                            <label for="baloncesto">Baloncesto (basketball)</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="tenis" name="tipos_intereses" value="Tenis" {% if 'Tenis' in intereses %} checked {% endif %} disabled>
+                            <label for="tenis">Tenis</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="natacion" name="tipos_intereses" value="Natación" {% if 'Natación' in intereses %} checked {% endif %} disabled>
+                            <label for="natacion">Natación</label><br>
                         </div>
                     </div>
                     <div class="personalH-info-column right-column">
                         <div class="form-group" style="margin-left: 20px; margin-right: 50px;">
-                            <input style="margin-top: 10px;" type="checkbox" id="baile" name="intereses" value="Baile" disabled>
-                            <label for="baile">Ciclismo</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
-                            <label for="ciencia">Atletismo</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
-                            <label for="ciencia">Voleibol</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
-                            <label for="ciencia">Gimnasia</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="ciclismo" name="tipos_intereses" value="Ciclismo" {% if 'Ciclismo' in intereses %} checked {% endif %} disabled>
+                            <label for="ciclismo">Ciclismo</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="atletismo" name="tipos_intereses" value="Atletismo" {% if 'Atletismo' in intereses %} checked {% endif %} disabled>
+                            <label for="atletismo">Atletismo</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="voleibol" name="tipos_intereses" value="Voleibol" {% if 'Voleibol' in intereses %} checked {% endif %} disabled>
+                            <label for="voleibol">Voleibol</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="gimnasia" name="tipos_intereses" value="Gimnasia" {% if 'Gimnasia' in intereses %} checked {% endif %} disabled>
+                            <label for="gimnasia">Gimnasia</label><br>
                         </div>
                     </div>                            
                     <div class="personalH-info-column right-column">
                         <div class="form-group" style="margin-left: 20px; margin-right: 50px;">
-                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
-                            <label for="ciencia">Deportes de combate</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
-                            <label for="ciencia">Pesca Deportiva</label><br>
-                            <input style="margin-top: 10px;" type="checkbox" id="ciencia" name="intereses" value="Ciencia" disabled>
-                            <label for="ciencia">Ajedrez</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="deportes_combate" name="tipos_intereses" value="Deportes de combate" {% if 'Deportes de combate' in intereses %} checked {% endif %} disabled>
+                            <label for="deportes_combate">Deportes de combate</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="pesca_deportiva" name="tipos_intereses" value="Pesca Deportiva" {% if 'Pesca Deportiva' in intereses %} checked {% endif %} disabled>
+                            <label for="pesca_deportiva">Pesca Deportiva</label><br>
+                            <input style="margin-top: 10px;" type="checkbox" id="ajedrez" name="tipos_intereses" value="Ajedrez" {% if 'Ajedrez' in intereses %} checked {% endif %} disabled>
+                            <label for="ajedrez">Ajedrez</label><br>
                             <!-- <input style="margin-top: 10px;" type="checkbox" id="otros" name="intereses" value="Otros" disabled> -->
                         </div>
                     </div>
                 </div>
             </div>
-            <label style="margin-left: 20px;" for="Otros"><strong>Otros (opcional):</strong></label>
-            <input style="margin-top: 10px; width: 450px;" type="text" id="OtrosI" name="OtrosI" disabled><br>
+            <br><label style="margin-left: 50px;" for="otros"><strong>Otros (opcional):</strong></label>
+            <input style="margin-top: 10px; width: 80%;" type="text" id="otros" name="otros" value="{{ texto_otros }}" disabled><br>
 
             <br><button onclick="hideLoading()" style="display: none" id="updateButtonH" type="submit">Guardar</button> <!-- Botón para actualizar datos -->
             <!-- </form> -->
-
+            <br><br><div style="border-top: 1px solid #ccc; margin-bottom: 10px; "></div>
             <br><h2 style="color: #003e79;">Resultados Difusos<hr class="line"></h2>
             <div id="content" class="blur">
             <h5 style="font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px;">Habilidades Técnicas <!--hr--></h5>
@@ -1079,11 +1077,8 @@ function showLoading() {
         const rangeInputs  = document.querySelectorAll('.personalH-info-column input[type="range"]');
         rangeInputs.forEach(input => input.disabled = !input.disabled); // Alterna el estado de habilitado/deshabilitado
 
-        const otrosInput = document.getElementById('Otros');
+        const otrosInput = document.getElementById('otros');
         otrosInput.disabled = !otrosInput.disabled; // Alternar el estado del campo de texto "Otros"
-        
-        const otrosInput2 = document.getElementById('OtrosI');
-        otrosInput2.disabled = !otrosInput2.disabled;
 
         //const anyCheckboxEnabled = Array.from(checkboxes).some(checkbox => !checkbox.disabled);
         

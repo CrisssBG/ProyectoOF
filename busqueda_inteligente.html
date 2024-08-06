@@ -3,7 +3,7 @@
 
 {% block body %}
 
-<form id="form-busqueda" method="POST">
+<!-- <form id="form-busqueda" method="POST"> -->
     <h1>Búsqueda</h1>
     <div class="info-container">
         <h2>Tipos de Búsquedas<hr class="line"></h2>
@@ -17,7 +17,8 @@
             <div id="seccion1" class="contenido-seccion" style="background-color: #0016790e;"><br>
                 <!-- <label style="margin-left: 28px;" for="experiencia"><strong>Años mínimos de experiencia:</strong></label>
                 <input type="number" id="experiencia" name="experiencia"><br><br> -->
-                <form action="/busqueda_inteligente" method="POST" onsubmit="handleFormSubmit(event, this)">
+                <form id="formulario-busqueda-inteligente" action="/busqueda_inteligente" method="POST">
+                    <!-- <form action="/busqueda_inteligente" method="POST" onsubmit="handleFormSubmit(event, this)"> -->
                     
                     <div style=" display: flex; justify-content: space-between;">
                         <div style="margin-left: 20px;">
@@ -205,7 +206,8 @@
                 <i id="icono-seccion2" class="fas fa-chevron-down"></i>
             </div>
             <div id="seccion2" class="contenido-seccion" style="background-color: #0016790e;"><br>
-                <form action="/busqueda_avanzada" method="POST" onsubmit="handleFormSubmit(event, this)">
+                <form action="/busqueda_avanzada" method="POST">
+                    <!-- <form action="/busqueda_avanzada" method="POST" onsubmit="handleFormSubmit(event, this)"> -->
                     
                     <div style=" display: flex; justify-content: space-between;">
                         <div class="form-group" style="margin-left: 20px;">
@@ -337,7 +339,8 @@
                 <i id="icono-seccion3" class="fas fa-chevron-down"></i>
             </div>
             <div id="seccion3" class="contenido-seccion" style="background-color: #0016790e;">
-                <form action="/busqueda_ia" method="POST" onsubmit="handleFormSubmit(event, this)">
+                <form action="/busqueda_ia" method="POST">
+                    <!-- <form action="/busqueda_ia" method="POST" onsubmit="handleFormSubmit(event, this)"> -->
                     <div style="text-align: center;"><br>
                         <label for="mensaje"><strong>Busqueda Inteligente:</strong></label>
                         <input type="text" id="mensaje" name="mensaje" style="width: 600px; /*border: 5px solid #007bff;*/" placeholder="Magíster con concimiento en Diseño Web y Base de Datos. Mínimo 8 años de Experiencia."><br>
@@ -346,14 +349,59 @@
                     <br><button type="submit">Buscar</button><br>
                 </form>
             </div>
-        <!-- </div> -->
-        <br>
+        </div>
+        <div class="seccion">
+            <div class="titulo-seccion" onclick="toggleSeccion('seccion4')">
+                <h4 style="margin-top: 0px; margin-bottom: 0px;">Búsqueda por Intereses (Express)</h4>
+                <i id="icono-seccion4" class="fas fa-chevron-down"></i>
+            </div>
+            <div id="seccion4" class="contenido-seccion" style="background-color: #0016790e; ;">
+                <form action="/buscar_intereses" method="POST">
+                    <br><h5 style="width: 800px; font-size: 20px; text-align: center; background-color: #003f7938; border-radius: 25px; padding-top: 8px; padding-bottom: 8px; margin-top: -5px; margin-bottom: 15px; margin-left: 10%;">Selecciona tus Intereses</h5>
+                    <div style="display: flex; justify-content: space-between; width: 80%; margin-left: 15%;">
+                        <br><div class="form-group" style="margin-left: 30px;">
+                            <!-- <label><strong>Selecciona tus intereses:</strong></label><br> -->
+                            <input style="margin-top: 5px;" type="checkbox" id="musica" name="tipos_intereses" value="Música">
+                            <label for="musica">Música</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="baile" name="tipos_intereses" value="Baile">
+                            <label for="baile">Baile</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="cine" name="tipos_intereses" value="Cine">
+                            <label for="cine">Cine</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="libros" name="tipos_intereses" value="Libros">
+                            <label for="libros">Libros</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="futbol" name="tipos_intereses" value="Fútbol (soccer)">
+                            <label for="futbol">Fútbol (soccer)</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="baloncesto" name="tipos_intereses" value="Baloncesto (basketball)">
+                            <label for="baloncesto">Baloncesto (basketball)</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="tenis" name="tipos_intereses" value="Tenis">
+                            <label for="tenis">Tenis</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="natacion" name="tipos_intereses" value="Natación">
+                            <label for="natacion">Natación</label><br>
+                        </div>
+                        <br><div class="form-group" style="margin-left: 30px;">
+                            <input style="margin-top: 5px;" type="checkbox" id="ciclismo" name="tipos_intereses" value="Ciclismo">
+                            <label for="ciclismo">Ciclismo</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="atletismo" name="tipos_intereses" value="Atletismo">
+                            <label for="atletismo">Atletismo</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="voleibol" name="tipos_intereses" value="Voleibol">
+                            <label for="voleibol">Voleibol</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="gimnasia" name="tipos_intereses" value="Gimnasia">
+                            <label for="gimnasia">Gimnasia</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="deportes_combate" name="tipos_intereses" value="Deportes de combate">
+                            <label for="deportes_combate">Deportes de combate</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="pesca_deportiva" name="tipos_intereses" value="Pesca Deportiva">
+                            <label for="pesca_deportiva">Pesca Deportiva</label><br>
+                            <input style="margin-top: 5px;" type="checkbox" id="ajedrez" name="tipos_intereses" value="Ajedrez">
+                            <label for="ajedrez">Ajedrez</label><br>
+                        </div>
+                    </div>
+                    <br><button type="submit">Buscar</button><br>
+                </form>
+            </div>
+            <br>
+        </div>
     </div>
-    <!-- <form action="{{ url_for('busqueda_inteligente') }}" method="post">
-        <button type="submit" class="btn btn-primary">Limpiar Tabla</button>
-    </form> -->
-    </div>
-</form>
+<!-- </form> -->
         
         <!--hr-->
 
@@ -479,132 +527,36 @@
     <!-- </div> -->
     <!--button type="button" onclick="buscarDocentes()">Buscar</button-->
 
-<!-- <button id="toggleButton" type="submit" style="position: relative; z-index: 5;" onclick="hideLoading()">REALIZAR BÚSQUEDA</button> -->
+    <!-- <button id="toggleButton" type="submit" style="position: relative; z-index: 5;" onclick="hideLoading()">REALIZAR BÚSQUEDA</button> -->
 
-
-<!-- <form action="{{ url_for('download_excel') }}" method="POST"> -->
-    <!-- <div class="info-container">
-        <ul id="resultado-busqueda">
-            <h2>Resultado de la Búsqueda<hr class="line"></h2>
-            {% if docente %}
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-bordered table-sm bg-white">
-                    <thead>
-                        <tr>
-                            <th>Foto</th>
-                            <th>Nombre y Apellido</th>
-                            <th>Cédula</th>
-                            <th>Celular</th>
-                            <th>Email</th>
-                            <th>Género</th>
-                            <th>Nivel de Estudio</th>
-                            <th>Carrera</th>
-                            <th>Disponibilidad</th>
-                            <th>Desarrollo y Arquitectura de Software</th>
-                            <th>Gestión y Análisis de Datos</th>
-                            <th>Diseño de Interfaz y Multimedia</th>
-                            <th>Seguridad y Cloud Computing</th>
-                            <th>Infraestructura y Comunicaciones</th>
-                            <th>Porcentaje de Similitud</th>
-                            <th>Nivel de Confianza</th>
-                        </tr>
-                        <style>
-                            .table-responsive {
-                                overflow-x: auto; /* Permite desplazamiento horizontal */
-                                max-width: 100%; /* Limita el ancho máximo */
-                                margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
-                            }
-                        </style>
-                    </thead>
-                    <tbody>
-                        <tr style="background-color: rgba(97, 202, 37, 0.37);">
-                            <td>
-                                <div class="form-group">
-                                    <div class="custom-file">
-                                        {% if imagen_pb %}
-                                        <img src="{{ url_for('static', filename='images/profile_pics/' + imagen_pb) }}" style="max-width: 50px; max-height: 50px; border-radius: 5px; border: 1px solid #ddd;" alt="Imagen de Perfil">
-                                        {% else %}
-                                        <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 50px; max-height: 50px;" alt="Imagen Predeterminada">
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </td>
-                            <td>{{ docente[0] }} {{ docente[1] }}</td>
-                            <td>{{ docente[2] }}</td>
-                            <td>{{ docente[3] }}</td>
-                            <td>{{ docente[4] }}</td>
-                            <td>{{ docente[5] }}</td>
-                            <td>{{ docente[6] }}</td>
-                            <td>{{ docente[7] }}</td>
-                            <td>{{ docente[9] }}</td>
-                            <td>{{ "%.2f"|format(resultado_difuso / 10) }}</td>
-                            <td>{{ "%.2f"|format(resultado_difuso_g / 10) }}</td>
-                            <td>{{ "%.2f"|format(resultado_difuso_d / 10) }}</td>
-                            <td>{{ "%.2f"|format(resultado_difuso_s / 10) }}</td>
-                            <td>{{ "%.2f"|format(resultado_difuso_i / 10) }}</td>
-                            <td>{{ similitud|round(2) }}%</td>
-                            <td>{{ nivel_confianza|round(2) }}%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            <p>No se encontraron resultados.</p>
-            {% endif %}
-
-            <input type="hidden" name="docente_id" value="{{ docente_id }}">
-
-            <-- <form action="{{ url_for('download_excel') }}" method="POST">
-                <button type="submit">Descargar en Excel</button>
-            </form> ->
-
-            {% if resultados_aproximados %}
-                <h2>Resultados Aproximados</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered table-sm bg-white">
-                        <thead>
-                            <tr>
-                                <th>ID Habilidades T.B</th>
-                                <th>Resultado Difuso</th>
-                            </tr>
-                            {% for resultado in resultados_aproximados %}
-                            <style>
-                                .table-responsive {
-                                    overflow-x: auto; /* Permite desplazamiento horizontal */
-                                    max-width: 100%; /* Limita el ancho máximo */
-                                    margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
-                                }
-                            </style>
-                        </thead>
-                        <tbody>
-                            <tr style="background-color: rgba(97, 202, 37, 0.37);">
-                                <td>{{ resultado[0] }}</td>
-                                <td>{{ "%.2f"|format(resultado[1] / 10) }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        {% else %}
-                        <p>No se encontraron resultados aproximados.</p>
-                        {% endif %}
-                    </table>
-                    <form action="{{ url_for('download_excel') }}" method="POST">
-                        <button type="submit">Descargar en Excel</button>
-                    </form>
-                </div>
-            
-        </ul>
-    </div> -->
-        <!-- Lista de docentes que coinciden con la búsqueda -->
-
-<!-- {% if tipo_busqueda == 'inteligente' %} -->
+{% if tipo_busqueda == 'inteligente' %}
 
     <div class="info-container">
         {% if docentes %}
             <ul id="resultado-busqueda">
                 
                 <h2>Resultado de la Búsqueda con Datos Difusos<hr class="line"></h2>
+                <!-- Verificación de Longitud de Listas -->
+            <div>
+                <p>Longitud docentes: {{ docentes|length }}</p>
+                <p>Longitud nivel_confianza_list: {{ nivel_confianza_list|length }}</p>
+                <p>Longitud resultado_difuso_list: {{ resultado_difuso_list|length }}</p>
+                <p>Longitud resultado_difuso_g_list: {{ resultado_difuso_g_list|length }}</p>
+                <p>Longitud resultado_difuso_d_list: {{ resultado_difuso_d_list|length }}</p>
+                <p>Longitud resultado_difuso_s_list: {{ resultado_difuso_s_list|length }}</p>
+                <p>Longitud resultado_difuso_i_list: {{ resultado_difuso_i_list|length }}</p>
+                <p>Longitud resultado_difuso_bhl_list: {{ resultado_difuso_bhl_list|length }}</p>
+                <p>Longitud resultado_difuso_bhc_list: {{ resultado_difuso_bhc_list|length }}</p>
+                <p>Longitud resultado_difuso_bhi_list: {{ resultado_difuso_bhi_list|length }}</p>
+                <p>Longitud resultado_difuso_bhm_list: {{ resultado_difuso_bhm_list|length }}</p>
+                <p>Longitud resultado_difuso_ecd_list: {{ resultado_difuso_ecd_list|length }}</p>
+                <p>Longitud resultado_difuso_eec_list: {{ resultado_difuso_eec_list|length }}</p>
+                <p>Longitud resultado_difuso_edp_list: {{ resultado_difuso_edp_list|length }}</p>
+                <p>Longitud resultado_difuso_eit_list: {{ resultado_difuso_eit_list|length }}</p>
+                <p>Longitud similitud_list: {{ similitud_list|length }}</p>
+            </div>
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                        <table id="tblData1" class="table table-striped table-hover table-bordered table-sm bg-white">
                             <thead>
                                 <tr style="background-color: #004484; color: #fff;">
                                     <th style="font-size: 14px; background-color: rgb(248, 190, 0); padding-left: 10px; padding-right: 10px; cursor: pointer;" title="El nivel de confianza varía dependiendo de la cantidad de parámetros elegidos (Mientras más parámetros, más exacto será el Nivel de Confianza)">Nivel de Confianza</th>
@@ -625,7 +577,7 @@
                                     <th style="font-size: 14px;">Seguridad y Cloud Computing</th>
                                     <th style="font-size: 14px;">Infraestructura y Comunicaciones</th>
                                     <th style="font-size: 14px;">Habilidad de Liderazgo Efectivo</th>
-                                    <th style="font-size: 14px;">Habilidad de Liderazgo Efectivo</th>
+                                    <th style="font-size: 14px;">Habilidad de Comunicación y Relaciones Interpersonales</th>
                                     <th style="font-size: 14px;">Habilidad de Innovación y Creatividad</th>
                                     <th style="font-size: 14px;">Habilidad de Manejo y Bienestar Personal</th>
                                     <th style="font-size: 14px;">Creación y Diseño de Contenidos Visuales</th>
@@ -649,6 +601,30 @@
                             </thead>
                             <tbody>
                                 {% for i in range(docentes|length) %}
+                                <!-- Verificación de Datos -->
+            <div>
+                <h3>Datos de Debugging</h3>
+                {% for i in range(docentes|length) %}
+                    <p>Docente {{ i }}:</p>
+                    <p>Nombre: {{ docentes[i]['nombre'] }} {{ docentes[i]['apellido'] }}</p>
+                    <p>Nivel de Confianza: {{ nivel_confianza_list[i]|round(2) }}%</p>
+                    <p>Desarrollo: {{ "%.2f"|format(resultado_difuso_list[i] / 10) }}</p>
+                    <p>Gestión: {{ "%.2f"|format(resultado_difuso_g_list[i] / 10) }}</p>
+                    <p>Diseño: {{ "%.2f"|format(resultado_difuso_d_list[i] / 10) }}</p>
+                    <p>Seguridad: {{ "%.2f"|format(resultado_difuso_s_list[i] / 10) }}</p>
+                    <p>Infraestructura: {{ "%.2f"|format(resultado_difuso_i_list[i] / 10) }}</p>
+                    <p>Liderazgo: {{ "%.2f"|format(resultado_difuso_bhl_list[i] / 10) }}</p>
+                    <p>Comunicación: {{ "%.2f"|format(resultado_difuso_bhc_list[i] / 10) }}</p>
+                    <p>Innovación: {{ "%.2f"|format(resultado_difuso_bhi_list[i] / 10) }}</p>
+                    <p>Manejo: {{ "%.2f"|format(resultado_difuso_bhm_list[i] / 10) }}</p>
+                    <p>Creación: {{ "%.2f"|format(resultado_difuso_ecd_list[i] / 10) }}</p>
+                    <p>Estrategia: {{ "%.2f"|format(resultado_difuso_eec_list[i] / 10) }}</p>
+                    <p>Desarrollo: {{ "%.2f"|format(resultado_difuso_edp_list[i] / 10) }}</p>
+                    <p>Idiomas: {{ "%.2f"|format(resultado_difuso_eit_list[i] / 10) }}</p>
+                    <p>Similitud: {{ similitud_list[i]|round(2) }}%</p>
+                    <hr>
+                {% endfor %}
+            </div>
                                 <tr {% if i < 3 %} style="background-color: rgba(97, 202, 37, 0.37);" {% else %} style="background-color: rgba(202, 199, 37, 0.37);" {% endif %}>
                                     <td style="background-color: rgba(255, 251, 0, 0.836);"><strong>{{ nivel_confianza_list[i]|round(2) }}%</strong></td>
                                     <td>
@@ -701,24 +677,21 @@
                         </table>
                     </div>
             </ul>
-            <form action="{{ url_for('download_excel') }}" method="POST">
-                <button type="submit">Descargar en Excel</button>
-            </form>
+            <button type="submit" onclick="exportTableToExcel('tblData1', 'resultado_buscado_difuso')">Exportar a Excel</button>
         {% else %}
             <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
         {% endif %}
     </div>
-<!-- {% endif %} -->
+{% endif %}
 
-<!-- {% if tipo_busqueda == 'avanzada' %} -->
+{% if tipo_busqueda == 'avanzada' %}
 
     <div class="info-container">
-        
         {% if docentes %}
             <ul id="resultado-busqueda">
                 <h2>Resultado de la Búsqueda Avanzada<hr class="line"></h2>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                    <table id="tblData2" class="table table-striped table-hover table-bordered table-sm bg-white">
                         <thead>
                             <tr style="background-color: #004484; color: #fff;">
                                 <th style="font-size: 14px;">Foto</th>
@@ -796,17 +769,15 @@
                         </tbody>
                     </table>
                 </div>
-                <form action="{{ url_for('download_excel') }}" method="POST">
-                    <button type="submit">Descargar en Excel</button>
-                </form>
+                <button type="submit" onclick="exportTableToExcel('tblData2', 'resultado_buscado_avanzado')">Exportar a Excel</button>
         {% else %}
             <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
         {% endif %}
     </div>
     <!-- {% set tipo_busqueda = 'inteligente' %} -->
-<!-- {% endif %} -->
+{% endif %}
 
-<!-- {% if tipo_busqueda == 'ia' %} -->
+{% if tipo_busqueda == 'ia' %}
 
     <div class="info-container">
         
@@ -815,7 +786,7 @@
                 
                 <h2>Resultado de la Búsqueda IA<hr class="line"></h2>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered table-sm bg-white">
+                    <table id="tblData3" class="table table-striped table-hover table-bordered table-sm bg-white">
                         <thead>
                             <tr style="background-color: #004484; color: #fff;">
                                 <th style="font-size: 14px;">Foto</th>
@@ -893,14 +864,79 @@
                         </tbody>
                     </table>
                 </div>
-                <form action="{{ url_for('download_excel') }}" method="POST">
-                    <button type="submit">Descargar en Excel</button>
-                </form>
+                <button type="submit" onclick="exportTableToExcel('tblData3', 'resultado_buscado_inteligente')">Exportar a Excel</button>
         {% else %}
             <p style="color: rgb(161, 0, 0);">No se encontraron resultados..</p>
         {% endif %}
     </div>
-<!-- {% endif %} -->
+{% endif %}
+{% if tipo_busqueda == 'intereses' %}
+    <div class="info-container">
+        {% if resultados %}
+            <ul id="resultado-busqueda">
+                <h2>Resultado de la Búsqueda por Intereses<hr class="line"></h2>
+                <div class="table-responsive">
+                    <table id="tblData4" class="table table-striped table-hover table-bordered table-sm bg-white">
+                        <thead>
+                            <tr style="background-color: #004484; color: #fff;">
+                                <th style="font-size: 14px;">Foto</th>
+                                <th style="font-size: 14px;">Nombre y Apellido</th>
+                                <th style="font-size: 14px;">Cédula</th>
+                                <th style="font-size: 14px;">Celular</th>
+                                <th style="font-size: 14px;">Email</th>
+                                <th style="font-size: 14px;">Género</th>
+                                <th style="font-size: 14px;">Nivel de Estudio</th>
+                                <th style="font-size: 14px;">Carrera</th>
+                                <th style="font-size: 14px;">Disponibilidad</th>
+                                <th style="font-size: 14px;">Tipos de Intereses</th>
+                            </tr>
+                            <style>
+                                .table-responsive {
+                                    overflow-x: auto; /* Permite desplazamiento horizontal */
+                                    max-width: 100%; /* Limita el ancho máximo */
+                                    margin-bottom: 20px; /* Añade margen inferior para separar de otros elementos */
+                                    margin-top: 20px;
+                                }
+                                .table th{
+                                    padding-top: 8px;
+                                    padding-bottom: 8px;
+                                }
+                            </style>
+                        </thead>
+                        <tbody>
+                            {% for docente in resultados %}
+                            <tr {% if loop.index <= 3 %} style="background-color: rgba(97, 202, 37, 0.37);" {% else %} style="background-color: rgba(202, 199, 37, 0.37);" {% endif %}>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            {% if docente[8] %}
+                                                <img src="{{ url_for('static', filename='images/profile_pics/' + docente[8]) }}" style="max-width: 50px; max-height: 50px; border-radius: 5px; border: 1px solid #ddd;" alt="Imagen de Perfil">
+                                            {% else %}
+                                                <img src="{{ url_for('static', filename='images/profile_pics/default.png') }}" style="max-width: 50px; max-height: 50px;" alt="Imagen Predeterminada">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ docente[0] }} {{ docente[1] }}</td>
+                                <td>{{ docente[2] }}</td>
+                                <td>{{ docente[3] }}</td>
+                                <td>{{ docente[4] }}</td>
+                                <td>{{ docente[5] }}</td>
+                                <td>{{ docente[6] }}</td>
+                                <td style="font-size: 12px;">{{ docente[7] }}</td>
+                                <td>{{ docente[9] }}</td>
+                                <td>{{ docente[10] }}<br>{{ docente[11] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" onclick="exportTableToExcel('tblData4', 'resultado_buscado_intereses')">Exportar a Excel</button>
+        {% else %}
+            <p style="color: rgb(161, 0, 0);">No se encontraron resultados.</p>
+        {% endif %}
+    </div>
+{% endif %}
         
     
                     
@@ -1085,6 +1121,9 @@
   
   <!--script src="/static/busqueda_inteligente.js"></script-->
   <script src="{{ url_for('static', filename='js/busqueda_inteligente.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
   <script>
 
     function updateIconH(value, parentElement) {
@@ -1207,6 +1246,36 @@
         // window.location.href = '/busqueda_inteligente'; 
     }
 
+    // function toggleSeccion(idSeccion) {
+    //         var seccion = document.getElementById(idSeccion);
+    //         var icono = document.getElementById('icono-' + idSeccion);
+
+    //         // Cierra todas las secciones
+    //         var secciones = document.querySelectorAll('.contenido-seccion');
+    //         secciones.forEach(function(elem) {
+    //             if (elem.id !== idSeccion) {
+    //                 elem.classList.remove('expandido');
+    //                 // Cambia el icono de todas las secciones a 'fa-chevron-down'
+    //                 var iconos = document.querySelectorAll('.titulo-seccion i');
+    //                 iconos.forEach(function(icono) {
+    //                     icono.classList.remove('fa-chevron-left');
+    //                     icono.classList.add('fa-chevron-down');
+    //                 });
+    //             }
+    //         });
+
+    //         // Alternar la clase 'expandido' en la sección seleccionada
+    //         if (seccion.classList.contains('expandido')) {
+    //             seccion.classList.remove('expandido');
+    //             icono.classList.remove('fa-chevron-left');
+    //             icono.classList.add('fa-chevron-down');
+    //         } else {
+    //             seccion.classList.add('expandido');
+    //             icono.classList.remove('fa-chevron-down');
+    //             icono.classList.add('fa-chevron-left');
+    //         }
+    //     }
+
      // Captura el elemento input de tipo range
     var ranges = document.querySelectorAll('input[type="range"]');
     var rangeTexts = document.querySelectorAll('.text-placeholder');
@@ -1224,85 +1293,286 @@
         alert("El nivel de confianza varía dependiendo de la cantidad de parámetros elegidos (Mientras más parámetros, más exacto será el Nivel de Confianza)");
     }
 
-    function hideLoading() {
-        var toggleButton = document.getElementById('toggleButton');
-        var loadingOverlay = document.getElementById('loadingOverlay');
-        var content = document.getElementById('content');
 
-        loadingOverlay.style.display = 'none'; // Oculta el overlay
-        content.style.filter = 'none'; // Remueve el blur del contenido
-        toggleButton.style.display = 'none'; // Oculta el botón
-    }
+    //Algo de este código me impide visualizar el resultado y me lo manda a la URL
+    // function hideLoading() {
+    //     var toggleButton = document.getElementById('toggleButton');
+    //     var loadingOverlay = document.getElementById('loadingOverlay');
+    //     var content = document.getElementById('content');
 
-    // Agrega un evento para el botón para que al hacer clic se llame a hideLoading
-    document.getElementById('toggleButton').addEventListener('click', hideLoading);
+    //     loadingOverlay.style.display = 'none'; // Oculta el overlay
+    //     content.style.filter = 'none'; // Remueve el blur del contenido
+    //     toggleButton.style.display = 'none'; // Oculta el botón
+    // }
+
+    // // Agrega un evento para el botón para que al hacer clic se llame a hideLoading
+    // document.getElementById('toggleButton').addEventListener('click', hideLoading);
     
-    document.addEventListener('DOMContentLoaded', function() {
-        // Selecciona el formulario y el mensaje
-        var formulario = document.getElementById('limpiar-form');
-        var mensaje = document.getElementById('mensaje');
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     // Selecciona el formulario y el mensaje
+    //     var formulario = document.getElementById('limpiar-form');
+    //     var mensaje = document.getElementById('mensaje');
 
-        // Verifica si el formulario se ha enviado
-        if (localStorage.getItem('formularioEnviado') === 'true') {
-            mensaje.style.display = 'none';
-        } else {
-            mensaje.style.display = 'block';
-        }
+    //     // Verifica si el formulario se ha enviado
+    //     if (localStorage.getItem('formularioEnviado') === 'true') {
+    //         mensaje.style.display = 'none';
+    //     } else {
+    //         mensaje.style.display = 'block';
+    //     }
 
-        // Maneja el evento de envío del formulario
-        formulario.addEventListener('submit', function() {
-            // Marca el formulario como enviado en localStorage
-            localStorage.setItem('formularioEnviado', 'true');
-            // Oculta el mensaje
-            mensaje.style.display = 'none';
-        });
-    });
+    //     // Maneja el evento de envío del formulario
+    //     formulario.addEventListener('submit', function() {
+    //         // Marca el formulario como enviado en localStorage
+    //         localStorage.setItem('formularioEnviado', 'true');
+    //         // Oculta el mensaje
+    //         mensaje.style.display = 'none';
+    //     });
+    // });
 
-    async function realizarBusqueda(url, formData) {
-        try {
-            // Convierte los datos del formulario en una cadena de consulta
-            const queryString = new URLSearchParams(formData).toString();
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     // Selecciona el formulario y el mensaje
+    //     var formulario = document.getElementById('limpiar-form');
+    //     var mensaje = document.getElementById('mensaje');
 
-            // Envía la solicitud
-            const response = await fetch(url + '?' + queryString, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: queryString
-            });
+    //     // Verifica si el formulario se ha enviado
+    //     if (localStorage.getItem('formularioEnviado') === 'true') {
+    //         mensaje.style.display = 'none';
+    //     } else {
+    //         mensaje.style.display = 'block';
+    //     }
 
-            // Verifica si la solicitud fue exitosa
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+    //     // Maneja el evento de envío del formulario
+    //     formulario.addEventListener('submit', function() {
+    //         // Marca el formulario como enviado en localStorage
+    //         localStorage.setItem('formularioEnviado', 'true');
+    //         // Oculta el mensaje
+    //         mensaje.style.display = 'none';
+    //     });
+    // });
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const formulario = document.querySelector('#formulario-busqueda-inteligente');
+
+    //     formulario.addEventListener('submit', function(event) {
+    //         event.preventDefault(); // Prevenir el envío del formulario de manera tradicional
+
+    //         const formData = new FormData(formulario);
+    //         const searchParams = new URLSearchParams(formData).toString();
+            
+    //         // Realizar la solicitud AJAX si es necesario, luego redirigir
+    //         fetch('/busqueda_inteligente?' + searchParams, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/x-www-form-urlencoded'
+    //             }
+    //         }).then(response => {
+    //             if (response.ok) {
+    //                 // Redirigir a la nueva URL
+    //                 window.location.href = '/busqueda_inteligente?' + searchParams;
+    //             }
+    //         }).catch(error => {
+    //             console.error('Error en la búsqueda:', error);
+    //         });
+    //     });
+    // });
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     // Funcionalidad 1: Manejo del formulario y mensaje
+    //     var formularioLimpiar = document.getElementById('limpiar-form');
+    //     var mensaje = document.getElementById('mensaje');
+
+    //     // Verifica si el formulario se ha enviado
+    //     if (localStorage.getItem('formularioEnviado') === 'true') {
+    //         mensaje.style.display = 'none';
+    //     } else {
+    //         mensaje.style.display = 'block';
+    //     }
+
+    //     // Maneja el evento de envío del formulario
+    //     formularioLimpiar.addEventListener('submit', function() {
+    //         // Marca el formulario como enviado en localStorage
+    //         localStorage.setItem('formularioEnviado', 'true');
+    //         // Oculta el mensaje
+    //         mensaje.style.display = 'none';
+    //     });
+
+    //     // Funcionalidad 2: Manejo del formulario de búsqueda inteligente
+    //     const formularioBusqueda = document.querySelector('#formulario-busqueda-inteligente');
+
+    //     formularioBusqueda.addEventListener('submit', function(event) {
+    //         event.preventDefault(); // Prevenir el envío del formulario de manera tradicional
+
+    //         const formData = new FormData(formularioBusqueda);
+    //         const searchParams = new URLSearchParams(formData).toString();
+            
+    //         // Realizar la solicitud AJAX si es necesario, luego redirigir
+    //         fetch('/busqueda_inteligente?' + searchParams, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/x-www-form-urlencoded'
+    //             }
+    //         }).then(response => {
+    //             if (response.ok) {
+    //                 // Redirigir a la nueva URL
+    //                 window.location.href = '/busqueda_inteligente?' + searchParams;
+    //             }
+    //         }).catch(error => {
+    //             console.error('Error en la búsqueda:', error);
+    //         });
+    //     });
+    // });
+    
+
+    // document.querySelectorAll('form').forEach(function(form) {
+    //     form.addEventListener('submit', function(event) {
+    //         event.preventDefault(); // Evitar el envío del formulario por defecto
+
+    //         // Obtener datos de la tabla
+    //         let table = this.previousElementSibling.querySelector('table'); // Obtiene la tabla antes del formulario
+    //         let tableData = [];
+            
+    //         table.querySelectorAll('tbody tr').forEach(row => {
+    //             let rowData = [];
+    //             row.querySelectorAll('td').forEach(cell => {
+    //                 rowData.push(cell.innerText.trim());
+    //             });
+    //             tableData.push(rowData);
+    //         });
+
+    //         // Enviar los datos al servidor usando fetch
+    //         fetch(this.action, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({ data: tableData })
+    //         })
+    //         .then(response => response.blob())
+    //         .then(blob => {
+    //             let url = window.URL.createObjectURL(blob);
+    //             let a = document.createElement('a');
+    //             a.href = url;
+    //             a.download = 'tabla_datos.xlsx';
+    //             document.body.appendChild(a);
+    //             a.click();
+    //             a.remove();
+    //         })
+    //         .catch(error => console.error('Error:', error));
+    //     });
+    // });
+
+    // async function realizarBusqueda(url, formData) {
+    //     try {
+    //         // Convierte los datos del formulario en una cadena de consulta
+    //         const queryString = new URLSearchParams(formData).toString();
+
+    //         // Envía la solicitud
+    //         const response = await fetch(url + '?' + queryString, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/x-www-form-urlencoded',
+    //             },
+    //             body: queryString
+    //         });
+
+    //         // Verifica si la solicitud fue exitosa
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+
+    //         // Actualiza el contenido de la página
+    //         const html = await response.text();
+    //         document.getElementById('resultado').innerHTML = html;
+
+    //         // Actualiza la URL en el navegador
+    //         history.pushState({}, '', url + '?' + queryString);
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //     }
+    // }
+
+    // function handleFormSubmit(event, form) {
+    //     event.preventDefault();
+    //     const formData = new FormData(form);
+    //     const action = form.getAttribute('action');
+    //     realizarBusqueda(action, Object.fromEntries(formData));
+    // }
+
+    // window.onpopstate = function(event) {
+    //     // Cargar el contenido según el estado del historial
+    //     fetch(window.location.href)
+    //         .then(response => response.text())
+    //         .then(html => {
+    //             document.getElementById('resultado').innerHTML = html;
+    //         });
+    // };
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const formulario = document.querySelector('#formulario-busqueda-inteligente');
+
+    //     formulario.addEventListener('submit', function(event) {
+    //         event.preventDefault(); // Prevenir el envío del formulario de manera tradicional
+
+    //         const formData = new FormData(formulario);
+    //         const searchParams = new URLSearchParams(formData).toString();
+            
+    //         // Realizar la solicitud AJAX si es necesario, luego redirigir
+    //         fetch('/busqueda_inteligente?' + searchParams, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/x-www-form-urlencoded'
+    //             }
+    //         }).then(response => {
+    //             if (response.ok) {
+    //                 // Redirigir a la nueva URL
+    //                 window.location.href = '/busqueda_inteligente?' + searchParams;
+    //             }
+    //         }).catch(error => {
+    //             console.error('Error en la búsqueda:', error);
+    //         });
+    //     });
+    // });
+
+    function exportTableToExcel(tableID, filename = '') {
+        // Seleccionar la tabla
+        var table = document.getElementById(tableID);
+        var wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+
+        // Obtener la hoja de trabajo
+        var ws = wb.Sheets["Sheet1"];
+
+        // Recorre todas las celdas para aplicar el formato de porcentaje
+        for (var cell in ws) {
+            if (cell[0] === '!' || isNaN(ws[cell].v)) continue; // Ignorar propiedades internas o celdas no numéricas
+
+            var cellValue = ws[cell].v;
+            if (typeof cellValue === 'number' && cellValue >= 0 && cellValue <= 1) {
+                ws[cell].z = '0.00%'; // Aplicar formato de porcentaje
             }
-
-            // Actualiza el contenido de la página
-            const html = await response.text();
-            document.getElementById('resultado').innerHTML = html;
-
-            // Actualiza la URL en el navegador
-            history.pushState({}, '', url + '?' + queryString);
-        } catch (error) {
-            console.error('Error:', error);
         }
-    }
 
-    function handleFormSubmit(event, form) {
-        event.preventDefault();
-        const formData = new FormData(form);
-        const action = form.getAttribute('action');
-        realizarBusqueda(action, Object.fromEntries(formData));
-    }
+        // Generar archivo Excel
+        var wbout = XLSX.write(wb, {
+            bookType: 'xlsx',
+            type: 'binary'
+        });
 
-    window.onpopstate = function(event) {
-        // Cargar el contenido según el estado del historial
-        fetch(window.location.href)
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('resultado').innerHTML = html;
-            });
-    };
+        // Convertir a Blob
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        // Crear enlace de descarga
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(new Blob([s2ab(wbout)], {type: "application/octet-stream"}));
+        link.download = filename + ".xlsx";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
     // function showLoading() {
     // var toggleButton = document.getElementById('toggleButton');

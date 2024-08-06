@@ -490,6 +490,11 @@ select{
 }
 */
 
+/* Opcional: Estilo para el icono de la sección */
+/* .titulo-seccion {
+    cursor: pointer; /* Cambia el cursor para indicar que es interactivo */
+/*} */
+
 /*--------------TUERCA ROTACION-----------------------*/
 
 @keyframes rotate {
@@ -940,6 +945,13 @@ input[type="range"] {
     border-radius: 0 0 15px 15px;
     width: 95%;
     margin-left: 15px;
+    /*overflow: hidden; /* Oculta el contenido que está fuera del área del contenedor */
+    /*max-height: 0; /* Inicialmente el contenedor está colapsado */
+    transition: max-height 0.5s ease-out; /* Transición suave */
+}
+
+.contenido-seccion.expandido {
+    max-height: 1000px; /* Establece un valor alto para que el contenido se pueda mostrar */
 }
 
 /*--------------------------------------------------------*/
