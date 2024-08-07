@@ -1,9 +1,16 @@
 # main.py
 from app import app
-from db import init_connection, mysql  # Importa la función para inicializar la conexión a MySQL
-from docentes import docentes_bp  # Importa el Blueprint de docentes
+#from db import init_connection, mysql  # Importa la función para inicializar la conexión a MySQL
+from db import init_connection, db  # Importa la función para inicializar la conexión a SQL
+#from docentes import docentes_bp  # Importa el Blueprint de docentes
 from flask import Flask, jsonify, request, render_template, redirect, url_for, flash, session, send_file
-from ontologia_fuzzy import OntologiaFuzzy
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import login_required
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import aliased
+from sqlalchemy import or_
+from models import Usuario, Docente, HabilidadesTB, ResultadosDifusosHT, Intereses  # Asegúrate de que los modelos estén en models.py
+#from ontologia_fuzzy import OntologiaFuzzy
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import re
@@ -23,10 +30,14 @@ import skfuzzy.control as ctrl
 init_connection(app)
 
 # Registra el Blueprint de docentes
-app.register_blueprint(docentes_bp)
+#app.register_blueprint(docentes_bp)
+
+# db = SQLAlchemy()
 
 #Settings
 app.secret_key = 'mysecretkey'
+
+db = SQLAlchemy(app)
 
 #Cargar la carpeta
 app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/images/profile_pics')
@@ -246,24 +257,20 @@ def home():
 def login():
     email = request.form['email']
     password = request.form['password']
-    cursor = mysql.connection.cursor()
-    cursor.execute('SELECT * FROM usuarios WHERE email = %s', (email,))
-    user = cursor.fetchone()
-    cursor.close()  # Cerrar el cursor después de la consulta
+    
+    # Buscar el usuario en la base de datos usando SQLAlchemy
+    user = Usuario.query.filter_by(email=email).first()
 
-    if user and check_password_hash(user[4], password):  # user[4] is the password field
+    if user and check_password_hash(user.password, password):
         session['logged_in'] = True
-        session['user_id'] = user[0]  # user[0] is the user ID field
-        session['username'] = user[3]  # user[3] is the username field
-        session['email'] = user[2]  # user[2] is the email field
+        session['user_id'] = user.id
+        session['username'] = user.usuario
+        session['email'] = user.email
         flash('Has iniciado sesión correctamente', 'success')
-        #if session['id_rol']==1:
-        #    return render_template('admin.html')
-        #elif session['id_rol']==2:
-        #    return redirect(url_for('index'))
         return redirect(url_for('index'))
     else:
         flash('Correo o contraseña incorrectos', 'danger')
+    
     return redirect(url_for('home'))
 
 @app.route('/registeruser', methods=['POST'])
@@ -278,7 +285,7 @@ def registeruser():
      # Dividir nombre_completo en nombre y apellido
     partes_nombre = name.split()
     if len(partes_nombre) >= 4:
-        nombre = ' '.join(partes_nombre[:2]) # Tomamos los dos primeros elementos como el nombre completo
+        nombre = ' '.join(partes_nombre[:2])  # Tomamos los dos primeros elementos como el nombre completo
         apellido = ' '.join(partes_nombre[2:])
     elif len(partes_nombre) == 2 or len(partes_nombre) == 3:
         nombre = partes_nombre[0]
@@ -288,91 +295,70 @@ def registeruser():
         apellido = ''
     #------------------------------------------------------#
 
-    cursor = mysql.connection.cursor()
+    #cursor = db.connection.cursor()
 
     #------------------------------------------------------#
-    #Verificar si el usuario y cedula ya está registrado
-    cursor.execute('SELECT * FROM usuarios WHERE email = %s', (email,))
-    existing_user = cursor.fetchone()
+    # Verificar si el usuario ya está registrado
+    existing_user = Usuario.query.filter_by(email=email).first()
     if existing_user:
         flash('Correo electrónico ya está registrado', 'danger')
         return redirect(url_for('home'))
 
-    cursor.execute('SELECT * FROM docente WHERE cedula = %s', (username,))
-    existing_cedula = cursor.fetchone()
+    # Verificar si la cédula ya está registrada
+    existing_cedula = Docente.query.filter_by(cedula=username).first()
     if existing_cedula:
         flash('Número de cédula ya está registrado', 'danger')
         return redirect(url_for('home'))
 
-    #------------------------------------------------------#
-
-    #------------------------------------------------------#
-    # Si no existen registros previos de correo electrónico ni de username, procede con el registro
+    # Registrar nuevo usuario
     hashed_password = generate_password_hash(password)
-    cursor.execute('INSERT INTO usuarios (nombre_completo, email, usuario, password) VALUES (%s, %s, %s, %s)',
-                   (name, email, username, hashed_password))
-    mysql.connection.commit()
-    #------------------------------------------------------#
+    new_user = Usuario(nombre_completo=name, email=email, usuario=username, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
 
-    #------------------------------------------------------#
-    # Verificar si el user/cédula ya está registrado
-    ##cursor.execute('SELECT * FROM usuarios WHERE usuario = %s', (username,))
-    ##existing_username = cursor.fetchone()
-    ##if existing_username:
-    ##    flash('Número de cédula ya está registrado', 'danger')
-    ##    return redirect(url_for('home'))
-    #------------------------------------------------------#
-
-    #-------------------------------------------------------#
     # Obtener el ID del usuario recién registrado
-    cursor.execute('SELECT id FROM usuarios WHERE email = %s', (email,))
-    user_id = cursor.fetchone()[0]
+    user_id = new_user.id
 
     # Insertar en la tabla docente
-    cursor.execute('INSERT INTO docente (id_usuario, nombre, apellido, cedula, email) VALUES (%s, %s, %s, %s, %s)',
-                   (user_id, nombre, apellido, username, email))
-    mysql.connection.commit()
-    #--------------------------------------------------------#
+    new_docente = Docente(id_usuario=user_id, nombre=nombre, apellido=apellido, cedula=username, email=email)
+    db.session.add(new_docente)
+    db.session.commit()
+
     # Obtener el ID del docente recién insertado
-    #cursor.execute('SELECT id FROM docente WHERE id_usuario = %s', (user_id,))
-    #docente_id = cursor.fetchone()[0]
-    # Insertar en la tabla habilidades_t_b
-    #cursor.execute('INSERT INTO habilidades_t_b (id_usuario) VALUES (%s)', (docente_id))
-    #mysql.connection.commit()
-    #--------------------------------------------------------#
-    # Obtener el ID del docente recién insertado
-    cursor.execute('SELECT id FROM docente WHERE id_usuario = %s', (user_id,))
-    docente_id = cursor.fetchone()[0]
+    docente_id = new_docente.id
 
-    cursor.execute('INSERT INTO habilidades_t_b (id_docente ) VALUES (%s)', (docente_id,))
-    mysql.connection.commit()
-    #--------------------------------------------------------#
-    # Obtener el ID del docente recién insertado
-    cursor.execute('SELECT id FROM habilidades_t_b WHERE id_docente = %s', (docente_id,))
-    habilidades_t_b_id = cursor.fetchone()[0]
+    # Insertar en habilidades_t_b
+    new_habilidades_t_b = HabilidadesTB(id_docente=docente_id)
+    db.session.add(new_habilidades_t_b)
+    db.session.commit()
 
-    cursor.execute('INSERT INTO resultados_difusos_h_t (id_habilidades_t_b ) VALUES (%s)', (habilidades_t_b_id,))
-    mysql.connection.commit()
+    # Obtener el ID de habilidades_t_b recién insertado
+    habilidades_t_b_id = new_habilidades_t_b.id
 
-    #--------------------------------------------------------#
-    cursor.execute('INSERT INTO intereses (id_docente ) VALUES (%s)', (docente_id,))
-    mysql.connection.commit()
+    # Insertar en resultados_difusos_h_t
+    new_resultados_difusos_h_t = ResultadosDifusosHT(id_habilidades_t_b=habilidades_t_b_id)
+    db.session.add(new_resultados_difusos_h_t)
+    db.session.commit()
 
-    cursor.close()
+    # Insertar en intereses
+    new_intereses = Intereses(id_docente=docente_id)
+    db.session.add(new_intereses)
+    db.session.commit()
+
     flash('Registro exitoso, ahora puedes iniciar sesión', 'success')
     return redirect(url_for('home'))
 
 @app.route('/index')
 @login_required
 def index():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT imagen_p FROM docente WHERE id_usuario = %s", [session['user_id']])
-    data = cur.fetchone()
-    cur.close()
-    # # Si 'data' es None, significa que el usuario no tiene imagen de perfil guardada
-    imagen_p = data[0] if data else None
-    # # Ahora pasas 'imagen_p' como parte del contexto al renderizar el template
-    return render_template('ini.html', imagen_p=imagen_p if imagen_p else 'default.png')
+    # Consultar la imagen de perfil del docente
+    docente = Docente.query.filter_by(id_usuario=session['user_id']).first()
+    
+    # Si 'docente' es None, significa que el usuario no tiene imagen de perfil guardada
+    imagen_p = docente.imagen_p if docente and docente.imagen_p else 'default.png'
+    
+    # Renderizar el template con la imagen de perfil
+    return render_template('ini.html', imagen_p=imagen_p)
     # try:
     #     # Obtener imagen de perfil del docente
     #     cur = mysql.connection.cursor()
@@ -424,10 +410,15 @@ def index():
 @app.route('/logout', methods=['GET', 'POST'] )
 #@login_required
 def logout():
+    # Elimina las variables de sesión relacionadas con el usuario
     session.pop('logged_in', None)
     session.pop('user_id', None)
     session.pop('username', None)
+    
+    # Muestra un mensaje flash para informar al usuario que ha cerrado sesión
     flash('Has cerrado sesión correctamente', 'success')
+    
+    # Redirige al usuario a la página de inicio
     return redirect(url_for('home'))
 
 @app.route('/perfil')
@@ -435,91 +426,59 @@ def logout():
 def perfil():
     #global resultado_difuso
     try:
-        # Obtener datos del usuario desde la tabla usuarios
-        cursor = mysql.connection.cursor()
-        cursor.execute('SELECT id, nombre, apellido, email FROM docente WHERE id_usuario = %s', (session['user_id'],))
-        user = cursor.fetchone()
-        #cursor.close()
+        # Obtener datos del usuario desde la tabla docente
+        user = db.session.execute(
+            'SELECT id, nombre, apellido, email FROM docente WHERE id_usuario = :user_id',
+            {'user_id': session['user_id']}
+        ).fetchone()
 
         if user:
-            #name = user[0]
-            #nombre_completo = user[0]
             id_docente = user[0]
             nombre = user[1]
             apellido = user[2]
-            #email = user[1]
             email = user[3]
 
-            # Dividir nombre_completo en nombre y apellido
-            #partes_nombre = nombre_completo.split()
-            #if len(partes_nombre) >= 3:
-            #    nombre = ' '.join(partes_nombre[:2])  # Primer Nombre y Segundo Nombre
-            #    apellido = ' '.join(partes_nombre[2:])  # Primer Apellido y Segundo Apellido
-            #elif len(partes_nombre) == 2:
-            #    nombre = partes_nombre[0]
-            #    apellido = partes_nombre[1]
-            #else:
-            #    nombre = nombre_completo
-            #    apellido = ''
-
             # Obtener datos adicionales del docente desde la tabla docente
-            cursor.execute('SELECT cedula, celular, genero, nvl_estudio, carrera, imagen_p, disponibilidad_c, anios_exp_informatica FROM docente WHERE id_usuario = %s', (session['user_id'],))
-            #cursor.execute('SELECT cedula, celular, genero, nvl_estudio, carrera, imagen_p, disponibilidad_c FROM docente WHERE id = %s', (id_docente,))
-            docente_data = cursor.fetchone()
+            docente_data = db.session.execute(
+                'SELECT cedula, celular, genero, nvl_estudio, carrera, imagen_p, disponibilidad_c, anios_exp_informatica FROM docente WHERE id_usuario = :user_id',
+                {'user_id': session['user_id']}
+            ).fetchone()
 
             if docente_data:
-                cedula = docente_data[0] if docente_data[0] else ""
-                celular = docente_data[1] if docente_data[1] else ""
-                genero = docente_data[2] if docente_data[2] else ""
-                nvl_estudio = docente_data[3] if docente_data[3] else ""
-                carrera = docente_data[4] if docente_data[4] else ""
-                imagen_p = docente_data[5] if docente_data[5] else 'default.png'  # Imagen predeterminada
-                disponibilidad_c = docente_data[6] if docente_data[6] else "0"
-                anios_exp_informatica = docente_data[7] if docente_data[6] else ""
+                cedula = docente_data[0] or ""
+                celular = docente_data[1] or ""
+                genero = docente_data[2] or ""
+                nvl_estudio = docente_data[3] or ""
+                carrera = docente_data[4] or ""
+                imagen_p = docente_data[5] or 'default.png'  # Imagen predeterminada
+                disponibilidad_c = docente_data[6] or "0"
+                anios_exp_informatica = docente_data[7] or ""
 
                 # Convertir imagen_p a cadena str si es bytes
                 #if isinstance(imagen_p, bytes):
                 #    imagen_p = imagen_p.decode('utf-8')
 
-                cursor.execute('SELECT tipos_intereses, otros FROM intereses WHERE id_docente = %s', (id_docente,))
-                result  = cursor.fetchone()
+                 # Obtener intereses
+                result = db.session.execute(
+                    'SELECT tipos_intereses, otros FROM intereses WHERE id_docente = :id_docente',
+                    {'id_docente': id_docente}
+                ).fetchone()
 
                 if result:
                     tipos_intereses = result[0]
                     otros = result[1]
                     
-                    # Verificar si tipos_intereses es None o una cadena vacía
-                    if tipos_intereses:
-                        # Dividir la cadena en una lista de intereses
-                        intereses = tipos_intereses.split(',')
-                    else:
-                        intereses = []
-                    
-                    # Verificar si otros es None o una cadena vacía
-                    if otros:
-                        # No es necesario dividir, simplemente asigna el valor
-                        texto_otros = otros
-                    else:
-                        texto_otros = ""
+                    intereses = tipos_intereses.split(',') if tipos_intereses else []
+                    texto_otros = otros if otros else ""
                 else:
                     intereses = []
                     texto_otros = ""
 
-                # if result:
-                #     tipos_intereses = result[0]
-                #     otros = result[1]
-                #     # Verificar si tipos_intereses es None
-                #     if tipos_intereses:
-                #         # Dividir la cadena en una lista de intereses
-                #         intereses = tipos_intereses.split(',')
-                #     else:
-                #         intereses = []
-                # else:
-                #     intereses = []
-
-                # Obtener habilidades técnicas y blandas del docente
-                cursor.execute('SELECT * FROM habilidades_t_b WHERE id_docente = %s', (id_docente,))
-                habilidades_data = cursor.fetchone()
+                # Obtener habilidades técnicas y blandas
+                habilidades_data = db.session.execute(
+                    'SELECT * FROM habilidades_t_b WHERE id_docente = :id_docente',
+                    {'id_docente': id_docente}
+                ).fetchone()
 
                 habilidades_tecnicas = {}
                 habilidades_blandas = {}
@@ -652,25 +611,24 @@ def perfil():
                         resultado_difuso_i = evaluador_techniques_skills_i.output['resultado_techniques_skills']
 
                         #Guardar Resultados Difusos
-                        # Ejemplo de cómo actualizar los resultados difusos en la base de datos
-                        cursor.execute("""
+                        # Guardar resultados difusos en la base de datos
+                        db.session.execute("""
                             UPDATE resultados_difusos_h_t
-                            SET resultado_difuso = %s,
-                                resultado_difuso_g = %s,
-                                resultado_difuso_d = %s,
-                                resultado_difuso_s = %s,
-                                resultado_difuso_i = %s
-                            WHERE id_habilidades_t_b = %s
-                        """, (
-                            resultado_difuso,
-                            resultado_difuso_g,
-                            resultado_difuso_d,
-                            resultado_difuso_s,
-                            resultado_difuso_i,
-                            habilidades_data[0]  # Asegúrate de que habilidades_data[0] sea el id de habilidades_t_b
-                        ))
-
-                        mysql.connection.commit()  # Guardar los cambios en la base de datos
+                            SET resultado_difuso = :resultado_difuso,
+                                resultado_difuso_g = :resultado_difuso_g,
+                                resultado_difuso_d = :resultado_difuso_d,
+                                resultado_difuso_s = :resultado_difuso_s,
+                                resultado_difuso_i = :resultado_difuso_i
+                            WHERE id_habilidades_t_b = :id_habilidades_t_b
+                        """, {
+                            'resultado_difuso': resultado_difuso,
+                            'resultado_difuso_g': resultado_difuso_g,
+                            'resultado_difuso_d': resultado_difuso_d,
+                            'resultado_difuso_s': resultado_difuso_s,
+                            'resultado_difuso_i': resultado_difuso_i,
+                            'id_habilidades_t_b': habilidades_data[0]  # Asegúrate de que habilidades_data[0] sea el id de habilidades_t_b
+                        })
+                        db.session.commit()
 
                     # Resultado Difuso Habilidades Blandas
 
@@ -718,23 +676,22 @@ def perfil():
                         resultado_difuso_bhm = evaluador_techniques_skills_bhm.output['resultado_techniques_skills']
 
                         #Guardar Resultados Difusos
-                        # Ejemplo de cómo actualizar los resultados difusos en la base de datos
-                        cursor.execute("""
-                            UPDATE resultados_difusos_h_t
-                            SET resultado_difuso_bhl = %s,
-                                resultado_difuso_bhc = %s,
-                                resultado_difuso_bhi = %s,
-                                resultado_difuso_bhm = %s
-                            WHERE id_habilidades_t_b = %s
-                        """, (
-                            resultado_difuso_bhl,
-                            resultado_difuso_bhc,
-                            resultado_difuso_bhi,
-                            resultado_difuso_bhm,
-                            habilidades_data[0]  # Asegúrate de que habilidades_data[0] sea el id de habilidades_t_b
-                        ))
-
-                        mysql.connection.commit()  # Guardar los cambios en la base de datos
+                        # Guardar resultados difusos en la base de datos
+                        db.session.execute("""
+                            UPDATE resultados_difusos_h_b
+                            SET resultado_difuso_bhl = :resultado_difuso_bhl,
+                                resultado_difuso_bhc = :resultado_difuso_bhc,
+                                resultado_difuso_bhi = :resultado_difuso_bhi,
+                                resultado_difuso_bhm = :resultado_difuso_bhm
+                            WHERE id_habilidades_t_b = :id_habilidades_b
+                        """, {
+                            'resultado_difuso_bhl': resultado_difuso_bhl,
+                            'resultado_difuso_bhc': resultado_difuso_bhc,
+                            'resultado_difuso_bhi': resultado_difuso_bhi,
+                            'resultado_difuso_bhm': resultado_difuso_bhm,
+                            'id_habilidades_t_b': habilidades_data[0]  # Asegúrate de que habilidades_data[0] sea el id de habilidades_b
+                        })
+                        db.session.commit()
 
                     # Resultado Difuso Habilidades Extracurriculares
 
@@ -782,26 +739,24 @@ def perfil():
                         resultado_difuso_eit = evaluador_techniques_skills_eit.output['resultado_techniques_skills']
 
                         #Guardar Resultados Difusos
-                        # Ejemplo de cómo actualizar los resultados difusos en la base de datos
-                        cursor.execute("""
-                            UPDATE resultados_difusos_h_t
-                            SET resultado_difuso_ecd = %s,
-                                resultado_difuso_eec = %s,
-                                resultado_difuso_edp = %s,
-                                resultado_difuso_eit = %s
-                            WHERE id_habilidades_t_b = %s
-                        """, (
-                            resultado_difuso_ecd,
-                            resultado_difuso_eec,
-                            resultado_difuso_edp,
-                            resultado_difuso_eit,
-                            habilidades_data[0]  # Asegúrate de que habilidades_data[0] sea el id de habilidades_t_b
-                        ))
-
-                        mysql.connection.commit()  # Guardar los cambios en la base de datos
+                        db.session.execute("""
+                            UPDATE resultados_difusos_h_e
+                            SET resultado_difuso_ecd = :resultado_difuso_ecd,
+                                resultado_difuso_eec = :resultado_difuso_eec,
+                                resultado_difuso_edp = :resultado_difuso_edp,
+                                resultado_difuso_eit = :resultado_difuso_eit
+                            WHERE id_habilidades_t_b = :id_habilidades_e
+                        """, {
+                            'resultado_difuso_ecd': resultado_difuso_ecd,
+                            'resultado_difuso_eec': resultado_difuso_eec,
+                            'resultado_difuso_edp': resultado_difuso_edp,
+                            'resultado_difuso_eit': resultado_difuso_eit,
+                            'id_habilidades_t_b': habilidades_data[0]  # Asegúrate de que habilidades_data[0] sea el id de habilidades_e
+                        })
+                        db.session.commit()
 
 
-                cursor.close()
+                #cursor.close()
 
                 return render_template('perfil.html', nombre=nombre, apellido=apellido, email=email, cedula=cedula, celular=celular, genero=genero, nvl_estudio=nvl_estudio, carrera=carrera, imagen_p=imagen_p, disponibilidad_c=disponibilidad_c, anios_exp_informatica=anios_exp_informatica, intereses=intereses, texto_otros=texto_otros, habilidades_tecnicas=habilidades_tecnicas, habilidades_blandas=habilidades_blandas, habilidades_extracurriculares=habilidades_extracurriculares, resultado_difuso=resultado_difuso, resultado_difuso_g=resultado_difuso_g, resultado_difuso_d=resultado_difuso_d, resultado_difuso_s=resultado_difuso_s, resultado_difuso_i=resultado_difuso_i, resultado_difuso_bhl=resultado_difuso_bhl, resultado_difuso_bhc=resultado_difuso_bhc, resultado_difuso_bhi=resultado_difuso_bhi, resultado_difuso_bhm=resultado_difuso_bhm, resultado_difuso_ecd=resultado_difuso_ecd, resultado_difuso_eec=resultado_difuso_eec, resultado_difuso_edp=resultado_difuso_edp, resultado_difuso_eit=resultado_difuso_eit)
             else:
@@ -895,58 +850,38 @@ def busqueda_inteligente():
             print(f"Niveles de Estudio: {nivel_estudio}")
 
             # Consulta SQL para obtener id_habilidades_t_b de resultados_difusos_h_t
-            cursor = mysql.connection.cursor()
+            #cursor = db.connection.cursor()
             
+            # Consulta SQL para obtener id_habilidades_t_b de resultados_difusos_h_t
             try:
-                #Extraer imagen de nuevo de la session imagen_pb?
-                cursor.execute('SELECT imagen_p FROM docente WHERE id_usuario = %s', (session['user_id'],))
-                imagen_p_result  = cursor.fetchone()
-                if imagen_p_result :    # Extraer la imagen de perfil si está disponible
-                    imagen_p = imagen_p_result[0]  # Asigna el primer elemento de la tupla
-                    #session['imagen_p'] = imagen_p  # Almacena en la sesión
+                # Extraer imagen de perfil del usuario
+                docente = Docente.query.filter_by(id=session['user_id']).first()
+                if docente and docente.imagen_p:
+                    imagen_p = docente.imagen_p
                 else:
-                    imagen_p = 'default.png'  # Si no hay imagen, asigna una imagen predeterminada
-                    #session['imagen_p'] = imagen_p  # Almacena en la sesión
+                    imagen_p = 'default.png'
 
                 # Establecer en la sesión
                 # session['imagen_p'] = imagen_p
 
-                # Consulta para obtener datos de resultados_difusos_h_t
-                sql_resultados = """
-                    SELECT id_habilidades_t_b, resultado_difuso, resultado_difuso_g, resultado_difuso_d, resultado_difuso_s, resultado_difuso_i, resultado_difuso_bhl, resultado_difuso_bhc, resultado_difuso_bhi, resultado_difuso_bhm, resultado_difuso_ecd, resultado_difuso_eec, resultado_difuso_edp, resultado_difuso_eit
-                    FROM resultados_difusos_h_t 
-                    WHERE (resultado_difuso BETWEEN %s AND %s
-                    OR resultado_difuso_g BETWEEN %s AND %s
-                    OR resultado_difuso_d BETWEEN %s AND %s
-                    OR resultado_difuso_s BETWEEN %s AND %s
-                    OR resultado_difuso_i BETWEEN %s AND %s
-                    OR resultado_difuso_bhl BETWEEN %s AND %s
-                    OR resultado_difuso_bhc BETWEEN %s AND %s
-                    OR resultado_difuso_bhi BETWEEN %s AND %s
-                    OR resultado_difuso_bhm BETWEEN %s AND %s
-                    OR resultado_difuso_ecd BETWEEN %s AND %s
-                    OR resultado_difuso_eec BETWEEN %s AND %s
-                    OR resultado_difuso_edp BETWEEN %s AND %s
-                    OR resultado_difuso_eit BETWEEN %s AND %s)
-                """
-                parametros = (
-                    desarrollo_arquitectura - 5, desarrollo_arquitectura + 5,
-                    gestion_analisis_datos - 5, gestion_analisis_datos + 5,
-                    disenio_interfaz_multimedia - 5, disenio_interfaz_multimedia + 5,
-                    seguridad_cloud_computing - 5, seguridad_cloud_computing + 5,
-                    infraestructura_comunicaciones - 5, infraestructura_comunicaciones + 5,
-                    habilidad_liderazgo_efectivo - 5, habilidad_liderazgo_efectivo + 5,
-                    habilidad_comunicacion_relaciones_i - 5, habilidad_comunicacion_relaciones_i + 5,
-                    habilidad_innovacion_creatividad - 5, habilidad_innovacion_creatividad + 5,
-                    habilidad_manejo_bienestar_personal - 5, habilidad_manejo_bienestar_personal + 5,
-                    creacion_contenidos_visuales - 5, creacion_contenidos_visuales + 5,
-                    estrategia_medios_digitales - 5, estrategia_medios_digitales + 5,
-                    desarrollo_profesional - 5, desarrollo_profesional + 5,
-                    idiomas_tecnicas_relajacion - 5, idiomas_tecnicas_relajacion + 5,
-                )
-                cursor.execute(sql_resultados, parametros)
-
-                resultados_difusos = cursor.fetchall()
+                # Consulta para obtener resultados difusos
+                resultados_difusos = ResultadosDifusosHT.query.filter(
+                    or_(
+                        ResultadosDifusosHT.resultado_difuso.between(desarrollo_arquitectura - 5, desarrollo_arquitectura + 5),
+                        ResultadosDifusosHT.resultado_difuso_g.between(gestion_analisis_datos - 5, gestion_analisis_datos + 5),
+                        ResultadosDifusosHT.resultado_difuso_d.between(disenio_interfaz_multimedia - 5, disenio_interfaz_multimedia + 5),
+                        ResultadosDifusosHT.resultado_difuso_s.between(seguridad_cloud_computing - 5, seguridad_cloud_computing + 5),
+                        ResultadosDifusosHT.resultado_difuso_i.between(infraestructura_comunicaciones - 5, infraestructura_comunicaciones + 5),
+                        ResultadosDifusosHT.resultado_difuso_bhl.between(habilidad_liderazgo_efectivo - 5, habilidad_liderazgo_efectivo + 5),
+                        ResultadosDifusosHT.resultado_difuso_bhc.between(habilidad_comunicacion_relaciones_i - 5, habilidad_comunicacion_relaciones_i + 5),
+                        ResultadosDifusosHT.resultado_difuso_bhi.between(habilidad_innovacion_creatividad - 5, habilidad_innovacion_creatividad + 5),
+                        ResultadosDifusosHT.resultado_difuso_bhm.between(habilidad_manejo_bienestar_personal - 5, habilidad_manejo_bienestar_personal + 5),
+                        ResultadosDifusosHT.resultado_difuso_ecd.between(creacion_contenidos_visuales - 5, creacion_contenidos_visuales + 5),
+                        ResultadosDifusosHT.resultado_difuso_eec.between(estrategia_medios_digitales - 5, estrategia_medios_digitales + 5),
+                        ResultadosDifusosHT.resultado_difuso_edp.between(desarrollo_profesional - 5, desarrollo_profesional + 5),
+                        ResultadosDifusosHT.resultado_difuso_eit.between(idiomas_tecnicas_relajacion - 5, idiomas_tecnicas_relajacion + 5)
+                    )
+                ).all()
 
                 print("Resultados Difusos:")
                 for resultado in resultados_difusos:
@@ -970,20 +905,36 @@ def busqueda_inteligente():
                     resultado_difuso_eit_list = []
 
                     for row in resultados_difusos:
-                        id_habilidades_t_b_list.append(row[0])
-                        resultado_difuso_list.append(row[1])
-                        resultado_difuso_g_list.append(row[2])
-                        resultado_difuso_d_list.append(row[3])
-                        resultado_difuso_s_list.append(row[4])
-                        resultado_difuso_i_list.append(row[5])
-                        resultado_difuso_bhl_list.append(row[6])
-                        resultado_difuso_bhc_list.append(row[7])
-                        resultado_difuso_bhi_list.append(row[8])
-                        resultado_difuso_bhm_list.append(row[9])
-                        resultado_difuso_ecd_list.append(row[10])
-                        resultado_difuso_eec_list.append(row[11])
-                        resultado_difuso_edp_list.append(row[12])
-                        resultado_difuso_eit_list.append(row[13])
+                        id_habilidades_t_b_list.append(row.id_habilidades_t_b)
+                        resultado_difuso_list.append(row.resultado_difuso)
+                        resultado_difuso_g_list.append(row.resultado_difuso_g)
+                        resultado_difuso_d_list.append(row.resultado_difuso_d)
+                        resultado_difuso_s_list.append(row.resultado_difuso_s)
+                        resultado_difuso_i_list.append(row.resultado_difuso_i)
+                        resultado_difuso_bhl_list.append(row.resultado_difuso_bhl)
+                        resultado_difuso_bhc_list.append(row.resultado_difuso_bhc)
+                        resultado_difuso_bhi_list.append(row.resultado_difuso_bhi)
+                        resultado_difuso_bhm_list.append(row.resultado_difuso_bhm)
+                        resultado_difuso_ecd_list.append(row.resultado_difuso_ecd)
+                        resultado_difuso_eec_list.append(row.resultado_difuso_eec)
+                        resultado_difuso_edp_list.append(row.resultado_difuso_edp)
+                        resultado_difuso_eit_list.append(row.resultado_difuso_eit)
+
+                    # for row in resultados_difusos:
+                    #     id_habilidades_t_b_list.append(row[0])
+                    #     resultado_difuso_list.append(row[1])
+                    #     resultado_difuso_g_list.append(row[2])
+                    #     resultado_difuso_d_list.append(row[3])
+                    #     resultado_difuso_s_list.append(row[4])
+                    #     resultado_difuso_i_list.append(row[5])
+                    #     resultado_difuso_bhl_list.append(row[6])
+                    #     resultado_difuso_bhc_list.append(row[7])
+                    #     resultado_difuso_bhi_list.append(row[8])
+                    #     resultado_difuso_bhm_list.append(row[9])
+                    #     resultado_difuso_ecd_list.append(row[10])
+                    #     resultado_difuso_eec_list.append(row[11])
+                    #     resultado_difuso_edp_list.append(row[12])
+                    #     resultado_difuso_eit_list.append(row[13])
 
                     # Calcular porcentaje de similitud (coeficiente de Jaccard)
                     def coeficiente_jaccard(set1, set2):
@@ -1035,41 +986,47 @@ def busqueda_inteligente():
 
                     nivel_confianza_list = [similitud * 100 for similitud in similitud_list]
 
-                    sql_docentes = """
-                    SELECT d.nombre, d.apellido, d.cedula, d.celular, d.email, d.genero, d.nvl_estudio, d.carrera, d.imagen_p, d.disponibilidad_c, d.anios_exp_informatica
-                        FROM docente d
-                        JOIN habilidades_t_b ht ON d.id = ht.id_docente
-                        JOIN resultados_difusos_h_t rd ON ht.id = rd.id_habilidades_t_b
-                        WHERE (rd.resultado_difuso BETWEEN %s AND %s
-                        OR rd.resultado_difuso_g BETWEEN %s AND %s
-                        OR rd.resultado_difuso_d BETWEEN %s AND %s
-                        OR rd.resultado_difuso_s BETWEEN %s AND %s
-                        OR rd.resultado_difuso_i BETWEEN %s AND %s
-                        OR rd.resultado_difuso_bhl BETWEEN %s AND %s
-                        OR rd.resultado_difuso_bhc BETWEEN %s AND %s
-                        OR rd.resultado_difuso_bhi BETWEEN %s AND %s
-                        OR rd.resultado_difuso_bhm BETWEEN %s AND %s
-                        OR rd.resultado_difuso_ecd BETWEEN %s AND %s
-                        OR rd.resultado_difuso_eec BETWEEN %s AND %s
-                        OR rd.resultado_difuso_edp BETWEEN %s AND %s
-                        OR rd.resultado_difuso_eit BETWEEN %s AND %s)
-                        AND ("""
-                        
-                    # Agregar condiciones dinámicas para cada nivel seleccionado
-                    condiciones = []
-                    parametros_docentes = list(parametros)  # Copia de la lista de parámetros para los docentes
-                    for index, nivel in enumerate(nivel_estudio):
-                        if index > 0:
-                            sql_docentes += " OR "
-                        sql_docentes += "FIND_IN_SET(%s, d.nvl_estudio)"
-                        condiciones.append(nivel)
-                        parametros_docentes.append(nivel)
-                    
-                    sql_docentes += ") LIMIT 10;"
-                    cursor.execute(sql_docentes, parametros_docentes)
+                    # Crear un alias para ResultadosDifusosH_T
+                    rd_alias = aliased(ResultadosDifusosHT)
 
-                    #cursor.execute(sql_docentes, parametros)
-                    docentes_data = cursor.fetchall()
+                    # Construir la consulta
+                    docentes_query = (
+                        db.session.query(Docente)
+                        .join(HabilidadesT_B)
+                        .join(rd_alias, HabilidadesT_B.id == rd_alias.id_habilidades_t_b)
+                        .filter(
+                            or_(
+                                rd_alias.resultado_difuso.between(min_resultado, max_resultado),
+                                rd_alias.resultado_difuso_g.between(min_resultado_g, max_resultado_g),
+                                rd_alias.resultado_difuso_d.between(min_resultado_d, max_resultado_d),
+                                rd_alias.resultado_difuso_s.between(min_resultado_s, max_resultado_s),
+                                rd_alias.resultado_difuso_i.between(min_resultado_i, max_resultado_i),
+                                rd_alias.resultado_difuso_bhl.between(min_resultado_bhl, max_resultado_bhl),
+                                rd_alias.resultado_difuso_bhc.between(min_resultado_bhc, max_resultado_bhc),
+                                rd_alias.resultado_difuso_bhi.between(min_resultado_bhi, max_resultado_bhi),
+                                rd_alias.resultado_difuso_bhm.between(min_resultado_bhm, max_resultado_bhm),
+                                rd_alias.resultado_difuso_ecd.between(min_resultado_ecd, max_resultado_ecd),
+                                rd_alias.resultado_difuso_eec.between(min_resultado_eec, max_resultado_eec),
+                                rd_alias.resultado_difuso_edp.between(min_resultado_edp, max_resultado_edp),
+                                rd_alias.resultado_difuso_eit.between(min_resultado_eit, max_resultado_eit)
+                            ),
+                            or_(
+                                *[Docente.nvl_estudio.contains(n) for n in nivel_estudio]
+                            )
+                        )
+                        .limit(10)
+                        .all()
+                    )
+
+                    # Extraer los datos necesarios para el render_template
+                    docentes_data = [
+                        (
+                            docente.nombre, docente.apellido, docente.cedula, docente.celular, docente.email,
+                            docente.genero, docente.nvl_estudio, docente.carrera, docente.imagen_p,
+                            docente.disponibilidad_c, docente.anios_exp_informatica
+                        )
+                        for docente in docentes_query
+                    ]
 
                     print("Datos de Docentes:")
                     for docente in docentes_data:
@@ -1240,7 +1197,7 @@ def busqueda_avanzada():
             print(f"Habilidades extracurriculares seleccionadas: {habilidades_extracurriculares_seleccionadas}")
 
             # Consulta SQL para obtener id_habilidades_t_b de resultados_difusos_h_t
-            cursor = mysql.connection.cursor()
+            cursor = db.connection.cursor()
 
             sql_docentes = """
                 SELECT d.nombre, d.apellido, d.cedula, d.celular, d.email, d.genero, d.nvl_estudio, d.carrera, d.imagen_p, d.disponibilidad_c, d.anios_exp_informatica,
@@ -1291,7 +1248,7 @@ def busqueda_avanzada():
             print(f"Parámetros de la consulta: {parametros_docentes}")
 
             # Ejecutar la consulta
-            cursor = mysql.connection.cursor()
+            cursor = db.connection.cursor()
             # Extraer imagen de perfil de la sesión
             cursor.execute('SELECT imagen_p FROM docente WHERE id_usuario = %s', (session['user_id'],))
             imagen_p_result = cursor.fetchone()
@@ -1404,7 +1361,7 @@ def busqueda_ia():
             return redirect(url_for('busqueda_inteligente'))
 
         # Construir consulta SQL basada en los parámetros extraídos
-        cursor = mysql.connection.cursor()
+        cursor = db.connection.cursor()
         sql_docentes = """
             SELECT d.nombre, d.apellido, d.cedula, d.celular, d.email, d.genero, d.nvl_estudio, d.carrera, d.imagen_p, d.disponibilidad_c, d.anios_exp_informatica,
                 ht.desarrollo_software, ht.desarrollo_frontend, ht.desarrollo_backend, ht.redes, ht.analisis_datos,
@@ -1512,7 +1469,7 @@ def buscar_intereses():
         return redirect(url_for('busqueda_inteligente'))
     try:
         # Realizar la consulta a la base de datos con LIKE
-        cursor = mysql.connection.cursor()
+        cursor = db.connection.cursor()
         query = """
             SELECT d.nombre, d.apellido, d.cedula, d.celular, d.email, d.genero, d.nvl_estudio, d.carrera, d.imagen_p, d.disponibilidad_c, i.tipos_intereses, i.otros
             FROM docente d
@@ -1607,14 +1564,14 @@ def guardar_perfil():
                 imagen_perfil.save(path_to_save)
 
                 # Actualizar el nombre del archivo de la imagen en la base de datos
-                cur = mysql.connection.cursor()
+                cur = db.connection.cursor()
                 cur.execute("""
                     UPDATE docente
                     SET imagen_p = %s
                     WHERE id_usuario = %s
                 """, (unique_filename, session['user_id']))
                 #""", (filename, session['user_id']))
-                mysql.connection.commit()
+                db.connection.commit()
                 cur.close()
             #else:
                 #flash('No se seleccionó ningún archivo', 'danger')
@@ -1622,7 +1579,7 @@ def guardar_perfil():
         #imagen_perfil = request.files['imagen_perfil']
 
         # Actualizar la base de datos
-        cur = mysql.connection.cursor()
+        cur = db.connection.cursor()
         cur.execute("""
             UPDATE docente
             SET celular = %s,
@@ -1636,7 +1593,7 @@ def guardar_perfil():
         #""", (nombre, apellido, request.form['cedula'], request.form['celular'], request.form['email'], request.form['genero'], ','.join(request.form.getlist('nvl_estudio')), ','.join(request.form.getlist('carrera')), int(request.form['disponibilidad_c']), session['user_id']))
         #""", (nombre, apellido, cedula, celular, email, genero, ','.join(nivel_estudio), ','.join(carrera), disponibilidad, session['user_id']))
         #""", (nombre, apellido, cedula, celular, email, genero, nivel_estudio, carrera, disponibilidad, session['user_id']))
-        mysql.connection.commit()
+        db.connection.commit()
         cur.close()
 
 
@@ -1657,7 +1614,7 @@ def guardar_perfil():
 def guardar_habilidades_perfil():
     if request.method == 'POST':
         #Conexion
-        cursor = mysql.connection.cursor()
+        cursor = db.connection.cursor()
         # Obtener el ID del usuario recién registrado
         #cursor.execute('SELECT id FROM usuarios WHERE email = %s', (email,))
         #user_id = cursor.fetchone()[0]
@@ -1723,7 +1680,7 @@ def guardar_habilidades_perfil():
         otros = request.form.get('otros', '')  # Obtiene el valor de 'otros', o una cadena vacía si no está presente
 
         # Actualizar la base de datos con las habilidades técnicas
-        cur = mysql.connection.cursor()
+        cur = db.connection.cursor()
         cur.execute("""
             UPDATE habilidades_t_b
             SET business_intelligence_bi = %s,
@@ -1762,7 +1719,7 @@ def guardar_habilidades_perfil():
             habilidades_tecnicas['aprendizaje_automatico_machine_learning'],
             (id_docente,)
         ))
-        mysql.connection.commit()
+        db.connection.commit()
 
         # Actualizar la base de datos con las habilidades blandas
         cur.execute("""
@@ -1795,7 +1752,7 @@ def guardar_habilidades_perfil():
             habilidades_blandas['manejo_inteligencia_emocional'],
             (id_docente,)
         ))
-        mysql.connection.commit()
+        db.connection.commit()
 
         # Actualizar la base de datos con las habilidades intereses
         cur.execute("""
@@ -1828,17 +1785,17 @@ def guardar_habilidades_perfil():
             habilidades_extracurriculares['mindfulness_meditacion'],
             (id_docente,)
         ))
-        mysql.connection.commit()
+        db.connection.commit()
         
         # Actualizar la base de datos
-        cur = mysql.connection.cursor()
+        cur = db.connection.cursor()
         cur.execute("""
             UPDATE intereses
             SET tipos_intereses = %s,
                 otros = %s
             WHERE id_docente = %s
         """, (tipos_intereses, otros, id_docente))
-        mysql.connection.commit()
+        db.connection.commit()
         cur.close()
 
         # if result:
@@ -2053,7 +2010,7 @@ def inject_user():
         #cursor.close()
         #if user:
         #    return {'nombre_completo': user[0]}
-        cursor = mysql.connection.cursor()
+        cursor = db.connection.cursor()
         cursor.execute('SELECT nombre, apellido, email FROM docente WHERE id_usuario = %s', (session['user_id'],))
         user = cursor.fetchone()
         cursor.close()

@@ -1,7 +1,8 @@
 #docentes.py
 from flask import Flask, Blueprint, current_app, render_template, request, jsonify, redirect, url_for, flash, session
 #from db import init_connection, mysql
-from db import mysql
+#from db import mysql
+from db import db
 from ontologia_fuzzy import OntologiaFuzzy
 #from main import login_required  # Importa login_required desde main.py
 # En la parte superior del archivo docentes.py
