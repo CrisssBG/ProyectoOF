@@ -121,35 +121,6 @@ evaluador_techniques_skills_eit = ctrl.ControlSystemSimulation(sistema_control_t
 # resultado_difuso = evaluador_techniques_skills.output['resultado_techniques_skills']
 # print(f"Resultado de habilidades de Desarrollo y Arquitectura de Software: {resultado_difuso}")
 
-
-
-
-
-# # # Asignación de valores a los antecedentes
-# # evaluador_techniques_skills.input['dev_software_score'] = 7
-# # evaluador_techniques_skills.input['dev_front_end_score'] = 3
-# # evaluador_techniques_skills.input['dev_back_end_score'] = 9
-
-# # # Ejecución de la simulación
-# # evaluador_techniques_skills.compute()
-
-# # # Obtener los valores de entrada
-# # dev_software_value = evaluador_techniques_skills.input['dev_software_score'].astype(int)
-# # dev_front_end_value = evaluador_techniques_skills.input['dev_front_end_score'].astype(int)
-# # dev_back_end_value = evaluador_techniques_skills.input['dev_back_end_score'].astype(int)
-
-# # # Resultados de la simulación
-# # resultado_techniques_skills_value = evaluador_techniques_skills.output['resultado_techniques_skills'].astype(int)
-
-# # # Imprimir resultados
-# # print("Valor de dev_software:", dev_software_value)
-# # print("Valor de dev_front_end:", dev_front_end_value)
-# # print("Valor de dev_back_end:", dev_back_end_value)
-# # print("Resultado de habilidades de diseño:", resultado_techniques_skills_value)
-
-# # # Visualización de la distribución de salida
-# # resultado_techniques_skills.view(sim=evaluador_techniques_skills)
-# resultado.view(sim=evaluador_techniques_skills)
 ###########################################################################################
 
 # Crear instancia de la ontología difusa
@@ -178,62 +149,6 @@ def login_required(func):
 #    experiencia = data.get('experiencia')
 #    docentes_similares = ontologia_fuzzy.obtener_docentes_similares(habilidad, experiencia)
 #    return jsonify(docentes_similares)
-
-
-
-# Definición del sistema de control difuso
-# Definir las antecedentes, consecuentes y reglas según tus requisitos específicos
-# En este ejemplo, se usa un sistema de control difuso simple para habilidades técnicas
-
-# # Definición de las antecedentes (habilidades técnicas)
-# antecedents_skills = {
-#     'software': ctrl.Antecedent(np.arange(0, 101, 1), 'software_score'),
-#     'front_end': ctrl.Antecedent(np.arange(0, 101, 1), 'front_end_score'),
-#     'back_end': ctrl.Antecedent(np.arange(0, 101, 1), 'back_end_score')
-# }
-
-# # Definición de las funciones de membresía para cada habilidad técnica
-# # Ajusta según tus necesidades específicas
-# for skill in antecedents_skills:
-#     antecedents_skills[skill]['bajo'] = fuzz.trimf(antecedents_skills[skill].universe, [0, 0, 50])
-#     antecedents_skills[skill]['medio'] = fuzz.trimf(antecedents_skills[skill].universe, [0, 50, 100])
-#     antecedents_skills[skill]['alto'] = fuzz.trimf(antecedents_skills[skill].universe, [50, 100, 100])
-
-# # Definición del consecuente (resultado de habilidades técnicas)
-# resultado_skills = ctrl.Consequent(np.arange(0, 101, 1), 'resultado_skills')
-# resultado_skills['bajo'] = fuzz.trimf(resultado_skills.universe, [0, 0, 50])
-# resultado_skills['medio'] = fuzz.trimf(resultado_skills.universe, [25, 50, 75])
-# resultado_skills['alto'] = fuzz.trimf(resultado_skills.universe, [50, 100, 100])
-
-# # Definición de reglas difusas (ejemplo)
-# rules_skills = [
-#     # ctrl.Rule(antecedents_skills['software']['alto'] & antecedents_skills['front_end']['alto'], resultado_skills['alto']),
-#     # ctrl.Rule(antecedents_skills['software']['medio'] | antecedents_skills['front_end']['medio'] | antecedents_skills['back_end']['bajo'], resultado_skills['medio']),
-#     # ctrl.Rule(antecedents_skills['software']['bajo'] & antecedents_skills['front_end']['bajo'], resultado_skills['bajo'])
-
-#     ctrl.Rule(antecedents_skills['software']['alto'] & antecedents_skills['front_end']['alto'], resultado_skills['alto']),
-#     ctrl.Rule(antecedents_skills['software']['medio'] | antecedents_skills['front_end']['medio'] | antecedents_skills['back_end']['bajo'], resultado_skills['medio']),
-#     ctrl.Rule(antecedents_skills['software']['bajo'] & antecedents_skills['front_end']['bajo'], resultado_skills['bajo']),
-
-#     ctrl.Rule(antecedents_skills['software']['alto'] & (antecedents_skills['front_end']['medio'] | antecedents_skills['back_end']['medio']), resultado_skills['medio']),
-#     ctrl.Rule(antecedents_skills['software']['medio'] & antecedents_skills['front_end']['alto'] & antecedents_skills['back_end']['alto'], resultado_skills['alto']),
-#     ctrl.Rule(antecedents_skills['software']['bajo'] & antecedents_skills['front_end']['bajo'] & antecedents_skills['back_end']['bajo'], resultado_skills['bajo']),
-
-#     ctrl.Rule(antecedents_skills['software']['alto'] & antecedents_skills['front_end']['bajo'] & antecedents_skills['back_end']['bajo'], resultado_skills['medio']),
-#     ctrl.Rule(antecedents_skills['software']['bajo'] & antecedents_skills['front_end']['alto'] & antecedents_skills['back_end']['bajo'], resultado_skills['medio']),
-#     ctrl.Rule(antecedents_skills['software']['bajo'] & antecedents_skills['front_end']['bajo'] & antecedents_skills['back_end']['alto'], resultado_skills['medio']),
-
-#     ctrl.Rule(antecedents_skills['software']['medio'] & antecedents_skills['front_end']['alto'] & antecedents_skills['back_end']['alto'], resultado_skills['alto']),
-#     ctrl.Rule(antecedents_skills['software']['alto'] & antecedents_skills['front_end']['medio'] & antecedents_skills['back_end']['alto'], resultado_skills['alto']),
-#     ctrl.Rule(antecedents_skills['software']['alto'] & antecedents_skills['front_end']['alto'] & antecedents_skills['back_end']['medio'], resultado_skills['alto'])
-# ]
-
-# # Creación del sistema de control difuso
-# sistema_control_skills = ctrl.ControlSystem(rules_skills)
-# evaluador_skills = ctrl.ControlSystemSimulation(sistema_control_skills)
-
-
-
 
 @app.route('/')
 def home():
@@ -373,53 +288,6 @@ def index():
     imagen_p = data[0] if data else None
     # # Ahora pasas 'imagen_p' como parte del contexto al renderizar el template
     return render_template('ini.html', imagen_p=imagen_p if imagen_p else 'default.png')
-    # try:
-    #     # Obtener imagen de perfil del docente
-    #     cur = mysql.connection.cursor()
-    #     cur.execute("SELECT imagen_p FROM docente WHERE id_usuario = %s", [session['user_id']])
-    #     data = cur.fetchone()
-    #     cur.close()
-
-    #     # Si 'data' es None, asignamos una imagen por defecto
-    #     imagen_p = data[0] if data else 'default.png'
-
-    #     # Lógica para obtener y evaluar habilidades técnicas del docente
-    #     cur = mysql.connection.cursor()
-    #     cur.execute("SELECT * FROM habilidades_t_b WHERE id_docente = %s", [session['user_id']])
-    #     habilidades_data = cur.fetchone()
-    #     cur.close()
-
-    #     resultado_difuso = None
-
-    #     if habilidades_data:
-    #         # Obtener los valores de habilidades técnicas del docente
-    #         software_valor = habilidades_data[3]  # Ajustar según el índice correcto de la columna
-    #         front_end_valor = habilidades_data[9]  # Ajustar según el índice correcto de la columna
-    #         back_end_valor = habilidades_data[10]  # Ajustar según el índice correcto de la columna
-
-    #         #evaluador_skills = ctrl.ControlSystemSimulation(evaluador)
-
-    #         # Establecer los valores de entrada en la simulación del evaluador difuso
-    #         evaluador_skills.input['software_score'] = software_valor
-    #         evaluador_skills.input['front_end_score'] = front_end_valor
-    #         evaluador_skills.input['back_end_score'] = back_end_valor
-
-    #         # Ejecutar la simulación del sistema de control difuso
-    #         evaluador_skills.compute()
-
-    #         # Obtener el resultado difuso de las habilidades técnicas
-    #         resultado_difuso = evaluador_skills.output['resultado_skills']
-
-    #         # Renderizar el template con la imagen de perfil y el resultado difuso
-    #         return render_template('index.html', imagen_p=imagen_p, resultado_difuso=resultado_difuso)
-    #     else:
-    #         flash('No se encontraron habilidades técnicas para este usuario', 'warning')
-
-    # except Exception as e:
-    #     flash(f'Ocurrió un error al cargar la página: {str(e)}', 'danger')
-
-    # return redirect(url_for('home'))
-
 
 @app.route('/logout', methods=['GET', 'POST'] )
 #@login_required
@@ -827,29 +695,6 @@ def register():
     return render_template('register.html')
 
 
-# def busqueda():
-#     if request.method == 'POST':
-#         # Establecemos el tipo de búsqueda directamente en cada función de búsqueda
-#         tipo_busqueda = request.form.get('tipo_busqueda')
-
-#         try:
-#             if tipo_busqueda == 'inteligente':
-#                 return busqueda_inteligente()
-#             elif tipo_busqueda == 'avanzada':
-#                 return busqueda_avanzada()
-#             elif tipo_busqueda == 'ia':
-#                 return busqueda_ia()
-#             else:
-#                 raise ValueError("Tipo de búsqueda no reconocido")
-#         except Exception as e:
-#             print(f"Error: {e}")
-#             return render_template('busqueda.html', tipo_busqueda=tipo_busqueda, imagen_p='default.png', error=str(e))
-
-#     # Si la solicitud es GET, simplemente renderizamos el formulario de búsqueda
-#     return render_template('busqueda.html', tipo_busqueda='inteligente', imagen_p='default.png')
-
-
-
 @app.route('/busqueda_inteligente', methods=['GET', 'POST'])
 @login_required
 def busqueda_inteligente():
@@ -878,21 +723,21 @@ def busqueda_inteligente():
             #nivel_estudio = request.form.get('nivel_estudio')
             nivel_estudio = request.form.getlist('nivel_estudio')
 
-            print("Datos recibidos:")
-            print(f"Desarrollo Arquitectura: {desarrollo_arquitectura}")
-            print(f"Gestión Análisis Datos: {gestion_analisis_datos}")
-            print(f"Diseño Interfaz Multimedia: {disenio_interfaz_multimedia}")
-            print(f"Seguridad Cloud Computing: {seguridad_cloud_computing}")
-            print(f"Infrastructura Comunicaciones: {infraestructura_comunicaciones}")
-            print(f"Habilidad Liderazgo Efectivo: {habilidad_liderazgo_efectivo}")
-            print(f"Habilidad Comunicación Relaciones I: {habilidad_comunicacion_relaciones_i}")
-            print(f"Habilidad Innovación Creatividad: {habilidad_innovacion_creatividad}")
-            print(f"Habilidad Manejo Bienestar Personal: {habilidad_manejo_bienestar_personal}")
-            print(f"Creación Contenidos Visuales: {creacion_contenidos_visuales}")
-            print(f"Estrategia Medios Digitales: {estrategia_medios_digitales}")
-            print(f"Desarrollo Profesional: {desarrollo_profesional}")
-            print(f"Idiomas Técnicas Relajación: {idiomas_tecnicas_relajacion}")
-            print(f"Niveles de Estudio: {nivel_estudio}")
+            # print("Datos recibidos:")
+            # print(f"Desarrollo Arquitectura: {desarrollo_arquitectura}")
+            # print(f"Gestión Análisis Datos: {gestion_analisis_datos}")
+            # print(f"Diseño Interfaz Multimedia: {disenio_interfaz_multimedia}")
+            # print(f"Seguridad Cloud Computing: {seguridad_cloud_computing}")
+            # print(f"Infrastructura Comunicaciones: {infraestructura_comunicaciones}")
+            # print(f"Habilidad Liderazgo Efectivo: {habilidad_liderazgo_efectivo}")
+            # print(f"Habilidad Comunicación Relaciones I: {habilidad_comunicacion_relaciones_i}")
+            # print(f"Habilidad Innovación Creatividad: {habilidad_innovacion_creatividad}")
+            # print(f"Habilidad Manejo Bienestar Personal: {habilidad_manejo_bienestar_personal}")
+            # print(f"Creación Contenidos Visuales: {creacion_contenidos_visuales}")
+            # print(f"Estrategia Medios Digitales: {estrategia_medios_digitales}")
+            # print(f"Desarrollo Profesional: {desarrollo_profesional}")
+            # print(f"Idiomas Técnicas Relajación: {idiomas_tecnicas_relajacion}")
+            # print(f"Niveles de Estudio: {nivel_estudio}")
 
             # Consulta SQL para obtener id_habilidades_t_b de resultados_difusos_h_t
             cursor = mysql.connection.cursor()
@@ -948,9 +793,9 @@ def busqueda_inteligente():
 
                 resultados_difusos = cursor.fetchall()
 
-                print("Resultados Difusos:")
-                for resultado in resultados_difusos:
-                    print(resultado)
+                # print("Resultados Difusos:")
+                # for resultado in resultados_difusos:
+                #     print(resultado)
 
                 if resultados_difusos:
                     # Crear listas vacías para almacenar los resultados
@@ -1071,9 +916,9 @@ def busqueda_inteligente():
                     #cursor.execute(sql_docentes, parametros)
                     docentes_data = cursor.fetchall()
 
-                    print("Datos de Docentes:")
-                    for docente in docentes_data:
-                        print(docente)
+                    # print("Datos de Docentes:")
+                    # for docente in docentes_data:
+                    #     print(docente)
 
                     # Ordenar docentes, resultados_difusos y demás datos según nivel_confianza_list
                     datos_completos = list(zip(
@@ -1233,11 +1078,11 @@ def busqueda_avanzada():
             #     anios_exp_informatica = 0  # Valor por defecto o manejar el error
 
             # Imprimir los valores para depuración
-            print(f"Años de experiencia: {anios_exp_informatica}")
-            print(f"Nivel de estudio: {nivel_estudio}")
-            print(f"Habilidades técnicas seleccionadas: {habilidades_tecnicas_seleccionadas}")
-            print(f"Habilidades blandas seleccionadas: {habilidades_blandas_seleccionadas}")
-            print(f"Habilidades extracurriculares seleccionadas: {habilidades_extracurriculares_seleccionadas}")
+            # print(f"Años de experiencia: {anios_exp_informatica}")
+            # print(f"Nivel de estudio: {nivel_estudio}")
+            # print(f"Habilidades técnicas seleccionadas: {habilidades_tecnicas_seleccionadas}")
+            # print(f"Habilidades blandas seleccionadas: {habilidades_blandas_seleccionadas}")
+            # print(f"Habilidades extracurriculares seleccionadas: {habilidades_extracurriculares_seleccionadas}")
 
             # Consulta SQL para obtener id_habilidades_t_b de resultados_difusos_h_t
             cursor = mysql.connection.cursor()
@@ -1287,8 +1132,8 @@ def busqueda_avanzada():
             sql_docentes += " LIMIT 10;"
 
             # Imprimir la consulta para depuración
-            print(f"Consulta SQL generada: {sql_docentes}")
-            print(f"Parámetros de la consulta: {parametros_docentes}")
+            # print(f"Consulta SQL generada: {sql_docentes}")
+            # print(f"Parámetros de la consulta: {parametros_docentes}")
 
             # Ejecutar la consulta
             cursor = mysql.connection.cursor()
@@ -1299,7 +1144,7 @@ def busqueda_avanzada():
                 imagen_p = imagen_p_result[0]
             else:
                 imagen_p = 'default.png'  # Si no hay imagen, asigna una imagen predeterminada
-            print(f"Foto: {imagen_p}")
+            # print(f"Foto: {imagen_p}")
 
             # Ejecutar la consulta
             cursor.execute(sql_docentes, parametros_docentes)
@@ -1307,14 +1152,14 @@ def busqueda_avanzada():
             #print(f'Tipo de Búsqueda: {tipo_busqueda}')  # Imprime en la consola para depuración
 
             # Imprimir los resultados para depuración
-            print("Resultados de la consulta:")
-            for docente in docentes_data:
-                print(docente)
+            # print("Resultados de la consulta:")
+            # for docente in docentes_data:
+            #     print(docente)
 
             # Cerrar el cursor
             cursor.close()
 
-            if not docente:
+            if not docentes_data:
                 flash('No se encontraron coincidencias con la búsqueda', 'danger')
                 return redirect(url_for('busqueda_inteligente'))
 
@@ -1355,7 +1200,7 @@ def busqueda_ia():
             return redirect(url_for('busqueda_inteligente'))
         
         # Imprimir datos ingresados
-        print(f"Mensaje recibido: {mensaje}")
+        # print(f"Mensaje recibido: {mensaje}")
 
         # Inicializar parámetros
         nivel_estudio = None
@@ -1432,15 +1277,15 @@ def busqueda_ia():
             sql_docentes += ")"
 
         # Imprimir consulta SQL final y parámetros
-        print(f"Consulta SQL: {sql_docentes}")
-        print(f"Parámetros: {parametros_docentes}")
+        # print(f"Consulta SQL: {sql_docentes}")
+        # print(f"Parámetros: {parametros_docentes}")
 
         # Ejecutar consulta
         cursor.execute(sql_docentes, parametros_docentes)
         docentes_data = cursor.fetchall()
 
         # Imprimir resultados de la consulta
-        print(f"Datos de docentes: {docentes_data}")
+        # print(f"Datos de docentes: {docentes_data}")
 
         # Extraer imagen de perfil
         cursor.execute('SELECT imagen_p FROM docente WHERE id_usuario = %s', (session['user_id'],))
@@ -1532,7 +1377,7 @@ def buscar_intereses():
 
         cursor.close()
 
-        print(f"Resultados de la búsqueda: {resultados}")
+        # print(f"Resultados de la búsqueda: {resultados}")
         
         if not resultados:
             flash('No se encontraron coincidencias con la búsqueda', 'danger')
@@ -1920,129 +1765,6 @@ def classify_skill(value):
 
 # Registrar la función en el entorno de Jinja2
 app.jinja_env.globals.update(classify_skill=classify_skill)
-
-
-
-# @app.route('/resultado_difuso', methods=['POST'])
-# def resultado_difuso():
-#     global resultado_difuso_global
-
-#     if request.method == 'POST':
-#         resultado_difuso_global = request.form.get('resultado_difuso', type=float)
-
-#         flash('¡Resultado difuso actualizado correctamente!', 'success')
-
-#         return redirect(url_for('perfil'))  # Redireccionar a la página de perfil o donde sea adecuado
-
-#     flash('Error al actualizar el resultado difuso', 'danger')
-#     return redirect(url_for('perfil'))  # Redireccionar a la página de perfil o donde sea adecuado
-
-
-#@app.route('/perfil')
-#def mostrar_perfil():
-#    global resultado_difuso_global  # Acceder al resultado difuso global
-
-    # Aquí puedes pasar otros datos necesarios para el perfil si es necesario
-#    contexto = {
-#        'resultado_difuso': resultado_difuso_global
-#    }
-
-#    return render_template('perfil.html', **contexto)
-
-#@app.route('/download_excel/<int:docente_id>', methods=['POST'])
-# @app.route('/download_excel', methods=['POST'])
-# def download_excel():
-#     if request.method == 'POST':
-#     # Recuperar datos del formulario
-#     #docente_nombre_apellido = request.form.get('docente_nombre_apellido')
-#         docente_id = request.form.get('docente_id')
-
-#         # Verificar que docente esté definido en el contexto actual
-#         #docente = request.form.get('docente')  # Ejemplo: Recuperar docente del formulario
-
-#         # Realizar consulta a la base de datos para obtener datos del docente
-#         cursor = mysql.connection.cursor()
-#         cursor.execute("""
-#             SELECT 
-#                 d.nombre,
-#                 d.apellido,
-#                 d.cedula,
-#                 d.celular,
-#                 d.email,
-#                 d.genero,
-#                 d.nvl_estudio,
-#                 d.carrera,
-#                 d.disponibilidad_c,
-#                 rd.resultado_difuso,
-#                 rd.resultado_difuso_g,
-#                 rd.resultado_difuso_d,
-#                 rd.resultado_difuso_s,
-#                 rd.resultado_difuso_i
-#             FROM 
-#                 habilidades_t_b h
-#             JOIN 
-#                 docente d ON h.id_docente = d.id
-#             JOIN 
-#                 resultados_difusos_h_t rd ON rd.id_habilidades_t_b = h.id
-#             WHERE 
-#                 d.id = %s;
-#         """, (docente_id,))
-#         docente_data = cursor.fetchone()
-#         cursor.close()
-
-#         # Crear un libro de Excel y una hoja
-#         # wb = Workbook()
-#         # ws = wb.active
-#         # ws.title = 'Resultados de Búsqueda'
-
-#         # Agregar encabezados a la hoja
-#         # headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso del Docente', 'Porcentaje de Similitud', 'Nivel de Confianza']
-#         # ws.append(headers)
-
-#         # Obtener datos del docente y añadir a la hoja
-#         if docente_data:
-#             # Crear libro de Excel y hoja
-#             wb = Workbook()
-#             ws = wb.active
-#             ws.title = 'Resultados de Búsqueda'
-
-#             # Agregar encabezados
-#             #headers = ['Foto', 'Nombre y Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
-#             headers = ['Nombre', 'Apellido', 'Cédula', 'Celular', 'Email', 'Género', 'Nivel de Estudio', 'Carrera', 'Disponibilidad', 'Resultado Difuso', 'Resultado Difuso G', 'Resultado Difuso D', 'Resultado Difuso S', 'Resultado Difuso I']
-#             ws.append(headers)
-
-#             # Preparar datos del docente y resultados difusos
-#             row_data = [
-#                 #'',  # Lógica para la imagen si es necesaria
-#                 #f"{docente_data[0]} {docente_data[1]}",
-#                 docente_data[0],
-#                 docente_data[1],
-#                 docente_data[2],
-#                 docente_data[3],
-#                 docente_data[4],
-#                 docente_data[5],
-#                 docente_data[6],
-#                 docente_data[7],
-#                 docente_data[8],
-#                 docente_data[9],    # resultado_difuso
-#                 docente_data[10],   # resultado_difuso_g
-#                 docente_data[11],   # resultado_difuso_d
-#                 docente_data[12],   # resultado_difuso_s
-#                 docente_data[13]    # resultado_difuso_i
-#             ]
-#             ws.append(row_data)
-
-#             # Guardar el libro de Excel
-#             excel_filename = f'Resultados_Busqueda_{docente_id}.xlsx'
-#             wb.save(excel_filename)
-
-#             # Ofrecer el archivo Excel para descargar
-#             return send_file(excel_filename, as_attachment=True)
-
-#         else:
-#             # Manejar caso donde docente no está definido
-#             return "Error: No se encontró información del docente para generar el archivo Excel."
-#     return redirect(url_for('busqueda_inteligente'))  # Ejemplo de redirección a la página principal
 
 @app.context_processor
 def inject_user():
